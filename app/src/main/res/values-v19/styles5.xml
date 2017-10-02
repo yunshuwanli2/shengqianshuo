@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.NoToolBar.Main" parent="AppTheme.NoToolBar">
+        <!--下面的这段状态栏 透明配置需要在每个 布局文件中加入 android:fitsSystemWindows=”true”-->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+    </style>
+
+</resources>

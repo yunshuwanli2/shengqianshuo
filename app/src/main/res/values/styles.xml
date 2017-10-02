@@ -1,0 +1,52 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+
+    </style>
+
+    <style name="AppTheme.NoToolBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <!-- popmenu 字体
+        <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
+        <item name="android:actionMenuTextColor">#4081ff</item>
+        <item name="actionMenuTextColor">#4081ff</item> -->
+        <!-- popmenu 背景
+        <item name="actionOverflowMenuStyle">@style/Widget.AppCompat.PopupMenu.Overflow.My</item>
+        <item name="android:dropDownListViewStyle">@style/MyThemeDropDownListView</item> -->
+
+        <!--背景设置 防止过度渲染
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowDisablePreview">true</item>-->
+    </style>
+
+    <style name="AppTheme.NoToolBar.Main" parent="AppTheme.NoToolBar"></style>
+
+    <!-- 弹出框背景色-->
+    <style name="Widget.AppCompat.PopupMenu.Overflow.My" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:dropDownWidth">wrap_content</item>
+        <!--<item name="android:popupBackground">@drawable/bg5_actionbar_flow</item>-->
+        <item name="android:dropDownVerticalOffset">40dip</item>
+    </style>
+
+    <style name="myCustomMenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="MyThemeDropDownListView" parent="@style/Widget.AppCompat.ListView.DropDown">
+        <!--<item name="android:divider">@drawable/toobar_menu_item_divider</item>-->
+        <item name="android:dividerHeight">1px</item>
+    </style>
+
+</resources>
