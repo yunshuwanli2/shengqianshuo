@@ -40,8 +40,6 @@ public class UserInfoFragment2 extends MFragment {
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             }
-
-            //注释dfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdf
         });
     }
 }
