@@ -41,7 +41,7 @@ public class UserInfoFragment2 extends MFragment {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             }
 
-            //注释
+            //注释dfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdf
         });
     }
 }
