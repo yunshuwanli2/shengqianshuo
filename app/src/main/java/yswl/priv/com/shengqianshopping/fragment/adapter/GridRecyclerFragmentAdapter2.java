@@ -18,7 +18,7 @@ import yswl.priv.com.shengqianshopping.bean.ProductDetail;
  * Created by yunshuwanli on 17/10/1.
  */
 
-public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecyclerFragmentAdapter.GridRecyHolder> {
+public class GridRecyclerFragmentAdapter2 extends RecyclerView.Adapter<GridRecyclerFragmentAdapter2.GridRecyHolder> {
 
     List<ProductDetail> mProductList;
 
@@ -30,20 +30,20 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
         this.mProductList = mProductList;
     }
 
-    public GridRecyclerFragmentAdapter() {
+    public GridRecyclerFragmentAdapter2() {
     }
 
     @Override
     public GridRecyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.recyclerview_grid_item_view, parent, false);
+                inflate(R.layout.recyclerview_grid_item_view2, parent, false);
         return new GridRecyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(GridRecyHolder holder, int position) {
         ProductDetail detail = mProductList.get(position);
-        holder.coup_price.setText(detail.couponNum);
+        holder.top_numb.setText("TOP" + position + 1);
         Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
         holder.produce_buy_count.setText(detail.volume);
         holder.product_desc.setText(detail.title);
@@ -53,13 +53,13 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
 
     @Override
     public int getItemCount() {
-        return (mProductList!=null && mProductList.size()>0) ? mProductList.size():0;
+        return (mProductList != null && mProductList.size() > 0) ? mProductList.size() : 0;
     }
 
 
     class GridRecyHolder extends RecyclerView.ViewHolder {
         ImageView preview_img;
-        TextView coup_price;
+        TextView top_numb;
         TextView product_desc;
         TextView product_price;
         TextView produce_buy_count;
@@ -67,7 +67,7 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
         public GridRecyHolder(View view) {
             super(view);
             preview_img = (ImageView) view.findViewById(R.id.iv_product_preview);
-            coup_price = (TextView) view.findViewById(R.id.tv_coup_price);
+            top_numb = (TextView) view.findViewById(R.id.tv_top_numb);
             product_desc = (TextView) view.findViewById(R.id.tv_product_desc);
             product_price = (TextView) view.findViewById(R.id.tv_product_price);
             produce_buy_count = (TextView) view.findViewById(R.id.tv_number_people);

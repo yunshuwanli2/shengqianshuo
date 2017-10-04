@@ -1,4 +1,4 @@
-package yswl.priv.com.shengqianshopping;
+package yswl.priv.com.shengqianshopping.activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,6 +14,7 @@ import com.alibaba.baichuan.android.trade.adapter.login.AlibcLogin;
 import com.alibaba.baichuan.android.trade.callback.AlibcLoginCallback;
 
 import yswl.com.klibrary.util.L;
+import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 
 /**

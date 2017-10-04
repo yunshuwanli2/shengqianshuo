@@ -8,13 +8,14 @@
     <string name="url_banner_list">/config/banner</string>
     <!--  选品库内商品列表-->
     <string name="url_category_list">/u_item/list</string>
-    <!--  ● 商品优惠券领用TOP100-->
-    <string name="url_coupon_list">/u_item/top</string>
+    <!--  ● 抢购排行榜TOP100-->
+    <string name="url_top_list">/u_item/top</string>
 
     <!--  ● 商品搜索查询-->
     <string name="url_shopping_query">/u_item/like</string>
 
     <!--  抢购商品列表(疯狂抢)-->
-    <string name="url_">/ju/tqg/list</string>
+    <string name="url_crazy_buy_list">/ju/tqg/list</string>
+
 
 </resources>

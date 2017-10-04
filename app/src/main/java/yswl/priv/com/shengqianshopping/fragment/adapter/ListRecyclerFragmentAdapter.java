@@ -1,5 +1,6 @@
 package yswl.priv.com.shengqianshopping.fragment.adapter;
 
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,7 @@ import yswl.priv.com.shengqianshopping.bean.ProductDetail;
  * Created by yunshuwanli on 17/10/1.
  */
 
-public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecyclerFragmentAdapter.GridRecyHolder> {
+public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecyclerFragmentAdapter.GridRecyHolder> {
 
     List<ProductDetail> mProductList;
 
@@ -30,20 +31,19 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
         this.mProductList = mProductList;
     }
 
-    public GridRecyclerFragmentAdapter() {
+    public ListRecyclerFragmentAdapter() {
     }
 
     @Override
     public GridRecyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.recyclerview_grid_item_view, parent, false);
+                inflate(R.layout.recyclerview_list_item_view, parent, false);
         return new GridRecyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(GridRecyHolder holder, int position) {
         ProductDetail detail = mProductList.get(position);
-        holder.coup_price.setText(detail.couponNum);
         Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
         holder.produce_buy_count.setText(detail.volume);
         holder.product_desc.setText(detail.title);
@@ -53,24 +53,31 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
 
     @Override
     public int getItemCount() {
-        return (mProductList!=null && mProductList.size()>0) ? mProductList.size():0;
+        return (mProductList != null && mProductList.size() > 0) ? mProductList.size() : 0;
     }
 
 
     class GridRecyHolder extends RecyclerView.ViewHolder {
         ImageView preview_img;
-        TextView coup_price;
+        TextView product_old_price;
         TextView product_desc;
         TextView product_price;
         TextView produce_buy_count;
+        TextView time_start;
+        TextView time_end;
+
 
         public GridRecyHolder(View view) {
             super(view);
             preview_img = (ImageView) view.findViewById(R.id.iv_product_preview);
-            coup_price = (TextView) view.findViewById(R.id.tv_coup_price);
             product_desc = (TextView) view.findViewById(R.id.tv_product_desc);
             product_price = (TextView) view.findViewById(R.id.tv_product_price);
-            produce_buy_count = (TextView) view.findViewById(R.id.tv_number_people);
+            product_old_price = (TextView) view.findViewById(R.id.tv_product_old_price);
+            product_old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中间横线
+            produce_buy_count = (TextView) view.findViewById(R.id.tv_selled_numb);
+            time_start = (TextView) view.findViewById(R.id.tv_time_start);
+            time_end = (TextView) view.findViewById(R.id.tv_time_end);
+
 
         }
     }

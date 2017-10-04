@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,25 +20,22 @@ import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.R;
-import yswl.priv.com.shengqianshopping.banner.SortEnum;
-import yswl.priv.com.shengqianshopping.bean.CategoryBean;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.SerializableMap;
-import yswl.priv.com.shengqianshopping.fragment.adapter.DividerItemDecoration;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter2;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
- *
+ * TOP100
  */
-public class GridRecyclerviewFragment extends MFragment implements HttpCallback<JSONObject> {
+public class GridRecyclerviewFragment2 extends MFragment implements HttpCallback<JSONObject> {
     RecyclerView mRecyclerView;
-    GridRecyclerFragmentAdapter mAdapter;
+    GridRecyclerFragmentAdapter2 mAdapter;
 
 
     private static final int REQUEST_ID = 1003;
-    private static final int REQUEST_ID_RECOM = 1004;
 
     private static final String ARG_PARAM1 = "param1";
 
@@ -54,25 +50,14 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
     private SerializableMap mParam1;//已经封装好的参数
 
 
-    public GridRecyclerviewFragment() {
+    public GridRecyclerviewFragment2() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment BlankFragment.
-     */
-    public static GridRecyclerviewFragment newInstance(SerializableMap param1) {
-        GridRecyclerviewFragment fragment = new GridRecyclerviewFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, param1);
-        fragment.setArguments(args);
+
+    public static GridRecyclerviewFragment2 newInstance() {
+        GridRecyclerviewFragment2 fragment = new GridRecyclerviewFragment2();
         return fragment;
     }
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,33 +81,20 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        mAdapter = new GridRecyclerFragmentAdapter();
+        mAdapter = new GridRecyclerFragmentAdapter2();
 
         mRecyclerView.setAdapter(mAdapter);
         requestData();
     }
 
-    /**
-     * 1. pid | 不可 | 选品库ID |
-     * 1. lastId | 可 | | 默认0 | 由于volume有0值，销量默认－1
-     * 1. count | 可 | | 默认20
-     * 1. sort | 可 | 排序字段 | popularity/人气-默认 , volume/售量 ， new/最新 , price/价格
-     * 1. sortBy | 可 | 排序方式 | 正序:asc 倒序:desc-默认
-     */
-    public void requestData() {
-        if (mParam1 != null) {
-            Map<String, Object> parm = mParam1.map;
-            String url = UrlUtil.getUrl(this, R.string.url_category_list);
-            HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, parm, this);
-        }
 
+    public void requestData() {
+        String url = UrlUtil.getUrl(this, R.string.url_top_list);
+        HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, null, this);
     }
 
 
-
-
-    private static final String TAG = GridRecyclerviewFragment.class.getSimpleName();
+    private static final String TAG = GridRecyclerviewFragment2.class.getSimpleName();
     List<ProductDetail> mProductList;
 
     @Override

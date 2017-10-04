@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,51 +22,43 @@ import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.R;
-import yswl.priv.com.shengqianshopping.banner.SortEnum;
-import yswl.priv.com.shengqianshopping.bean.CategoryBean;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.SerializableMap;
-import yswl.priv.com.shengqianshopping.fragment.adapter.DividerItemDecoration;
-import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.bean.TimeBean;
+import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter2;
+import yswl.priv.com.shengqianshopping.fragment.adapter.ListRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
- *
+ * TOP100
  */
-public class GridRecyclerviewFragment extends MFragment implements HttpCallback<JSONObject> {
+public class ListRecyclerviewFragment extends MFragment implements HttpCallback<JSONObject> {
     RecyclerView mRecyclerView;
-    GridRecyclerFragmentAdapter mAdapter;
+    ListRecyclerFragmentAdapter mAdapter;
 
 
     private static final int REQUEST_ID = 1003;
-    private static final int REQUEST_ID_RECOM = 1004;
 
     private static final String ARG_PARAM1 = "param1";
 
-    public SerializableMap getmParam1() {
+    public TimeBean getmParam1() {
         return mParam1;
     }
 
-    public void setmParam1(SerializableMap mParam1) {
+    public void setmParam1(TimeBean mParam1) {
         this.mParam1 = mParam1;
     }
 
-    private SerializableMap mParam1;//已经封装好的参数
+    private TimeBean mParam1;//已经封装好的参数
 
 
-    public GridRecyclerviewFragment() {
+    public ListRecyclerviewFragment() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment BlankFragment.
-     */
-    public static GridRecyclerviewFragment newInstance(SerializableMap param1) {
-        GridRecyclerviewFragment fragment = new GridRecyclerviewFragment();
+
+    public static ListRecyclerviewFragment newInstance(TimeBean param1) {
+        ListRecyclerviewFragment fragment = new ListRecyclerviewFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -73,12 +66,11 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
     }
 
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = (SerializableMap) getArguments().getSerializable(ARG_PARAM1);
+            mParam1 = (TimeBean) getArguments().getSerializable(ARG_PARAM1);
         }
     }
 
@@ -91,38 +83,37 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
 
-        manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        mAdapter = new GridRecyclerFragmentAdapter();
+        mAdapter = new ListRecyclerFragmentAdapter();
 
         mRecyclerView.setAdapter(mAdapter);
         requestData();
     }
 
+
     /**
-     * 1. pid | 不可 | 选品库ID |
-     * 1. lastId | 可 | | 默认0 | 由于volume有0值，销量默认－1
-     * 1. count | 可 | | 默认20
-     * 1. sort | 可 | 排序字段 | popularity/人气-默认 , volume/售量 ， new/最新 , price/价格
-     * 1. sortBy | 可 | 排序方式 | 正序:asc 倒序:desc-默认
+     * 1. pageNo | 可 | 页码 | 默认为1
+     * 1. pageSize | 可 | 每页数量 | 默认为20
+     * 1. startTime | 不可 | 查询开始时间 | 2017-09-24 15:00:00
+     * 1. endTime | 不可 | 查询结束时间 | 2017-09-24 18:00:00
      */
     public void requestData() {
-        if (mParam1 != null) {
-            Map<String, Object> parm = mParam1.map;
-            String url = UrlUtil.getUrl(this, R.string.url_category_list);
-            HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, parm, this);
-        }
+        if (mParam1 == null) return;
+        String url = UrlUtil.getUrl(this, R.string.url_crazy_buy_list);
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageNo", 1);
+        map.put("pageSize", 20);
+        map.put("startTime", mParam1.startTime);
+        map.put("endTime", mParam1.endTime);
 
+        HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, map, this);
     }
 
 
-
-
-    private static final String TAG = GridRecyclerviewFragment.class.getSimpleName();
+    private static final String TAG = ListRecyclerviewFragment.class.getSimpleName();
     List<ProductDetail> mProductList;
 
     @Override

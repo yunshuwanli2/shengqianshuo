@@ -22,6 +22,10 @@ import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.priv.com.shengqianshopping.R;
+import yswl.priv.com.shengqianshopping.activity.AdvanceActivity;
+import yswl.priv.com.shengqianshopping.activity.CrazyBuyActivity;
+import yswl.priv.com.shengqianshopping.activity.RecommendActivity;
+import yswl.priv.com.shengqianshopping.activity.Top100Activity;
 import yswl.priv.com.shengqianshopping.banner.BannerBean;
 import yswl.priv.com.shengqianshopping.banner.BannerUtil;
 import yswl.priv.com.shengqianshopping.bean.CategoryBean;
@@ -30,7 +34,6 @@ import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, View.OnClickListener {
     private static final String FRAGMENT_TAG = "HomeFragment2_ItemFragment";
-
 
 
     ConvenientBanner mConvenientBanner;
@@ -101,20 +104,25 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 //        }
         switch (v.getId()) {
             case R.id.ll_fkq:
-                CategoryBean category = getCrazyBuyProductCategoryId("抢购");
-                //TODO 新抢购页
+//                CategoryBean category = getCrazyBuyProductCategoryId("抢购");
+                //TODO 疯狂抢购页
+                CrazyBuyActivity.startActivity(getActivity());
                 break;
             case R.id.ll_tj:
-                CategoryBean category2 = getCrazyBuyProductCategoryId("推荐");
-                //TODO 新推荐页
+//                CategoryBean category2 = getCrazyBuyProductCategoryId("推荐");
+                //TODO 小编推荐页
+                RecommendActivity.startActivity(getActivity());
                 break;
             case R.id.ll_sort:
-                CategoryBean category3 = getCrazyBuyProductCategoryId("排名");
-                //TODO 排名页
+//                CategoryBean category3 = getCrazyBuyProductCategoryId("排名");
+                //TODO top100排名页
+
+                Top100Activity.startActivity(getActivity());
                 break;
             case R.id.ll_plan:
-                CategoryBean category4 = getCrazyBuyProductCategoryId("预告");
-                //TODO 预告
+//                CategoryBean category4 = getCrazyBuyProductCategoryId("预告");
+                //TODO 预告页
+                AdvanceActivity.startActivity(getActivity());
                 break;
 
         }
@@ -138,10 +146,8 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                             ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
 
                     //TODO 赋值
-                    if (mCategorys != null && mCategorys.size() > 0){
-
+                    if (mCategorys != null && mCategorys.size() > 0) {
                         addProductListModule(mCategorys.get(0));
-
                     }
                     break;
             }
@@ -150,7 +156,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     }
 
     private void addProductListModule(CategoryBean category) {
-        getChildFragmentManager().beginTransaction().replace(R.id.content, ItemFragment.newInstance(category),FRAGMENT_TAG).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.content, ItemFragment.newInstance(category), FRAGMENT_TAG).commit();
     }
 
     @Override
@@ -161,8 +167,8 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     public CategoryBean getCrazyBuyProductCategoryId(String key) {
         if (mCategorys != null && mCategorys.size() > 0)
-            for (CategoryBean category: mCategorys) {
-                if(category.title.contains(key)){
+            for (CategoryBean category : mCategorys) {
+                if (category.title.contains(key)) {
                     return category;
                 }
             }

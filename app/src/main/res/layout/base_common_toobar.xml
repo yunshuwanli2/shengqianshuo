@@ -3,18 +3,18 @@
     android:id="@+id/base_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:navigationIcon="@mipmap/toolbar_back"
     android:background="@android:color/holo_blue_light"
-    android:minHeight="?attr/actionBarSize">
+    android:minHeight="?attr/actionBarSize"
+    android:navigationIcon="@mipmap/toolbar_back">
 
-   <!-- <TextView
-        android:id="@+id/base_toolbar_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:maxLines="1"
-        android:textColor="#141414"
-        android:textSize="18sp"
-        android:visibility="gone"
-        android:textStyle="bold"/> -->
+    <!-- <TextView
+         android:id="@+id/base_toolbar_title"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center"
+         android:maxLines="1"
+         android:textColor="#141414"
+         android:textSize="18sp"
+         android:visibility="gone"
+         android:textStyle="bold"/> -->
 </android.support.v7.widget.Toolbar>

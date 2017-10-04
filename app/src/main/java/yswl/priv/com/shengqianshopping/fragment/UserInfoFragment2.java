@@ -11,10 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import org.w3c.dom.Text;
-
 import yswl.com.klibrary.base.MFragment;
-import yswl.priv.com.shengqianshopping.LoginActivity;
+import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.R;
 
 /**

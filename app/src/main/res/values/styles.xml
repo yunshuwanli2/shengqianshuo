@@ -49,4 +49,8 @@
         <item name="android:dividerHeight">1px</item>
     </style>
 
+    <style name="AppTheme.NoToolBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoToolBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

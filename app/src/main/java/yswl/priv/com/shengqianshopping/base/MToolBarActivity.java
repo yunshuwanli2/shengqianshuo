@@ -4,13 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 
 import yswl.com.klibrary.base.MActivity;
 import yswl.priv.com.shengqianshopping.R;
 
-public class MToolBarActivity extends MActivity implements View.OnClickListener {
+public class MToolBarActivity extends MActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,21 +27,38 @@ public class MToolBarActivity extends MActivity implements View.OnClickListener 
         setSupportActionBar(toolbar);
 
         setHomeAsUpShowAndEnabled(true);
-        toolbar.setNavigationOnClickListener(this);
 
     }
 
-    void setHomeAsUpShowAndEnabled(boolean boo){
+    void setHomeAsUpShowAndEnabled(boolean boo) {
         getSupportActionBar().setHomeButtonEnabled(boo); //设置返回键可用
         getSupportActionBar().setDisplayHomeAsUpEnabled(boo);
     }
 
     @Override
-    public void onClick(View v) {
-        navigationBack();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                navigationBack();
+                return true;
+            default:
+                return false;
+        }
     }
 
-    void navigationBack(){
+//    @Override
+//    public void onClick(View v) {
+//        int id = v.getId();
+//        switch (id) {
+//            case android.R.id.home:
+//                navigationBack();
+//            default:
+//                break;
+//        }
+//    }
+
+    void navigationBack() {
         this.onBackPressed();
     }
 }
