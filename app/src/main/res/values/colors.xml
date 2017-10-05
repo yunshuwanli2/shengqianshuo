@@ -6,4 +6,5 @@
     <color name="dim_foreground_dark">#bebebe</color>
     <color name="lighter_gray">#ddd</color>
     <color name="background_dark">#ff000000</color>
+    <color name="app_main_bg">#ece6e3e3</color>
 </resources>
