@@ -123,5 +123,5 @@
     <string name="user_info_invitation">有奖邀请</string>
     <string name="user_info_customer_service">客服帮助</string>
     <string name="user_info_setting">设置</string>
-
+    <string name="back">返回</string>
 </resources>

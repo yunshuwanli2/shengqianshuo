@@ -17,4 +17,6 @@
          android:textSize="18sp"
          android:visibility="gone"
          android:textStyle="bold"/> -->
+
+
 </android.support.v7.widget.Toolbar>
