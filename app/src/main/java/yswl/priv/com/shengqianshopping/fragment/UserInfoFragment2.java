@@ -39,5 +39,6 @@ public class UserInfoFragment2 extends MFragment {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         });
+        //
     }
 }
