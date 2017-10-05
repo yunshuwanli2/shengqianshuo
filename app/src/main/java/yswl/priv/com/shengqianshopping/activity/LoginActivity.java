@@ -38,7 +38,6 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
 
 
     private static final String TAG = "LoginActivity";
-    private UserBean userBean;
     private String nick;
     private String headImg;
 
@@ -99,9 +98,8 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
         Toast.makeText(LoginActivity.this, "登录成功 ", Toast.LENGTH_LONG).show();
         try {
             //保存data
-            userBean = GsonUtil.GsonToBean(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.analysisData(result).getString(ResultUtil.MSG)), UserBean.class);
-            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.UID, userBean.getUid());
-            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.TOKEN, userBean.getToken());
+            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.UID, GsonUtil.getJSONObjectKeyVal(ResultUtil.analysisData(result).getString(ResultUtil.MSG), "uid"));
+            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.TOKEN, GsonUtil.getJSONObjectKeyVal(ResultUtil.analysisData(result).getString(ResultUtil.MSG), "token"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
