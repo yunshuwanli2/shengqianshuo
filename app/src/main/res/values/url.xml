@@ -21,4 +21,7 @@
     <!--  登录 -->
     <string name="url_login">/login/third_party</string>
 
+
+    <!--启动页图片-->
+    <string name="url_splash_screen">/config/screening</string>
 </resources>

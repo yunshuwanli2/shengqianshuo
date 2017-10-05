@@ -1,5 +1,7 @@
 package yswl.priv.com.shengqianshopping;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,8 +17,14 @@ import yswl.priv.com.shengqianshopping.fragment.DataGenerator;
 
 public class MainActivityV3 extends MActivity {
 
+    public static void startAct(Context context) {
+        Intent intent = new Intent(context, MainActivityV3.class);
+        context.startActivity(intent);
+    }
+
     BottomNavigationBar bottomNavigationBar;
     int lastSelectedPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +69,7 @@ public class MainActivityV3 extends MActivity {
 
     private MFragment[] mFragments;
     private int index = 0;
+
     private void onTabItemSelected(int postion) {
         if (index == postion) return;
         Fragment fragment = null;

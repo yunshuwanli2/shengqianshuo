@@ -23,11 +23,7 @@
         <activity
             android:name=".MainActivityV3"
             android:theme="@style/AppTheme.NoToolBar.Main">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.ScrollingActivity"
@@ -37,7 +33,17 @@
         <activity android:name=".activity.AdvanceActivity" />
         <activity android:name=".activity.CrazyBuyActivity" />
         <activity android:name=".activity.Top100Activity" />
-        <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".activity.SearchActivity" />
+
+        <activity
+            android:name=".activity.SplashActivity"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
