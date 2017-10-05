@@ -108,4 +108,20 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+
+    <!--userInfoFragment-->
+    <string name="user_info_balance">余额：</string>
+    <string name="user_info_ji_bao">集分宝：</string>
+    <string name="user_info_apply_cash">申请提现</string>
+    <string name="user_info_sign">签到有礼</string>
+    <string name="user_info_my_tracks">我的足迹</string>
+    <string name="user_info_balance_of_payments">收支明细</string>
+    <string name="user_info_fans">我的粉丝</string>
+    <string name="user_info_order">淘宝订单</string>
+    <string name="user_info_shopping_cart">淘宝购物车</string>
+    <string name="user_info_heroes_list">英雄榜</string>
+    <string name="user_info_invitation">有奖邀请</string>
+    <string name="user_info_customer_service">客服帮助</string>
+    <string name="user_info_setting">设置</string>
+
 </resources>
