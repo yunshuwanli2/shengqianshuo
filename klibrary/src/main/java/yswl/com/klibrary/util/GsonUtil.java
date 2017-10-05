@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
@@ -120,6 +121,41 @@ public class GsonUtil {
         Type listum = new TypeToken<List<T>>() {
         }.getType();
         return gson.fromJson(objarray.toString(), listum);
+    }
+
+
+    /**
+     * 通过key获取value
+     * @param json
+     * @param key
+     * @return
+     */
+    public static String getJSONObjectKeyVal(String json, String key){
+        JSONObject object = null;
+        try {
+            object = new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(object == null){
+            return "";
+        }
+        if(key == null){
+            return "";
+        }
+        String result = null;
+        Object obj;
+        try {
+            obj = object.get(key);
+            if (obj == null || obj.equals(null)){
+                result = "";
+            }else{
+                result = obj.toString();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }

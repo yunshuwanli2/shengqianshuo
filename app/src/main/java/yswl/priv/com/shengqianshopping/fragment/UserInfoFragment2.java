@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
 import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
 import com.alibaba.baichuan.android.trade.model.OpenType;
 import com.alibaba.baichuan.android.trade.model.TradeResult;
-import com.alibaba.baichuan.android.trade.page.AlibcAddCartPage;
 import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
 import com.alibaba.baichuan.android.trade.page.AlibcMyCartsPage;
 import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
@@ -31,10 +29,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import yswl.com.klibrary.base.MFragment;
+import yswl.com.klibrary.imgloader.ImageLoaderProxy;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
+import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 
 /**
  * Created by kangpAdministrator on 2017/9/27 0027.
@@ -42,7 +42,11 @@ import yswl.priv.com.shengqianshopping.activity.SettingActivity;
  */
 
 public class UserInfoFragment2 extends MFragment {
-public static final String TAG = UserInfoFragment2.class.getSimpleName();
+    public static final String TAG = UserInfoFragment2.class.getSimpleName();
+    @BindView(R.id.iv_head)
+    ImageView ivHead;
+    @BindView(R.id.tv_user_name)
+    TextView tvUserName;
     private Unbinder unbinder;
     @BindView(R.id.user_info_ll_setting)
     LinearLayout lSetting;
@@ -68,8 +72,7 @@ public static final String TAG = UserInfoFragment2.class.getSimpleName();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         });
-
-
+        initView();
     }
 
 
@@ -116,12 +119,12 @@ public static final String TAG = UserInfoFragment2.class.getSimpleName();
                 new AlibcTradeCallback() {
                     @Override
                     public void onTradeSuccess(TradeResult tradeResult) {
-                        L.e(TAG,"购物车操作 -- 返回成功 result : "+tradeResult.resultType.name());
+                        L.e(TAG, "购物车操作 -- 返回成功 result : " + tradeResult.resultType.name());
                     }
 
                     @Override
                     public void onFailure(int code, String msg) {
-                        L.e(TAG,"购物车操作 -- 返回失败 code:"+code+" msg: "+ msg);
+                        L.e(TAG, "购物车操作 -- 返回失败 code:" + code + " msg: " + msg);
                     }
                 });
 
@@ -141,17 +144,24 @@ public static final String TAG = UserInfoFragment2.class.getSimpleName();
                 new AlibcTradeCallback() {
                     @Override
                     public void onTradeSuccess(TradeResult tradeResult) {
-                        L.e(TAG,"订单操作 -- 返回成功 result : "+tradeResult.resultType.name());
+                        L.e(TAG, "订单操作 -- 返回成功 result : " + tradeResult.resultType.name());
                     }
 
                     @Override
                     public void onFailure(int code, String msg) {
-                        L.e(TAG,"订单操作 -- 返回失败 code:"+code+" msg: "+ msg);
+                        L.e(TAG, "订单操作 -- 返回失败 code:" + code + " msg: " + msg);
                     }
                 });
 
     }
 
+    //初始化界面--登录状态设置头像-昵称
+    private void initView() {
+        if (SharedPreUtils.getInstance(activity).getValueBySharedPreferences(SharedPreUtils.ISONLINE, false)) {
+            tvUserName.setText(SharedPreUtils.getInstance(activity).getValueBySharedPreferences(SharedPreUtils.NICK, ""));
+            ImageLoaderProxy.getInstance().displayImage(SharedPreUtils.getInstance(activity).getValueBySharedPreferences(SharedPreUtils.HEADIMG, ""), ivHead);
+        }
+    }
 
     @Override
     public void onDestroyView() {

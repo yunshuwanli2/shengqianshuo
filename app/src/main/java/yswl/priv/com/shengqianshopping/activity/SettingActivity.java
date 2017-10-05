@@ -13,6 +13,7 @@ import yswl.com.klibrary.util.CacheDataManager;
 import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
+import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 
 //设置
 public class SettingActivity extends MToolBarActivity {
@@ -69,6 +70,10 @@ public class SettingActivity extends MToolBarActivity {
             public void onSuccess() {
                 //TODO 发出退出全局信息
                 Toast.makeText(SettingActivity.this, "退出登录成功", Toast.LENGTH_SHORT).show();
+                //设置退出状态
+                SharedPreUtils.getInstance(SettingActivity.this).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, false);
+                //清除数据
+                SharedPreUtils.getInstance(SettingActivity.this).clearAllData();
             }
 
             @Override
