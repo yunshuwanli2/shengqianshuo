@@ -25,7 +25,6 @@ public class MToolBarActivity extends MActivity {
         Toolbar toolbar = findView(R.id.base_toolbar);
 
         setSupportActionBar(toolbar);
-
         setHomeAsUpShowAndEnabled(true);
 
     }

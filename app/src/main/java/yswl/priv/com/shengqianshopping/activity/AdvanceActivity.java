@@ -7,9 +7,10 @@ import android.os.Bundle;
 
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
+import yswl.priv.com.shengqianshopping.fragment.AdvanceGridRecyclerFragment;
 
 /**
- *  预告
+ * 预告
  */
 public class AdvanceActivity extends MToolBarActivity {
 
@@ -18,11 +19,13 @@ public class AdvanceActivity extends MToolBarActivity {
         context.startActivity(intent);
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advance);
-
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content, AdvanceGridRecyclerFragment.newInstance()).commitAllowingStateLoss();
 
 
     }

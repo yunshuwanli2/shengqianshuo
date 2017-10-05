@@ -7,4 +7,9 @@
     tools:context="yswl.priv.com.shengqianshopping.activity.AdvanceActivity">
 
     <include layout="@layout/base_common_toobar" />
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
