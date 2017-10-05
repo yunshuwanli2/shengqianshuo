@@ -10,6 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.baichuan.android.trade.AlibcTrade;
+import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
+import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
+import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
+import com.alibaba.baichuan.android.trade.model.OpenType;
+import com.alibaba.baichuan.android.trade.model.TradeResult;
+import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
+import com.alibaba.baichuan.android.trade.page.AlibcDetailPage;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -20,6 +29,7 @@ import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.L;
+import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.banner.SortEnum;
 import yswl.priv.com.shengqianshopping.bean.CategoryBean;
@@ -34,14 +44,22 @@ import yswl.priv.com.shengqianshopping.util.UrlUtil;
  *
  */
 public class GridRecyclerviewFragment extends MFragment implements HttpCallback<JSONObject> {
-    RecyclerView mRecyclerView;
-    GridRecyclerFragmentAdapter mAdapter;
 
-
+    private static final String TAG = GridRecyclerviewFragment.class.getSimpleName();
     private static final int REQUEST_ID = 1003;
     private static final int REQUEST_ID_RECOM = 1004;
-
     private static final String ARG_PARAM1 = "param1";
+
+
+    private SerializableMap mParam1;//已经封装好的参数
+    RecyclerView mRecyclerView;
+
+    GridRecyclerFragmentAdapter mAdapter;
+    List<ProductDetail> mProductList;
+
+    public List<ProductDetail> getmProductList() {
+        return mProductList;
+    }
 
     public SerializableMap getmParam1() {
         return mParam1;
@@ -51,19 +69,10 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         this.mParam1 = mParam1;
     }
 
-    private SerializableMap mParam1;//已经封装好的参数
-
 
     public GridRecyclerviewFragment() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment BlankFragment.
-     */
     public static GridRecyclerviewFragment newInstance(SerializableMap param1) {
         GridRecyclerviewFragment fragment = new GridRecyclerviewFragment();
         Bundle args = new Bundle();
@@ -71,7 +80,6 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         fragment.setArguments(args);
         return fragment;
     }
-
 
 
     @Override
@@ -98,9 +106,42 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mAdapter = new GridRecyclerFragmentAdapter();
-
+        mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView parent, View view, int position) {
+                ToastUtil.showToast("点击了" + position);
+                List<ProductDetail> products = getmProductList();
+                if (products == null || products.size() == 0) return;
+                ProductDetail detail = products.get(position);
+                openAlibcPage(detail);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         requestData();
+    }
+
+
+    void openAlibcPage(ProductDetail detail) {
+        Map<String, String> exParams = new HashMap<>();
+        exParams.put(AlibcConstants.ISV_CODE, "appisvcode");
+
+        //商品详情page
+        AlibcBasePage detailPage = new AlibcDetailPage(detail.iid);
+        //设置页面打开方式
+        AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
+        AlibcTrade.show(getActivity(), detailPage, showParams, null, exParams, new AlibcTradeCallback() {
+
+            @Override
+            public void onTradeSuccess(TradeResult tradeResult) {
+                L.e(TAG,tradeResult.resultType.name());
+                //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
+            }
+        });
     }
 
     /**
@@ -119,11 +160,6 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
 
     }
 
-
-
-
-    private static final String TAG = GridRecyclerviewFragment.class.getSimpleName();
-    List<ProductDetail> mProductList;
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {

@@ -7,12 +7,13 @@ import android.support.v4.app.FragmentTransaction;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 
+import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.base.MFragment;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.fragment.DataGenerator;
 
 
-public class MainActivityV3 extends MToolBarActivity {
+public class MainActivityV3 extends MActivity {
 
     BottomNavigationBar bottomNavigationBar;
     int lastSelectedPosition = 0;

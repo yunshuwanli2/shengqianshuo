@@ -36,7 +36,8 @@
         <activity android:name=".activity.RecommendActivity" />
         <activity android:name=".activity.AdvanceActivity" />
         <activity android:name=".activity.CrazyBuyActivity" />
-        <activity android:name=".activity.Top100Activity"></activity>
+        <activity android:name=".activity.Top100Activity" />
+        <activity android:name=".activity.SearchActivity"></activity>
     </application>
 
 </manifest>

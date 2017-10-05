@@ -4,7 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -25,6 +29,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.AdvanceActivity;
 import yswl.priv.com.shengqianshopping.activity.CrazyBuyActivity;
 import yswl.priv.com.shengqianshopping.activity.RecommendActivity;
+import yswl.priv.com.shengqianshopping.activity.SearchActivity;
 import yswl.priv.com.shengqianshopping.activity.Top100Activity;
 import yswl.priv.com.shengqianshopping.banner.BannerBean;
 import yswl.priv.com.shengqianshopping.banner.BannerUtil;
@@ -61,16 +66,27 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     //    LinearLayout mCrazyBuy, mAdvise, mSort, mPlan;
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        initUI(view);
+        initToolBar();
+        initBanner();
+        requestCategroy();
+        requestBanner();
+    }
+
+    private void initUI(View view) {
         mConvenientBanner = (ConvenientBanner) view.findViewById(R.id.convenientBanner);
         view.findViewById(R.id.ll_fkq).setOnClickListener(this);
         view.findViewById(R.id.ll_tj).setOnClickListener(this);
         view.findViewById(R.id.ll_sort).setOnClickListener(this);
         view.findViewById(R.id.ll_plan).setOnClickListener(this);
-
-        initBanner();
-        requestCategroy();
-        requestBanner();
     }
+
+    private void initToolBar() {
+
+
+    }
+
+
 
     private static final int REQUEST_ID_CATEGROY = 100;
     private static final int REQUEST_ID_BANNER = 101;
@@ -97,30 +113,20 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     @Override
     public void onClick(View v) {
-//       Fragment frament = getChildFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-//        ItemFragment gridFragment = null;
-//        if(frament instanceof ItemFragment){
-//             gridFragment = (ItemFragment)frament ;
-//        }
         switch (v.getId()) {
             case R.id.ll_fkq:
-//                CategoryBean category = getCrazyBuyProductCategoryId("抢购");
                 //TODO 疯狂抢购页
                 CrazyBuyActivity.startActivity(getActivity());
                 break;
             case R.id.ll_tj:
-//                CategoryBean category2 = getCrazyBuyProductCategoryId("推荐");
                 //TODO 小编推荐页
                 RecommendActivity.startActivity(getActivity());
                 break;
             case R.id.ll_sort:
-//                CategoryBean category3 = getCrazyBuyProductCategoryId("排名");
                 //TODO top100排名页
-
                 Top100Activity.startActivity(getActivity());
                 break;
             case R.id.ll_plan:
-//                CategoryBean category4 = getCrazyBuyProductCategoryId("预告");
                 //TODO 预告页
                 AdvanceActivity.startActivity(getActivity());
                 break;

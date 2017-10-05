@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@android:color/white"
+    android:maxHeight="50dp"
+    android:minHeight="48dp">
+
+    <EditText
+        android:id="@+id/home_search_tool"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/view_common_searchbox_bg"
+        android:cursorVisible="true"
+        android:drawableLeft="@mipmap/ic_toolbar_search"
+        android:drawablePadding="10dp"
+        android:drawableStart="@mipmap/ic_toolbar_search"
+        android:inputType="text"
+        android:paddingRight="10dp"
+        android:textColor="#FF484848"
+        android:textCursorDrawable="@null" />
+</LinearLayout>

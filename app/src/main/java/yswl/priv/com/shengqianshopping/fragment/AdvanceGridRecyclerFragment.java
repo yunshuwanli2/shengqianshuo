@@ -87,8 +87,8 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
         Map<String, Object> map = new HashMap<>();
         map.put("pageNo", 1);
         map.put("pageSize", 20);
-        map.put("startTime", "2017-10-05 00:00:00");
-        map.put("endTime", "2017-10-05 09:00:00");
+//        map.put("startTime", "2017-10-05 00:00:00");
+//        map.put("endTime", "2017-10-05 09:00:00");
         HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, map, this);
     }
 
