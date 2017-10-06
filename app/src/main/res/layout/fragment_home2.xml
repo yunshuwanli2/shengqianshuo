@@ -17,12 +17,13 @@
             android:src="@color/colorAccent" />
 
         <RelativeLayout
+            android:id="@+id/home_toolbar_search"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="@drawable/corner8_light_gray_bg">
+            android:background="@drawable/view_common_searchbox_bg">
 
             <ImageView
                 android:id="@+id/img_magnifier"
@@ -39,25 +40,16 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/img_magnifier"
                 android:background="@null"
-                android:text="女鞋"
                 android:textColor="@color/background_dark"
                 android:textSize="15sp" />
-
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@color/colorAccent"
-                android:layout_marginRight="5dp"
-                />
 
         </RelativeLayout>
 
         <ImageView
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginRight="10dp"
+            android:id="@+id/home_mune"
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
             android:src="@color/colorAccent" />
 
     </LinearLayout>

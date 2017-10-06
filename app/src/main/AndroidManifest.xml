@@ -22,9 +22,7 @@
         <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".MainActivityV3"
-            android:theme="@style/AppTheme.NoToolBar.Main">
-
-        </activity>
+            android:theme="@style/AppTheme.NoToolBar.Main"></activity>
         <activity
             android:name=".activity.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
@@ -34,9 +32,13 @@
         <activity android:name=".activity.CrazyBuyActivity" />
         <activity android:name=".activity.Top100Activity" />
         <activity android:name=".activity.SearchActivity" />
-
         <activity
             android:name=".activity.SplashActivity"
+            android:noHistory="true">
+
+        </activity>
+        <activity
+            android:name=".activity.LaunchActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -67,7 +67,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         initUI(view);
-        initToolBar();
+        initToolBar(view);
         initBanner();
         requestCategroy();
         requestBanner();
@@ -81,11 +81,16 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         view.findViewById(R.id.ll_plan).setOnClickListener(this);
     }
 
-    private void initToolBar() {
+    private void initToolBar(View view) {
+        view.findViewById(R.id.home_toolbar_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchActivity.startActivity(getActivity());
+            }
+        });
 
 
     }
-
 
 
     private static final int REQUEST_ID_CATEGROY = 100;

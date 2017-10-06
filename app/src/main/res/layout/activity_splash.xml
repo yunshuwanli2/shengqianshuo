@@ -10,6 +10,7 @@
         android:id="@+id/splash_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         android:src="@color/app_main_bg" />
 
     <TextView
@@ -19,8 +20,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
-        android:alpha="0.4"
-        android:background="@drawable/bg_text_timer_alpha"
+        android:alpha="0.6"
+        android:background="@color/background_dark"
         android:gravity="center"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 </RelativeLayout>
