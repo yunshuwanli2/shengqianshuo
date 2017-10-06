@@ -11,13 +11,9 @@ public class SharedPreUtils {
 
     public final static String CACHE = "cache";
 
-    public final static String UID = "uid";//
+    public final static String UID = "uid";//用户id
 
-    public final static String TOKEN = "token";//
-//
-//    public final static String NICK = "Nick";//昵称
-//
-//    public final static String HEADIMG = "headImg";//头像
+    public final static String TOKEN = "token";//令牌
 
     public final static String USERINFO = "userInfo";//用户信息
 

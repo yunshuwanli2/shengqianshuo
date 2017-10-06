@@ -34,6 +34,8 @@ import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
+import yswl.priv.com.shengqianshopping.bean.UserBean;
+import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 
 /**
@@ -47,9 +49,13 @@ public class UserInfoFragment2 extends MFragment {
     ImageView ivHead;
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
+    @BindView(R.id.tv_balance)
+    TextView tvBalance;
+    @BindView(R.id.tv_integral)
+    TextView tvIntegral;
+
+
     private Unbinder unbinder;
-    @BindView(R.id.user_info_ll_setting)
-    LinearLayout lSetting;
     private Activity activity;
 
     @Nullable
@@ -158,8 +164,11 @@ public class UserInfoFragment2 extends MFragment {
     //初始化界面--登录状态设置头像-昵称
     private void initView() {
         if (SharedPreUtils.getInstance(activity).getValueBySharedPreferences(SharedPreUtils.ISONLINE, false)) {
-            tvUserName.setText(SharedPreUtils.getInstance(activity).getValueBySharedPreferences(SharedPreUtils.NICK, ""));
-            ImageLoaderProxy.getInstance().displayImage(SharedPreUtils.getInstance(activity).getValueBySharedPreferences(SharedPreUtils.HEADIMG, ""), ivHead);
+            UserBean userBean = UserManager.getUserInfo(activity);
+            tvUserName.setText(userBean.getNickname());
+            ImageLoaderProxy.getInstance().displayImage(userBean.getAvatar(), ivHead);
+            tvBalance.setText("￥" + userBean.getAsset().getRemainder());
+            tvIntegral.setText(userBean.getAsset().getIntegral() + "");
         }
     }
 
