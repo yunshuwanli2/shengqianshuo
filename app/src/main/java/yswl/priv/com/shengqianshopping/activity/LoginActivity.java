@@ -22,12 +22,14 @@ import java.util.Map;
 
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
+import yswl.com.klibrary.http.okhttp.MSPUtils;
 import yswl.com.klibrary.util.GsonUtil;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.UserBean;
+import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
@@ -40,6 +42,8 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     private static final String TAG = "LoginActivity";
     private String nick;
     private String headImg;
+    private final int LOGIN_REQUESTID = 1002;
+    private final int GET_USERINFO_REQUESTID = 1003;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +81,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
                 map.put("channelNickname", nick);
                 map.put("channelAvatar", headImg);
                 map.put("aFrom", "");
-                HttpClientProxy.getInstance().postAsyn(url, 1002, map, LoginActivity.this);
+                HttpClientProxy.getInstance().postAsyn(url, LOGIN_REQUESTID, map, LoginActivity.this);
             }
 
             @Override
@@ -95,18 +99,29 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
-        Toast.makeText(LoginActivity.this, "登录成功 ", Toast.LENGTH_LONG).show();
-        try {
-            //保存data
-            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.UID, GsonUtil.getJSONObjectKeyVal(ResultUtil.analysisData(result).getString(ResultUtil.MSG), "uid"));
-            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.TOKEN, GsonUtil.getJSONObjectKeyVal(ResultUtil.analysisData(result).getString(ResultUtil.MSG), "token"));
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (requestId == LOGIN_REQUESTID) {
+            try {
+                //保存data
+                SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.UID, GsonUtil.getJSONObjectKeyVal(ResultUtil.analysisData(result).getString(ResultUtil.MSG), "uid"));
+                SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.TOKEN, GsonUtil.getJSONObjectKeyVal(ResultUtil.analysisData(result).getString(ResultUtil.MSG), "token"));
+                //获取用户信息
+                UserManager.getUser(LoginActivity.this, GsonUtil.getJSONObjectKeyVal(ResultUtil.analysisData(result).getString(ResultUtil.MSG), "uid"), LoginActivity.this, GET_USERINFO_REQUESTID);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else if (requestId == GET_USERINFO_REQUESTID) {
+            try {
+                Toast.makeText(LoginActivity.this, "登录成功 ", Toast.LENGTH_LONG).show();
+                //保存用户信息
+                UserManager.saveInfo(LoginActivity.this, ResultUtil.analysisData(result).getString(ResultUtil.MSG).toString());
+                SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, true);
+                finish();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
-        SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.HEADIMG, headImg);
-        SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.NICK, nick);
-        SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, true);
-        finish();
+
     }
 
     @Override

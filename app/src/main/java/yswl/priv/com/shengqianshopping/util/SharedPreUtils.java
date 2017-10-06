@@ -14,12 +14,15 @@ public class SharedPreUtils {
     public final static String UID = "uid";//
 
     public final static String TOKEN = "token";//
+//
+//    public final static String NICK = "Nick";//昵称
+//
+//    public final static String HEADIMG = "headImg";//头像
 
-    public final static String NICK = "Nick";//昵称
-
-    public final static String HEADIMG = "headImg";//头像
+    public final static String USERINFO = "userInfo";//用户信息
 
     public final static String ISONLINE = "isONLine";//在线状态
+
 
     private SharedPreferences sp;
 
