@@ -26,6 +26,7 @@ import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.SerializableMap;
 import yswl.priv.com.shengqianshopping.fragment.adapter.AdvanceGridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter2;
+import yswl.priv.com.shengqianshopping.util.DateUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
@@ -87,8 +88,8 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
         Map<String, Object> map = new HashMap<>();
         map.put("pageNo", 1);
         map.put("pageSize", 20);
-//        map.put("startTime", "2017-10-05 00:00:00");
-//        map.put("endTime", "2017-10-05 09:00:00");
+        map.put("startTime", DateUtil.getTomorroFixedTime2("00:00:00"));
+        map.put("endTime", DateUtil.getTomorroFixedTime2("09:00:00"));
         HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, map, this);
     }
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,6 +20,7 @@ public class BrowserActivity extends MActivity {
     private static final String URL = "url";
     private static final String TITTLE = "title";
     private WebViewExtraProWrap mWebViewExtra;
+    Toolbar toolbar;
 
     public static void start(String title, String url, Activity context) {
         Intent intent = new Intent(context, BrowserActivity.class);
@@ -40,17 +42,21 @@ public class BrowserActivity extends MActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.browser);
-        mWebViewExtra = (WebViewExtraProWrap) findViewById(R.id.ly_browser);
+        toolbar = findView(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        mWebViewExtra = findView(R.id.ly_browser);
         processIntent(getIntent());
+        getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 
     public void processIntent(Intent intent) {
         if (intent == null)
             return;
-        intent.getStringExtra(URL);
         String url = intent.getStringExtra(URL);
         mWebViewExtra.loadUrl(this, url);
+        String title = intent.getStringExtra(TITTLE);
+        setTitle(title);
     }
 
     @Override
@@ -72,7 +78,12 @@ public class BrowserActivity extends MActivity {
                 mWebViewExtra.clearCache(true);
                 mWebViewExtra.reload(this);
                 return true;
+            case android.R.id.home:
+                this.onBackPressed();
+                return true;
+            default:
+                return false;
         }
-        return super.onOptionsItemSelected(item);
+
     }
 }

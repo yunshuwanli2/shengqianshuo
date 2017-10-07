@@ -52,7 +52,7 @@ public class SplashActivity extends MActivity {
         if (!TextUtils.isEmpty(aDbean.imgUrl)) {
             Glide.with(this).asDrawable().load(aDbean.imgUrl).into(screenImg);
         }
-        if (TextUtils.isEmpty(aDbean.link)) {
+        if (!TextUtils.isEmpty(aDbean.link)) {
             screenImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,7 +70,7 @@ public class SplashActivity extends MActivity {
 
         if (!TextUtils.isEmpty(aDbean.s)) {
             int time = Integer.parseInt(aDbean.s);
-            CountDownTimer timer = new CountDownTimer(time * 1000, 1000) {
+            CountDownTimer timer = new CountDownTimer((time + 1) * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     mTextView.setText(millisUntilFinished / 1000 + "");

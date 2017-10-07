@@ -33,7 +33,7 @@ public class LaunchActivity extends MActivity implements HttpCallback<JSONObject
 
         request();
         ImageView imageView = findView(R.id.launch);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.2f);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.2f, 1f);
         alphaAnimation.setDuration(3000);
         imageView.startAnimation(alphaAnimation);
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {

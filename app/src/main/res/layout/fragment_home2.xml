@@ -31,10 +31,10 @@
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:src="@color/colorAccent" />
+                android:src="@mipmap/ic_toolbar_search" />
 
 
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"

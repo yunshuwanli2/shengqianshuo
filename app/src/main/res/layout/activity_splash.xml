@@ -21,7 +21,7 @@
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
         android:alpha="0.6"
-        android:background="@color/background_dark"
+        android:background="@drawable/bg_text_timer_alpha"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="18sp" />

@@ -1,22 +1,18 @@
 package yswl.priv.com.shengqianshopping.fragment;
 
-import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 
 import org.json.JSONObject;
-
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,15 +31,20 @@ import yswl.priv.com.shengqianshopping.banner.BannerBean;
 import yswl.priv.com.shengqianshopping.banner.BannerUtil;
 import yswl.priv.com.shengqianshopping.bean.CategoryBean;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
+import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerAdapter;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, View.OnClickListener {
     private static final String FRAGMENT_TAG = "HomeFragment2_ItemFragment";
 
+    private static final int REQUEST_ID_CATEGROY = 100;
+    private static final int REQUEST_ID_BANNER = 101;
 
     ConvenientBanner mConvenientBanner;
     private BannerUtil banner;
     List<BannerBean> mImags;
+    List<CategoryBean> mCategorys;
+
 
     public HomeFragment2() {
         // Required empty public constructor
@@ -88,13 +89,38 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 SearchActivity.startActivity(getActivity());
             }
         });
+        final ImageView imageView = (ImageView) view.findViewById(R.id.home_mune);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupWindow popupWindow = new PopupWindow(getActivity());
+                popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+                View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_grid_recyclerview, null);
+                RecyclerView recyView = (RecyclerView) view.findViewById(R.id.recycler_view);
+                GridRecyclerAdapter adapter = new GridRecyclerAdapter();
+                adapter.setCategoryList(mCategorys);
+                adapter.setOnItemClickListener(new GridRecyclerAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(RecyclerView parent, View view, int position) {
+                        if (mCategorys != null) ;
+                        //TODO
+
+                    }
+                });
+                recyView.setAdapter(adapter);
+                popupWindow.setContentView(view);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+                popupWindow.setOutsideTouchable(false);
+                popupWindow.setFocusable(true);
+                popupWindow.showAsDropDown(imageView);
+
+            }
+        });
 
 
     }
 
-
-    private static final int REQUEST_ID_CATEGROY = 100;
-    private static final int REQUEST_ID_BANNER = 101;
 
     private void requestCategroy() {
         String url = UrlUtil.getUrl(this, R.string.url_category_type_list);
@@ -140,8 +166,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     }
 
 
-    List<CategoryBean> mCategorys;
-
     @Override
     public void onSucceed(int requestId, final JSONObject result) {
         if (ResultUtil.isCodeOK(result)) {
@@ -176,13 +200,4 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     }
 
 
-    public CategoryBean getCrazyBuyProductCategoryId(String key) {
-        if (mCategorys != null && mCategorys.size() > 0)
-            for (CategoryBean category : mCategorys) {
-                if (category.title.contains(key)) {
-                    return category;
-                }
-            }
-        return null;
-    }
 }
