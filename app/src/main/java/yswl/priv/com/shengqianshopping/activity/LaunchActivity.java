@@ -63,6 +63,7 @@ public class LaunchActivity extends MActivity implements HttpCallback<JSONObject
         HttpClientProxy.getInstance().postAsyn(url, 1, null, this);
     }
 
+
     ADbean aDbean;
 
     @Override

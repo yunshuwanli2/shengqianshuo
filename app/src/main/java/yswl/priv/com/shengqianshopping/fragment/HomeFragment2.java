@@ -47,7 +47,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
 
     public HomeFragment2() {
-        // Required empty public constructor
     }
 
 
@@ -93,34 +92,52 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupWindow popupWindow = new PopupWindow(getActivity());
-                popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_grid_recyclerview, null);
-                RecyclerView recyView = (RecyclerView) view.findViewById(R.id.recycler_view);
-                GridRecyclerAdapter adapter = new GridRecyclerAdapter();
-                adapter.setCategoryList(mCategorys);
-                adapter.setOnItemClickListener(new GridRecyclerAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(RecyclerView parent, View view, int position) {
-                        if (mCategorys != null) ;
-                        //TODO
-
-                    }
-                });
-                recyView.setAdapter(adapter);
-                popupWindow.setContentView(view);
-                popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-                popupWindow.setOutsideTouchable(false);
-                popupWindow.setFocusable(true);
-                popupWindow.showAsDropDown(imageView);
-
+                if (mCategorys != null)
+                    showMenuPopWindow(imageView);
             }
         });
 
 
     }
 
+
+    PopupWindow mPopupWindow;
+    RecyclerView mMenuRecyView;
+
+    private void showMenuPopWindow(final View view) {
+        if (mPopupWindow == null) {
+            mPopupWindow = new PopupWindow(getActivity());
+            int h = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+            int w = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+            mPopupWindow.setWidth(w);
+            mPopupWindow.setHeight(h);
+            View ui = LayoutInflater.from(getContext()).inflate(R.layout.menu_grid_recyclerview, null);
+            mMenuRecyView = (RecyclerView) ui.findViewById(R.id.recycler_view);
+            ui.findViewById(R.id.close_menu).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPopupWindow.dismiss();
+                }
+            });
+            GridRecyclerAdapter adapter = new GridRecyclerAdapter();
+            adapter.setCategoryList(mCategorys);
+            adapter.setOnItemClickListener(new GridRecyclerAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(RecyclerView parent, View view, int position) {
+                    if (mCategorys != null) ;
+                    //TODO
+                }
+            });
+            mMenuRecyView.setAdapter(adapter);
+            mPopupWindow.setContentView(ui);
+            mPopupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+            mPopupWindow.setOutsideTouchable(false);
+            mPopupWindow.setFocusable(true);
+        }
+
+        if (!mPopupWindow.isShowing())
+            mPopupWindow.showAsDropDown(view);
+    }
 
     private void requestCategroy() {
         String url = UrlUtil.getUrl(this, R.string.url_category_type_list);
