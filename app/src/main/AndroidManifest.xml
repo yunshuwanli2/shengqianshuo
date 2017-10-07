@@ -47,6 +47,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ScoreboardActivity" />
+        <activity android:name=".activity.BindPhoneActivity" />
+
 
     </application>
 

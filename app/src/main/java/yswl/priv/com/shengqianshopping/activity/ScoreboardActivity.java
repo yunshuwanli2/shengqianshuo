@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -37,8 +38,8 @@ public class ScoreboardActivity extends MToolBarActivity implements HttpCallback
     RecyclerView recyclerview;
 
     private Unbinder unbinder;
-    private List<HeroeListBean> list = new ArrayList<>();
-    private ScoreboardActivityAdapter adapter;
+    private List<HeroeListBean> list = new ArrayList<>();//数据
+    private ScoreboardActivityAdapter adapter;//适配器
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,12 +69,13 @@ public class ScoreboardActivity extends MToolBarActivity implements HttpCallback
     @Override
     public void onSucceed(int requestId, JSONObject result) {
         if (ResultUtil.isCodeOK(result)) {
-            List<HeroeListBean> tempList = GsonUtil.GsonToList(GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), ResultUtil.LIST), HeroeListBean.class);
+//            List<HeroeListBean> tempList = GsonUtil.GsonToList(GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), ResultUtil.LIST), HeroeListBean.class);
+            List<HeroeListBean> tempList = HeroeListBean.jsonToList(ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
             if (tempList != null) {
                 for (int i = 0; i < tempList.size(); i++) {
                     list.add(tempList.get(i));
-                    adapter.notifyDataSetChanged();
                 }
+                adapter.notifyDataSetChanged();
             }
         }
     }
@@ -83,18 +85,18 @@ public class ScoreboardActivity extends MToolBarActivity implements HttpCallback
         ToastUtil.showToast(errorMsg);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
-
     //获取数据
     private void getData() {
         String url = UrlUtil.getUrl(ScoreboardActivity.this, R.string.url_hero_list);
         Map<String, Object> map = new HashMap<>();
         map.put("uid", SharedPreUtils.getInstance(ScoreboardActivity.this).getValueBySharedPreferences(SharedPreUtils.UID, ""));
         HttpClientProxy.getInstance().postAsyn(url, 1234, map, ScoreboardActivity.this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 
 }

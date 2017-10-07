@@ -20,6 +20,7 @@ import com.alibaba.baichuan.android.trade.model.TradeResult;
 import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
 import com.alibaba.baichuan.android.trade.page.AlibcMyCartsPage;
 import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
+import com.bumptech.glide.Glide;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -167,7 +168,7 @@ public class UserInfoFragment2 extends MFragment {
         if (SharedPreUtils.getInstance(activity).getValueBySharedPreferences(SharedPreUtils.ISONLINE, false)) {
             UserBean userBean = UserManager.getUserInfo(activity);
             tvUserName.setText(userBean.getNickname());
-            ImageLoaderProxy.getInstance().displayImage(userBean.getAvatar(), ivHead);
+            Glide.with(activity).load(userBean.getAvatar()).into(ivHead);
             tvBalance.setText("￥" + userBean.getAsset().getRemainder());
             tvIntegral.setText(userBean.getAsset().getIntegral() + "");
         }

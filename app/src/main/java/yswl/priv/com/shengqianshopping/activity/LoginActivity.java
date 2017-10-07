@@ -46,6 +46,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     private String headImg;
     private final int LOGIN_REQUESTID = 1002;
     private final int GET_USERINFO_REQUESTID = 1003;
+    private String phoneStatus = "0";// 用户是否进行手机号绑定 0未绑定 1已绑定
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,22 +106,32 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
-        if (requestId == LOGIN_REQUESTID&&ResultUtil.isCodeOK(result)) {
+        if (requestId == LOGIN_REQUESTID && ResultUtil.isCodeOK(result)) {
             //保存data
             SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.UID, GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid"));
             SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.TOKEN, GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "token"));
             //获取用户信息
             Log.i("znh", result.toString() + "授权返回");
             Log.i("znh", GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid") + "----uid");
+            phoneStatus = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "phoneStatus");
             UserManager.getUser(LoginActivity.this, GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid"), LoginActivity.this, GET_USERINFO_REQUESTID);
 
-        } else if (requestId == GET_USERINFO_REQUESTID&&ResultUtil.isCodeOK(result)) {
+        } else if (requestId == GET_USERINFO_REQUESTID && ResultUtil.isCodeOK(result)) {
             Toast.makeText(LoginActivity.this, "登录成功 ", Toast.LENGTH_LONG).show();
             //保存用户信息
             Log.i("znh", result.toString() + "----用户信息");
             Log.i("znh", GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG) + "----用户信息");
             UserManager.saveInfo(LoginActivity.this, GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG));
             SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, true);
+            //判断是否绑定是手机号
+            if ("0".equals(phoneStatus)) {
+                //未绑定
+                startActivity(new Intent(LoginActivity.this, BindPhoneActivity.class));
+            } else {
+                //绑定
+
+
+            }
             finish();
         }
 

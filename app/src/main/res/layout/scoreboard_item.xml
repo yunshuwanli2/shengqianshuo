@@ -23,11 +23,11 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/scoreboard_item_img_head"
-            android:text="老王"
             android:textColor="@color/background_dark"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/scoreboard_item_tv_integral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/dim_foreground_dark"
@@ -35,7 +35,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:textSize="18sp"
-            android:text="1000"
             />
 
     </RelativeLayout>

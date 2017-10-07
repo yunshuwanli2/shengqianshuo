@@ -27,8 +27,10 @@
     <string name="url_get_user_info">/user/get</string>
     <!--  英雄榜 -->
     <string name="url_hero_list">/top/get</string>
-
-
+    <!--  验证码 -->
+    <string name="url_verification_code">/phone/send</string>
+    <!--  绑定手机号－检测验证码 -->
+    <string name="url_check_verification_code">/phone/code/check</string>
 
 
     <!--启动页图片-->
