@@ -3,17 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/iv_product_preview"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:src="@color/colorPrimaryDark" />
+            android:layout_height="140dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_app" />
 
         <TextView
             android:id="@+id/tv_coup_price"
@@ -31,20 +33,22 @@
     </RelativeLayout>
 
     <TextView
-
         android:id="@+id/tv_product_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@mipmap/ic_allow_right"
+        android:drawablePadding="2dp"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="1"
+        android:padding="2dp"
         android:text="笔袋金牌卖家出品"
         android:textColor="@color/colorAccent" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="2dp">
 
         <TextView
             android:id="@+id/text"

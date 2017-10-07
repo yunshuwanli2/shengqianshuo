@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#d0d1d2</color>
+    <color name="colorPrimaryDark">#ff000000</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="dim_foreground_dark">#bebebe</color>
-    <color name="lighter_gray">#ddd</color>
+    <color name="dim_foreground_dark">#d1cfcf</color>
+    <color name="lighter_gray">#edebeb</color>
     <color name="background_dark">#ff000000</color>
-    <color name="app_main_bg">#ece6e3e3</color>
+    <color name="app_main_bg">#f4edebeb</color>
+    <color name="white">#ffffff</color>
     <color name="yellow">#f5f7e80f</color>
 </resources>

@@ -71,7 +71,7 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
     @Override
     public void onBindViewHolder(GridRecyHolder holder, final int position) {
         ProductDetail detail = mProductList.get(position);
-        holder.coup_price.setText(detail.couponNum);
+        holder.coup_price.setText(detail.getCouponNum());
         Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
         holder.produce_buy_count.setText(detail.volume);
         holder.product_desc.setText(detail.title);

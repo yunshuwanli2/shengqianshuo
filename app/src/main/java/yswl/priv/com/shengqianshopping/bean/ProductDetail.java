@@ -54,12 +54,12 @@ import yswl.com.klibrary.util.DateJsonDeserializer;
 
 public class ProductDetail {
 
-   public String id;
+    public String id;
     public String iid;//商品id
     public String title;
-    public  String pictUrl;//商品主图
-    public  String[] smallImages;//商品小图列
-    public  String reservePrice;//商品一口价格
+    public String pictUrl;//商品主图
+    public String[] smallImages;//商品小图列
+    public String reservePrice;//商品一口价格
     public String itemUrl;
     public String provcity;//所在地 杭州
     public String userType;//卖家类型 0:集市 1:商城
@@ -81,8 +81,13 @@ public class ProductDetail {
     public String couponStartTime;
     public String couponTotalCount;
     public String couponRemainCount;
+
+
     public String couponNum;//优惠券面额价格
 
+    public String getCouponNum() {
+        return "券:￥" + couponNum;
+    }
 
 
     public static List<ProductDetail> jsonToList(JSONArray objarray) {
@@ -95,5 +100,5 @@ public class ProductDetail {
         return result;
     }
 
-    
+
 }

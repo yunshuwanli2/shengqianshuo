@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <ScrollView
@@ -18,7 +19,7 @@
                 android:id="@+id/ll_head"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorAccent"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -26,7 +27,7 @@
                     android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@color/white" />
 
                 <TextView
                     android:id="@+id/tv_user_name"
@@ -34,19 +35,19 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="username"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="1px"
                 android:background="@android:color/white" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorAccent"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -120,9 +121,9 @@
                 </LinearLayout>
 
                 <View
-                    android:layout_width="1dp"
+                    android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/dim_foreground_dark" />
+                    android:background="@color/app_main_bg" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -156,7 +157,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <LinearLayout
                 android:id="@+id/user_info_ll_tracks"
@@ -200,7 +201,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <LinearLayout
                 android:id="@+id/user_info_ll_balance_of_payments"
@@ -244,7 +245,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <LinearLayout
                 android:id="@+id/user_info_ll_fans"
@@ -288,7 +289,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <View
                 android:layout_width="match_parent"
@@ -298,7 +299,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <LinearLayout
                 android:id="@+id/user_info_ll_order"
@@ -342,7 +343,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <LinearLayout
                 android:id="@+id/user_info_ll_shopping_cart"
@@ -386,7 +387,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <View
                 android:layout_width="match_parent"
@@ -396,7 +397,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <LinearLayout
                 android:id="@+id/user_info_ll_heroes_list"
@@ -440,7 +441,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <LinearLayout
                 android:id="@+id/user_info_ll_invitation"
@@ -484,7 +485,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <LinearLayout
                 android:id="@+id/user_info_ll_customer_service"
@@ -528,7 +529,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <LinearLayout
                 android:id="@+id/user_info_ll_setting"
@@ -572,7 +573,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/dim_foreground_dark" />
+                android:background="@color/app_main_bg" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

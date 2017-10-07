@@ -46,7 +46,7 @@ public class RebateFragment extends MFragment {
                     return;
                 }
                 String url = getActivity().getResources().getString(R.string.url_search_tool, key);
-                BrowserActivity.start(" ", url, getActivity());
+                BrowserActivity.start("搜索：" + key, url, getActivity());
 
             }
         });

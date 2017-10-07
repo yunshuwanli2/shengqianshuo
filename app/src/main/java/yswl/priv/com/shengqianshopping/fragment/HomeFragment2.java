@@ -94,7 +94,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             @Override
             public void onClick(View v) {
                 PopupWindow popupWindow = new PopupWindow(getActivity());
-                popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                 View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_grid_recyclerview, null);
                 RecyclerView recyView = (RecyclerView) view.findViewById(R.id.recycler_view);

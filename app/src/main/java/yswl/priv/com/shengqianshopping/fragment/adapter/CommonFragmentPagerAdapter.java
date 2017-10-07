@@ -23,12 +23,11 @@ public class CommonFragmentPagerAdapter extends FragmentPagerAdapter {
         super(fm);
         this.fragmentList = new ArrayList<>();
     }
-    public void setFragmentList(List<CategoryBean> categorys){
-        for (CategoryBean catb:categorys ) {
+
+    public void setFragmentList(List<CategoryBean> categorys) {
+        for (CategoryBean catb : categorys) {
             this.fragmentList.add(new ItemFragment(catb));
         }
-        this.fragmentList.add(new RebateFragment());
-
     }
 
     @Override
@@ -45,18 +44,16 @@ public class CommonFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        if(position != fragmentList.size()-1) {
-            MFragment fragment = fragmentList.get(position);
-            if (((ItemFragment) fragment).getmCategory() != null)
-                return ((ItemFragment) fragment).getmCategory().title;
-        }
-        return " test";
+        MFragment fragment = fragmentList.get(position);
+        if (((ItemFragment) fragment).getmCategory() != null)
+            return ((ItemFragment) fragment).getmCategory().title;
+        return "";
+
     }
 
     @Override
     public int getCount() {
         int count = fragmentList != null ? fragmentList.size() : 0;
-//        Lx.d(TAG,"count" +count+"  this "+this +"  fragment  "+fragmentList.getInstance(0));
         return count;
     }
 

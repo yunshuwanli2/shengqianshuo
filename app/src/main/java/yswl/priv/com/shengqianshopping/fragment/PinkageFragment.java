@@ -75,7 +75,7 @@ public class PinkageFragment extends MFragment implements HttpCallback<JSONObjec
         mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.colorPrimaryDark);
+                return getResources().getColor(R.color.colorAccent);
             }
 
             @Override
@@ -84,8 +84,8 @@ public class PinkageFragment extends MFragment implements HttpCallback<JSONObjec
             }
         });
         mSlidingTabLayout.setTabTitleTextSize(15);
-        mSlidingTabLayout.setTitleTextColor(getResources().getColor(R.color.colorPrimary),
-                getResources().getColor(R.color.colorAccent));
+        mSlidingTabLayout.setTitleTextColor(getResources().getColor(R.color.colorAccent),
+                getResources().getColor(R.color.background_dark));
         mMyFragmentPagerAdapter = new CommonFragmentPagerAdapter(getChildFragmentManager());
         mViewPager.setAdapter(mMyFragmentPagerAdapter);
 
