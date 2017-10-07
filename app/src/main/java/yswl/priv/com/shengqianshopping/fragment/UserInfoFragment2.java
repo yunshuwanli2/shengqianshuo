@@ -33,6 +33,7 @@ import yswl.com.klibrary.imgloader.ImageLoaderProxy;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
+import yswl.priv.com.shengqianshopping.activity.ScoreboardActivity;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
 import yswl.priv.com.shengqianshopping.bean.UserBean;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
@@ -104,7 +105,7 @@ public class UserInfoFragment2 extends MFragment {
                 gotoAliShoppingChe();
                 break;
             case R.id.user_info_ll_heroes_list:
-
+                startActivity(new Intent(activity, ScoreboardActivity.class));
                 break;
             case R.id.user_info_ll_invitation:
 

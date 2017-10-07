@@ -2,6 +2,7 @@ package yswl.priv.com.shengqianshopping.activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -22,6 +23,7 @@ import java.util.Map;
 
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
+import yswl.com.klibrary.http.okhttp.HeaderInterceptor;
 import yswl.com.klibrary.http.okhttp.MSPUtils;
 import yswl.com.klibrary.util.GsonUtil;
 import yswl.com.klibrary.util.L;
@@ -81,6 +83,10 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
                 map.put("channelNickname", nick);
                 map.put("channelAvatar", headImg);
                 map.put("aFrom", "");
+                map.put("deviceType", "2");
+                map.put("deviceToken", HeaderInterceptor.getMAC());
+                map.put("appVersion", "3.2.0");
+                map.put("osVersion", Build.VERSION.RELEASE);
                 HttpClientProxy.getInstance().postAsyn(url, LOGIN_REQUESTID, map, LoginActivity.this);
             }
 
@@ -99,27 +105,23 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
-        if (requestId == LOGIN_REQUESTID) {
-            try {
-                //保存data
-                SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.UID, GsonUtil.getJSONObjectKeyVal(ResultUtil.analysisData(result).getString(ResultUtil.MSG), "uid"));
-                SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.TOKEN, GsonUtil.getJSONObjectKeyVal(ResultUtil.analysisData(result).getString(ResultUtil.MSG), "token"));
-                //获取用户信息
-                UserManager.getUser(LoginActivity.this, GsonUtil.getJSONObjectKeyVal(ResultUtil.analysisData(result).getString(ResultUtil.MSG), "uid"), LoginActivity.this, GET_USERINFO_REQUESTID);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        if (requestId == LOGIN_REQUESTID&&ResultUtil.isCodeOK(result)) {
+            //保存data
+            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.UID, GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid"));
+            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.TOKEN, GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "token"));
+            //获取用户信息
+            Log.i("znh", result.toString() + "授权返回");
+            Log.i("znh", GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid") + "----uid");
+            UserManager.getUser(LoginActivity.this, GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid"), LoginActivity.this, GET_USERINFO_REQUESTID);
 
-        } else if (requestId == GET_USERINFO_REQUESTID) {
-            try {
-                Toast.makeText(LoginActivity.this, "登录成功 ", Toast.LENGTH_LONG).show();
-                //保存用户信息
-                UserManager.saveInfo(LoginActivity.this, ResultUtil.analysisData(result).getString(ResultUtil.MSG).toString());
-                SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, true);
-                finish();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        } else if (requestId == GET_USERINFO_REQUESTID&&ResultUtil.isCodeOK(result)) {
+            Toast.makeText(LoginActivity.this, "登录成功 ", Toast.LENGTH_LONG).show();
+            //保存用户信息
+            Log.i("znh", result.toString() + "----用户信息");
+            Log.i("znh", GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG) + "----用户信息");
+            UserManager.saveInfo(LoginActivity.this, GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG));
+            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, true);
+            finish();
         }
 
     }

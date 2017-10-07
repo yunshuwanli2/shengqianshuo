@@ -1,5 +1,7 @@
 package yswl.priv.com.shengqianshopping.bean;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 /**
