@@ -120,7 +120,7 @@ public class UserInfoFragment2 extends MFragment {
 
     void gotoAliShoppingChe() {
         Map<String, String> exParams = new HashMap<>();
-        exParams.put(AlibcConstants.ISV_CODE, "appisvcode");
+        exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
         AlibcBasePage myCartsPage = new AlibcMyCartsPage();
         AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
         AlibcTrade.show(getActivity(), myCartsPage, showParams, null, exParams,
@@ -141,7 +141,7 @@ public class UserInfoFragment2 extends MFragment {
     void gotoAliOrder() {
 
         Map<String, String> exParams = new HashMap<>();
-        exParams.put(AlibcConstants.ISV_CODE, "appisvcode");
+        exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
         /**
          * @param status   默认跳转页面；填写：0：全部；1：待付款；2：待发货；3：待收货；4：待评价
          * @param allOrder false 进行订单分域（只展示通过当前app下单的订单），true 显示所有订单

@@ -58,6 +58,7 @@ public class ProductDetail {
     public String iid;//商品id
     public String title;
     public String pictUrl;//商品主图
+    public String picUrl;//商品主图
     public String[] smallImages;//商品小图列
     public String reservePrice;//商品一口价格
     public String itemUrl;
@@ -68,6 +69,13 @@ public class ProductDetail {
     public String zkFinalPrice;//商品折扣价格
     public String nick;//卖家昵称
     public String sellerId;// 卖家ID
+
+    public String getVolume() {
+        if (volume == null)
+            return "0";
+        return volume;
+    }
+
     public String volume;//30天销量
     public String tkRate;//收入比例 20% 百分比
     public String shopTitle;

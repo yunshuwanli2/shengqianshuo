@@ -8,10 +8,10 @@ import java.util.Objects;
  * Created by yunshuwanli on 17/10/2.
  */
 
-public class SerializableMap implements Serializable {
+public class SerializableParamsMap implements Serializable {
    public Map<String,Object> map;
 
-    public SerializableMap(Map<String, Object> map) {
+    public SerializableParamsMap(Map<String, Object> map) {
         this.map = map;
     }
 }

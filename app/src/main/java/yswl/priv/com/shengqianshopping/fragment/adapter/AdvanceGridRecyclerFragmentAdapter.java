@@ -45,9 +45,9 @@ public class AdvanceGridRecyclerFragmentAdapter extends RecyclerView.Adapter<Adv
         ProductDetail detail = mProductList.get(position);
         Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
         holder.product_desc.setText(detail.title);
-        holder.product_price.setText(detail.couponPrice);
+        holder.product_price.setText(detail.zkFinalPrice);
         holder.product_old_price.setText(detail.reservePrice);
-        holder.total.setText(detail.volume);
+        holder.total.setText(detail.getVolume());
     }
 
 

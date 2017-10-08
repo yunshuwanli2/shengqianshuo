@@ -31,12 +31,9 @@ import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
-import yswl.priv.com.shengqianshopping.banner.SortEnum;
-import yswl.priv.com.shengqianshopping.bean.CategoryBean;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
-import yswl.priv.com.shengqianshopping.bean.SerializableMap;
-import yswl.priv.com.shengqianshopping.fragment.adapter.DividerItemDecoration;
+import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
@@ -51,7 +48,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
     private static final String ARG_PARAM1 = "param1";
 
 
-    private SerializableMap mParam1;//已经封装好的参数
+    private SerializableParamsMap mParam1;//已经封装好的参数
     RecyclerView mRecyclerView;
 
     GridRecyclerFragmentAdapter mAdapter;
@@ -61,11 +58,11 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         return mProductList;
     }
 
-    public SerializableMap getmParam1() {
+    public SerializableParamsMap getmParam1() {
         return mParam1;
     }
 
-    public void setmParam1(SerializableMap mParam1) {
+    public void setmParam1(SerializableParamsMap mParam1) {
         this.mParam1 = mParam1;
     }
 
@@ -73,7 +70,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
     public GridRecyclerviewFragment() {
     }
 
-    public static GridRecyclerviewFragment newInstance(SerializableMap param1) {
+    public static GridRecyclerviewFragment newInstance(SerializableParamsMap param1) {
         GridRecyclerviewFragment fragment = new GridRecyclerviewFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
@@ -86,7 +83,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = (SerializableMap) getArguments().getSerializable(ARG_PARAM1);
+            mParam1 = (SerializableParamsMap) getArguments().getSerializable(ARG_PARAM1);
         }
     }
 
@@ -123,7 +120,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
 
     void openAlibcPage(ProductDetail detail) {
         Map<String, String> exParams = new HashMap<>();
-        exParams.put(AlibcConstants.ISV_CODE, "appisvcode");
+        exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
 
         //商品详情page
         AlibcBasePage detailPage = new AlibcDetailPage(detail.iid);

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import org.json.JSONObject;
 
 import java.util.List;
-import java.util.Map;
 
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
@@ -22,8 +21,7 @@ import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
-import yswl.priv.com.shengqianshopping.bean.SerializableMap;
-import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter2;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
@@ -39,15 +37,15 @@ public class GridRecyclerviewFragment2 extends MFragment implements HttpCallback
 
     private static final String ARG_PARAM1 = "param1";
 
-    public SerializableMap getmParam1() {
+    public SerializableParamsMap getmParam1() {
         return mParam1;
     }
 
-    public void setmParam1(SerializableMap mParam1) {
+    public void setmParam1(SerializableParamsMap mParam1) {
         this.mParam1 = mParam1;
     }
 
-    private SerializableMap mParam1;//已经封装好的参数
+    private SerializableParamsMap mParam1;//已经封装好的参数
 
 
     public GridRecyclerviewFragment2() {
@@ -63,7 +61,7 @@ public class GridRecyclerviewFragment2 extends MFragment implements HttpCallback
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = (SerializableMap) getArguments().getSerializable(ARG_PARAM1);
+            mParam1 = (SerializableParamsMap) getArguments().getSerializable(ARG_PARAM1);
         }
     }
 

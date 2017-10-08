@@ -73,7 +73,7 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
         ProductDetail detail = mProductList.get(position);
         holder.coup_price.setText(detail.getCouponNum());
         Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
-        holder.produce_buy_count.setText(detail.volume);
+        holder.produce_buy_count.setText(detail.getVolume());
         holder.product_desc.setText(detail.title);
         holder.product_price.setText(detail.couponPrice);
 

@@ -1,12 +1,9 @@
 package yswl.priv.com.shengqianshopping.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,15 +18,11 @@ import java.util.Map;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
-import yswl.com.klibrary.http.okhttp.MDeviceUtil;
 import yswl.com.klibrary.util.L;
-import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
-import yswl.priv.com.shengqianshopping.bean.SerializableMap;
 import yswl.priv.com.shengqianshopping.bean.TimeBean;
-import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter2;
 import yswl.priv.com.shengqianshopping.fragment.adapter.ListRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 

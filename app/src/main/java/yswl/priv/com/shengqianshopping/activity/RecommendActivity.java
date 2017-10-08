@@ -2,7 +2,6 @@ package yswl.priv.com.shengqianshopping.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import org.json.JSONObject;
@@ -18,7 +17,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.bean.CategoryBean;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
-import yswl.priv.com.shengqianshopping.bean.SerializableMap;
+import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
 import yswl.priv.com.shengqianshopping.fragment.GridRecyclerviewFragment;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
@@ -69,7 +68,7 @@ public class RecommendActivity extends MToolBarActivity implements HttpCallback<
             CategoryBean category = caregorys.get(0);
             Map<String, Object> mParam = new HashMap<>();
             mParam.put("pid", category.pid);
-            MFragment fragment = GridRecyclerviewFragment.newInstance(new SerializableMap(mParam));
+            MFragment fragment = GridRecyclerviewFragment.newInstance(new SerializableParamsMap(mParam));
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content, fragment).commit();
         }

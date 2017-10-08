@@ -1,6 +1,5 @@
 package yswl.priv.com.shengqianshopping.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,15 +19,11 @@ import java.util.Map;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
-import yswl.com.klibrary.http.okhttp.MDeviceUtil;
 import yswl.com.klibrary.util.L;
-import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
-import yswl.priv.com.shengqianshopping.bean.SerializableMap;
 import yswl.priv.com.shengqianshopping.fragment.adapter.AdvanceGridRecyclerFragmentAdapter;
-import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter2;
 import yswl.priv.com.shengqianshopping.util.DateUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 

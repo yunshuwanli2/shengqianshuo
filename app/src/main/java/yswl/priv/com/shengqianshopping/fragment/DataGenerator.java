@@ -9,7 +9,7 @@ import yswl.com.klibrary.base.MFragment;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.banner.SortEnum;
 import yswl.priv.com.shengqianshopping.bean.CategoryBean;
-import yswl.priv.com.shengqianshopping.bean.SerializableMap;
+import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
 
 public class DataGenerator {
 
@@ -40,22 +40,22 @@ public class DataGenerator {
         Map<String, Object> param = new HashMap<>();
         param.put("pid", category.pid);
         param.put("sort", SortEnum.HOT.getValue());
-        GridRecyclerviewFragment fragment = GridRecyclerviewFragment.newInstance(new SerializableMap(param));
+        GridRecyclerviewFragment fragment = GridRecyclerviewFragment.newInstance(new SerializableParamsMap(param));
 
         Map<String, Object> param2 = new HashMap<>();
         param2.put("pid", category.pid);
         param2.put("sort", SortEnum.NEW.getValue());
-        GridRecyclerviewFragment fragment2 = GridRecyclerviewFragment.newInstance(new SerializableMap(param2));
+        GridRecyclerviewFragment fragment2 = GridRecyclerviewFragment.newInstance(new SerializableParamsMap(param2));
 
         Map<String, Object> param3 = new HashMap<>();
         param3.put("pid", category.pid);
         param3.put("sort", SortEnum.VOLUME.getValue());
-        GridRecyclerviewFragment fragment3 = GridRecyclerviewFragment.newInstance(new SerializableMap(param3));
+        GridRecyclerviewFragment fragment3 = GridRecyclerviewFragment.newInstance(new SerializableParamsMap(param3));
 
         Map<String, Object> param4 = new HashMap<>();
         param4.put("pid", category.pid);
         param4.put("sort", SortEnum.PRICE.getValue());
-        GridRecyclerviewFragment fragment4 = GridRecyclerviewFragment.newInstance(new SerializableMap(param4));
+        GridRecyclerviewFragment fragment4 = GridRecyclerviewFragment.newInstance(new SerializableParamsMap(param4));
         fragments[0] = fragment;
         fragments[1] = fragment2;
         fragments[2] = fragment3;

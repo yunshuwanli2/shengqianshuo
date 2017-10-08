@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,6 +17,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.alibaba.baichuan.android.trade.AlibcTrade;
+import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
+import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
+import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
+import com.alibaba.baichuan.android.trade.model.OpenType;
+import com.alibaba.baichuan.android.trade.model.TradeResult;
+import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
+import com.alibaba.baichuan.android.trade.page.AlibcDetailPage;
 
 import org.json.JSONObject;
 
@@ -24,10 +37,13 @@ import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.http.okhttp.MDeviceUtil;
+import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.MAppInfoUtil;
+import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
+import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 public class SearchActivity extends MActivity implements HttpCallback<JSONObject> {
@@ -37,6 +53,8 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
         context.startActivity(intent);
     }
 
+    RecyclerView mRecyclerView;
+    GridRecyclerFragmentAdapter mAdapter;
     EditText mEdit;
     ImageView mClear;
     ImageView mSearch;
@@ -81,6 +99,7 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
             }
         });
 
+
         mClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +107,47 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
             }
         });
 
+        mRecyclerView = findView(R.id.recycler_view);
+        GridLayoutManager manager = new GridLayoutManager(this, 2);
 
+        manager.setOrientation(OrientationHelper.VERTICAL);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        mAdapter = new GridRecyclerFragmentAdapter();
+        mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView parent, View view, int position) {
+                List<ProductDetail> products = mProductList;
+                if (products == null || products.size() == 0) return;
+                ProductDetail detail = products.get(position);
+                openAlibcPage(detail);
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
+
+    }
+
+
+    void openAlibcPage(ProductDetail detail) {
+        Map<String, String> exParams = new HashMap<>();
+        exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
+        //商品详情page
+        AlibcBasePage detailPage = new AlibcDetailPage(detail.iid);
+        //设置页面打开方式
+        AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
+        AlibcTrade.show(this, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
+
+            @Override
+            public void onTradeSuccess(TradeResult tradeResult) {
+                //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
+            }
+        });
     }
 
     /**
@@ -104,7 +163,6 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
         Map<String, Object> map = new HashMap<>();
         map.put("like", key);
         map.put("count", 20);
-
         HttpClientProxy.getInstance().postAsynSQS(url, 1002, map, this);
     }
 
