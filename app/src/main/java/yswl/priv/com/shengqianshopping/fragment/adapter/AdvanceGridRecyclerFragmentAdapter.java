@@ -69,7 +69,7 @@ public class AdvanceGridRecyclerFragmentAdapter extends RecyclerView.Adapter<Adv
             preview_img = (ImageView) view.findViewById(R.id.iv_product_preview);
             product_old_price = (TextView) view.findViewById(R.id.tv_product_old_price);
             product_desc = (TextView) view.findViewById(R.id.tv_product_desc);
-            product_price = (TextView) view.findViewById(R.id.tv_product_price);
+            product_price = (TextView) view.findViewById(R.id.tv_produce_price);
             total = (TextView) view.findViewById(R.id.tv_total);
 
         }

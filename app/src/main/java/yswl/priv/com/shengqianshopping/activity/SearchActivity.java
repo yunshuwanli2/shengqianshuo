@@ -171,7 +171,8 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
         if (ResultUtil.isCodeOK(result)) {
             mProductList = ProductDetail.jsonToList(
                     ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
-
+            mAdapter.setmProductList(mProductList);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
