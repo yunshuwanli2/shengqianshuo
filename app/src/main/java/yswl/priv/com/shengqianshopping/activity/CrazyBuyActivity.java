@@ -67,18 +67,23 @@ public class CrazyBuyActivity extends MToolBarActivity implements View.OnClickLi
 
     private void setTimeFrame() {
         mYes.setText("昨日");
-        mNine.setText("09:00 \n" + getShowTime());
-        mThirteen.setText("13:00 \n" + getShowTime());
-        mSevenTeen.setText("17:00 \n" + getShowTime());
+        mNine.setText("09:00 \n" + getShowTime(9 * 60 * 60 * 1000, 13 * 60 * 60 * 1000));
+        mThirteen.setText("13:00 \n" + getShowTime(13 * 60 * 60 * 1000, 17 * 60 * 60 * 1000));
+        mSevenTeen.setText("17:00 \n" + getShowTime(17 * 60 * 60 * 1000, 24 * 60 * 60 * 1000));
         mTomorr.setText("预告");
     }
 
-    String getShowTime() {
-
-        if (true) {
+    String getShowTime(long time, long nextTime) {
+        long compareTime = DateUtil.getTodayZero() + time;
+        long compareNextTime = DateUtil.getTodayZero() + nextTime;
+        long currentTime = System.currentTimeMillis();
+        if (currentTime < compareTime) {
+            return "即将开始";
+        } else if (compareTime < currentTime && currentTime < compareNextTime) {
             return "正在抢购";
+        } else {
+            return "已在抢购";
         }
-        return "即将开始";
     }
 
 
