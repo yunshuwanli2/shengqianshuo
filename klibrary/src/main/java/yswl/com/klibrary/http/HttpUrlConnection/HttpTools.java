@@ -106,7 +106,7 @@ public final class HttpTools {
             httpURLConnection.setUseCaches(false);               //使用Post方式不能使用缓存
             //设置请求体的类型是文本类型
             httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            //设置请求体的长度
+//            设置请求体的长度
             httpURLConnection.setRequestProperty("Content-Length", String.valueOf(data.length));
             //获得输出流，向服务器写入数据
             OutputStream outputStream = httpURLConnection.getOutputStream();

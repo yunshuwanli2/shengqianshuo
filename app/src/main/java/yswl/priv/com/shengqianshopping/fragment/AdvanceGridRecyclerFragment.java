@@ -1,5 +1,6 @@
 package yswl.priv.com.shengqianshopping.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,7 +20,9 @@ import java.util.Map;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
+import yswl.com.klibrary.http.okhttp.MDeviceUtil;
 import yswl.com.klibrary.util.L;
+import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
@@ -90,6 +93,10 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
         map.put("pageSize", 20);
         map.put("startTime", DateUtil.getTomorroFixedTime2("00:00:00"));
         map.put("endTime", DateUtil.getTomorroFixedTime2("09:00:00"));
+        map.put("deviceToken", MDeviceUtil.getMAC());
+        map.put("deviceType", "2");
+        map.put("osVersion", Build.VERSION.RELEASE);
+        map.put("appVersion", MAppInfoUtil.getVersionCode(getActivity()) + "");
         HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, map, this);
     }
 

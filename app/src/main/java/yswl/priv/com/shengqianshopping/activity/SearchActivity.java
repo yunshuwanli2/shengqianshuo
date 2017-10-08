@@ -2,6 +2,7 @@ package yswl.priv.com.shengqianshopping.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -22,6 +23,8 @@ import java.util.Map;
 import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
+import yswl.com.klibrary.http.okhttp.MDeviceUtil;
+import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
@@ -101,6 +104,10 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
         Map<String, Object> map = new HashMap<>();
         map.put("like", key);
         map.put("count", 20);
+        map.put("deviceToken", MDeviceUtil.getMAC());
+        map.put("deviceType", "2");
+        map.put("osVersion", Build.VERSION.RELEASE);
+        map.put("appVersion", MAppInfoUtil.getVersionCode(this) + "");
         HttpClientProxy.getInstance().postAsyn(url, 1002, map, this);
     }
 

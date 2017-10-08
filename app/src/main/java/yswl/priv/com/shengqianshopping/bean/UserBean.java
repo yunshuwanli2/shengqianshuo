@@ -1,27 +1,50 @@
 package yswl.priv.com.shengqianshopping.bean;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.Date;
+
+import yswl.com.klibrary.util.DateJsonDeserializer;
 
 /**
  * 第三方用户信息
+ * <p>
+ * <p>
+ * "uid": "18892440",
+ * "nickname": "tb18892440",
+ * "avatar": "https%3A%2F%2Fwwc.alicdn.com%2Favatar%2FgetAvatar.",
+ * "phone": "",
+ * "qq": "",
+ * "email": "",
+ * "alipay": [],
+ * "asset": {
+ * "remainder": "0",
+ * "integral": "0",
+ * "revenue": "0"
+ * }
  */
 
 public class UserBean implements Serializable {
 
-    private String uid;
-    private String nickname;
-    private String avatar;
-    private String phone;
-    private String qq;
-    private String email;
-    private Alipay alipay;
-    private Asset asset;
+    public String uid;
+    public String nickname;
+    public String avatar;
+    public String phone;
+    public String qq;
+    public String email;
+    public Alipay alipay;
+    public Asset asset;
 
     public class Alipay {
-        private String realName;
-        private String aliAccount;
+        public String realName;
+        public String aliAccount;
 
         public String getRealName() {
             return realName;
@@ -41,9 +64,9 @@ public class UserBean implements Serializable {
     }
 
     public class Asset {
-        private String remainder;
-        private String integral;
-        private String revenue;
+        public String remainder;
+        public String integral;
+        public String revenue;
 
         public String getRemainder() {
             return remainder;
@@ -133,4 +156,22 @@ public class UserBean implements Serializable {
     public void setAsset(Asset asset) {
         this.asset = asset;
     }
+
+
+    public static UserBean jsonToBean(JSONObject json) {
+        if (null == json) return null;
+
+        try {
+            Gson gson = new GsonBuilder().registerTypeAdapter(Date.class,
+                    new DateJsonDeserializer()).create();
+            Type data = new TypeToken<UserBean>() {
+            }.getType();
+            UserBean result = gson.fromJson(json.toString(), data);
+            return result;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+
 }

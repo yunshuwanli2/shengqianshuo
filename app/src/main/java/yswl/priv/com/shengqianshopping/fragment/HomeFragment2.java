@@ -3,6 +3,8 @@ package yswl.priv.com.shengqianshopping.fragment;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 
 import org.json.JSONObject;
 
+import java.security.acl.Group;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,10 +110,8 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     private void showMenuPopWindow(final View view) {
         if (mPopupWindow == null) {
             mPopupWindow = new PopupWindow(getActivity());
-            int h = getActivity().getWindowManager().getDefaultDisplay().getHeight();
-            int w = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-            mPopupWindow.setWidth(w);
-            mPopupWindow.setHeight(h);
+            mPopupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+            mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
             View ui = LayoutInflater.from(getContext()).inflate(R.layout.menu_grid_recyclerview, null);
             mMenuRecyView = (RecyclerView) ui.findViewById(R.id.recycler_view);
             ui.findViewById(R.id.close_menu).setOnClickListener(new View.OnClickListener() {
@@ -119,6 +120,11 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                     mPopupWindow.dismiss();
                 }
             });
+            GridLayoutManager manager = new GridLayoutManager(getActivity(), 4);
+            manager.setOrientation(OrientationHelper.VERTICAL);
+            mMenuRecyView.setHasFixedSize(true);
+            mMenuRecyView.setNestedScrollingEnabled(false);
+            mMenuRecyView.setLayoutManager(manager);
             GridRecyclerAdapter adapter = new GridRecyclerAdapter();
             adapter.setCategoryList(mCategorys);
             adapter.setOnItemClickListener(new GridRecyclerAdapter.OnItemClickListener() {

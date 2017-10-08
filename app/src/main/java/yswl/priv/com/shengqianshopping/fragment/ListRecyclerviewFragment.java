@@ -1,5 +1,6 @@
 package yswl.priv.com.shengqianshopping.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,7 +21,9 @@ import java.util.Map;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
+import yswl.com.klibrary.http.okhttp.MDeviceUtil;
 import yswl.com.klibrary.util.L;
+import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
@@ -108,7 +111,10 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
         map.put("pageSize", 20);
         map.put("startTime", mParam1.startTime);
         map.put("endTime", mParam1.endTime);
-
+        map.put("deviceToken", MDeviceUtil.getMAC());
+        map.put("deviceType", "2");
+        map.put("osVersion", Build.VERSION.RELEASE);
+        map.put("appVersion", MAppInfoUtil.getVersionCode(getActivity()) + "");
         HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, map, this);
     }
 

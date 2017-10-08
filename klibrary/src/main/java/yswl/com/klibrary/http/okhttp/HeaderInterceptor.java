@@ -9,6 +9,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import yswl.com.klibrary.MApplication;
+import yswl.com.klibrary.util.MAppInfoUtil;
 
 
 public class HeaderInterceptor implements Interceptor {
@@ -29,19 +30,22 @@ public class HeaderInterceptor implements Interceptor {
 
     /**
      * 统一为请求添加头信息
-     *  1. "deviceType":"1",
-     1.     "deviceToken":"12312khdsjfhkj1",
-     1.     "appVersion":"1.2",
-     1.     "osVersion":"10.1.2",
+     * 1. "deviceType":"1",
+     * 1.     "deviceToken":"12312khdsjfhkj1",
+     * 1.     "appVersion":"1.2",
+     * 1.     "osVersion":"10.1.2",
+     *
      * @return
      */
     private Request.Builder addHeaders(Request.Builder builder) {
         return builder
+                .addHeader("Content-Type","application/json; charset=utf-8")
                 .addHeader("deviceToken", getMAC())
                 .addHeader("deviceType", "2")
                 .addHeader("osVersion", Build.VERSION.RELEASE)
-                .addHeader("appVersion", "3.2.0");
+                .addHeader("appVersion", MAppInfoUtil.getVersionCode(MApplication.getApplication())+"");
     }
+
     private Request.Builder addHeaders2(Request.Builder builder) {
         return builder
                 .addHeader("Connection", "keep-alive")

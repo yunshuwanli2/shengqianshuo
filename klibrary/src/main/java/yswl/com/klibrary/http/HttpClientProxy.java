@@ -29,6 +29,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.http.CallBack.DownloadCallBack;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
@@ -123,7 +124,7 @@ public class HttpClientProxy implements IRequestMethod {
         try {
             StringBuilder tempParams = new StringBuilder();
             int pos = 0;
-            if(paramsMap!=null) {
+            if (paramsMap != null) {
                 for (String key : paramsMap.keySet()) {
                     if (pos > 0) {
                         tempParams.append("&");
@@ -135,7 +136,7 @@ public class HttpClientProxy implements IRequestMethod {
                 }
             }
             String params = tempParams.toString();
-            L.e(TAG,"http request params :"+ params);
+            L.e(TAG, "http request params :" + params);
             RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, params);
             String requestUrl;
             if (url.startsWith("http://") || url.startsWith("https://")) {
@@ -168,15 +169,16 @@ public class HttpClientProxy implements IRequestMethod {
     public void postAsyn(String url, final int requestId, Map<String, Object> paramsMap, final HttpCallback<JSONObject> httpCallback) {
         try {
             FormBody.Builder builder = new FormBody.Builder();
-            if(paramsMap!=null) {
+            if (paramsMap != null) {
                 for (String key : paramsMap.keySet()) {
                     Object obj = paramsMap.get(key);
                     String value = (obj instanceof String) ? (String) obj : String.valueOf(obj);
-                    L.e(TAG,"http request params key :"+ key +", value ："+value);
+                    L.e(TAG, "http request params key :" + key + ", value ：" + value);
                     builder.add(key, URLEncoder.encode(value, "utf-8"));
                 }
             }
             RequestBody body = builder.build();
+
             String requestUrl;
             if (url.startsWith("http://") || url.startsWith("https://")) {
                 requestUrl = url;
@@ -184,7 +186,7 @@ public class HttpClientProxy implements IRequestMethod {
                 requestUrl = String.format("%s%s", BASE_URL, url);
             }
             final String finalUrl = requestUrl;
-            Request request = new Request.Builder().url(requestUrl).post(body).build();
+            Request request = new Request.Builder().url(requestUrl).post(body).addHeader("Content-Type", "text/html; charset=utf-8").build();
             OkHttpClientManager.getSingleInstance().newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {

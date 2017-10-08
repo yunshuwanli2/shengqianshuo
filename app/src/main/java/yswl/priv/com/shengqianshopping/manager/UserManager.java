@@ -2,6 +2,7 @@ package yswl.priv.com.shengqianshopping.manager;
 
 import android.content.Context;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -34,7 +35,13 @@ public class UserManager {
 
     //获取储存的用户信息
     public static UserBean getUserInfo(Context context) {
-        return GsonUtil.GsonToBean(SharedPreUtils.getInstance(context).getValueBySharedPreferences(SharedPreUtils.USERINFO, ""), UserBean.class);
+        String userStrinfo = SharedPreUtils.getInstance(context).getValueBySharedPreferences(SharedPreUtils.USERINFO, "");
+        try {
+            return UserBean.jsonToBean(new JSONObject(userStrinfo));
+        } catch (JSONException e) {
+            return null;
+        }
+//        return GsonUtil.GsonToBean(userStrinfo, UserBean.class);
     }
 
     //调用接口获取用户信息

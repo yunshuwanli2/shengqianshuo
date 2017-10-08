@@ -37,6 +37,7 @@ public class CrazyBuyActivity extends MToolBarActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crazy_buy);
+        setTitle("疯狂抢");
         initUI();
     }
 

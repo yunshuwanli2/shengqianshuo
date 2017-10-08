@@ -34,7 +34,6 @@ import yswl.com.klibrary.util.MKeyBoardUtils;
 
 /**
  * webview 扩展
- *
  */
 public class WebViewExtra extends WebView {
     private static final String TAG = "WebViewExtra";
@@ -118,7 +117,6 @@ public class WebViewExtra extends WebView {
     }
 
 
-
     boolean pagenotfound = false;
 
     public void setWebViewClient() {
@@ -160,8 +158,7 @@ public class WebViewExtra extends WebView {
             }
 
             @Override
-            public void onReceivedSslError(WebView view,
-                                           SslErrorHandler handler, SslError error) {
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 // handler.cancel(); // Android默认的处理方式
                 handler.proceed(); // 接受所有网站的证书
                 // handleMessage(Message msg); // 进行其他处理
@@ -188,16 +185,16 @@ public class WebViewExtra extends WebView {
             @Override
             public void onLoadResource(WebView view, String url) {
                 if (checkUrl(url)) {
-                    super.onLoadResource(view, url);
                 }
+                super.onLoadResource(view, url);
             }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 //附件的url 规范
                 if (checkUrl(url)) {
-                    view.loadUrl(url);
                 }
+                view.loadUrl(url);
                 return true;
             }
         });
@@ -267,7 +264,7 @@ public class WebViewExtra extends WebView {
     }
 
     public interface Progress {
-        public void onProgressChanged(int newProgress);
+        void onProgressChanged(int newProgress);
     }
 
     public void loadUrl(Context context, String url) {

@@ -13,6 +13,8 @@ import java.util.Iterator;
 import yswl.com.klibrary.MApplication;
 
 public class MAppInfoUtil {
+
+
     /**
      * 获取应用程序名称
      */

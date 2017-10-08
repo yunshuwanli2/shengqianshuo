@@ -24,6 +24,7 @@ public class AdvanceActivity extends MToolBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advance);
+        setTitle("明日预告");
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content, AdvanceGridRecyclerFragment.newInstance()).commitAllowingStateLoss();
 
