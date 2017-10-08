@@ -104,11 +104,8 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
         Map<String, Object> map = new HashMap<>();
         map.put("like", key);
         map.put("count", 20);
-        map.put("deviceToken", MDeviceUtil.getMAC());
-        map.put("deviceType", "2");
-        map.put("osVersion", Build.VERSION.RELEASE);
-        map.put("appVersion", MAppInfoUtil.getVersionCode(this) + "");
-        HttpClientProxy.getInstance().postAsyn(url, 1002, map, this);
+
+        HttpClientProxy.getInstance().postAsynSQS(url, 1002, map, this);
     }
 
     @Override

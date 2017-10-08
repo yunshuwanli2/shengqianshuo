@@ -93,11 +93,7 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
         map.put("pageSize", 20);
         map.put("startTime", DateUtil.getTomorroFixedTime2("00:00:00"));
         map.put("endTime", DateUtil.getTomorroFixedTime2("09:00:00"));
-        map.put("deviceToken", MDeviceUtil.getMAC());
-        map.put("deviceType", "2");
-        map.put("osVersion", Build.VERSION.RELEASE);
-        map.put("appVersion", MAppInfoUtil.getVersionCode(getActivity()) + "");
-        HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, map, this);
+        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, map, this);
     }
 
 

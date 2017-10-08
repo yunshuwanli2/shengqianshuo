@@ -155,7 +155,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         if (mParam1 != null) {
             Map<String, Object> parm = mParam1.map;
             String url = UrlUtil.getUrl(this, R.string.url_category_list);
-            HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, parm, this);
+            HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, parm, this);
         }
 
     }

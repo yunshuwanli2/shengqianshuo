@@ -66,6 +66,10 @@ public class MAppInfoUtil {
         return -1;
     }
 
+    public static String getVersionCode() {
+        return getVersionCode(MApplication.getApplication()) + "";
+    }
+
     public static String getCurProcessName(Context paramContext) {
         int pid = Process.myPid();
         Iterator localIterator = ((ActivityManager) paramContext.getSystemService(Context.ACTIVITY_SERVICE)).getRunningAppProcesses().iterator();

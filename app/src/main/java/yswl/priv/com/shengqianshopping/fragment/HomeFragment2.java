@@ -149,12 +149,12 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         String url = UrlUtil.getUrl(this, R.string.url_category_type_list);
         Map<String, Object> par = new HashMap<>();
         par.put("type", "1");
-        HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID_CATEGROY, par, this);
+        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID_CATEGROY, par, this);
     }
 
     private void requestBanner() {
         String url = UrlUtil.getUrl(this, R.string.url_banner_list);
-        HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID_BANNER, null, this);
+        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID_BANNER, null, this);
     }
 
     void initBanner() {

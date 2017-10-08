@@ -49,7 +49,7 @@ public class UserManager {
         String url = UrlUtil.getUrl(context, R.string.url_get_user_info);
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
-        HttpClientProxy.getInstance().postAsyn(url, requestId, map, httpCallback);
+        HttpClientProxy.getInstance().postAsynSQS(url, requestId, map, httpCallback);
     }
 
 }

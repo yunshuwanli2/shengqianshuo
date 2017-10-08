@@ -56,7 +56,7 @@ public class RecommendActivity extends MToolBarActivity implements HttpCallback<
         Map<String, Object> parm = new HashMap<>();
         parm.put("type", "3");
         String url = UrlUtil.getUrl(this, R.string.url_category_type_list);
-        HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID_RECOM, parm, this);
+        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID_RECOM, parm, this);
     }
 
 

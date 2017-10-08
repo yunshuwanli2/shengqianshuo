@@ -47,7 +47,12 @@ public class SplashActivity extends MActivity {
         ADbean aDbean = getData();
         screenImg = findView(R.id.splash_screen);
         mTextView = findView(R.id.timer);
-
+        mTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivityV3.startAct(SplashActivity.this);
+            }
+        });
 
         if (!TextUtils.isEmpty(aDbean.imgUrl)) {
             Glide.with(this).asDrawable().load(aDbean.imgUrl).into(screenImg);
@@ -73,7 +78,7 @@ public class SplashActivity extends MActivity {
             CountDownTimer timer = new CountDownTimer((time + 1) * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    mTextView.setText(millisUntilFinished / 1000 + "");
+                    mTextView.setText("跳过" + millisUntilFinished / 1000 + "");
                 }
 
                 @Override

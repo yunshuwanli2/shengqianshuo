@@ -90,7 +90,7 @@ public class ScoreboardActivity extends MToolBarActivity implements HttpCallback
         String url = UrlUtil.getUrl(ScoreboardActivity.this, R.string.url_hero_list);
         Map<String, Object> map = new HashMap<>();
         map.put("uid", SharedPreUtils.getInstance(ScoreboardActivity.this).getValueBySharedPreferences(SharedPreUtils.UID, ""));
-        HttpClientProxy.getInstance().postAsyn(url, 1234, map, ScoreboardActivity.this);
+        HttpClientProxy.getInstance().postAsynSQS(url, 1234, map, ScoreboardActivity.this);
     }
 
     @Override

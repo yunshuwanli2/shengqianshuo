@@ -90,7 +90,7 @@ public class GridRecyclerviewFragment2 extends MFragment implements HttpCallback
 
     public void requestData() {
         String url = UrlUtil.getUrl(this, R.string.url_top_list);
-        HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, null, this);
+        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, null, this);
     }
 
 

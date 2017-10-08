@@ -120,7 +120,7 @@ public class BindPhoneActivity extends MToolBarActivity implements HttpCallback<
         Map<String, Object> map = new HashMap<>();
         map.put("uid", SharedPreUtils.getInstance(BindPhoneActivity.this).getValueBySharedPreferences(SharedPreUtils.UID, ""));
         map.put("phone", edtPhone.getText().toString());
-        HttpClientProxy.getInstance().postAsyn(url, GET_VCODE_REQUEST_ID, map, BindPhoneActivity.this);
+        HttpClientProxy.getInstance().postAsynSQS(url, GET_VCODE_REQUEST_ID, map, BindPhoneActivity.this);
     }
 
 
@@ -143,7 +143,7 @@ public class BindPhoneActivity extends MToolBarActivity implements HttpCallback<
         Map<String, Object> map = new HashMap<>();
         map.put("phone", edtPhone.getText().toString());
         map.put("code", edtVcode.getText().toString());
-        HttpClientProxy.getInstance().postAsyn(url, BIND_PHONE_REQUEST_ID, map, BindPhoneActivity.this);
+        HttpClientProxy.getInstance().postAsynSQS(url, BIND_PHONE_REQUEST_ID, map, BindPhoneActivity.this);
     }
 
     @Override

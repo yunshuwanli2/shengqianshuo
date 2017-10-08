@@ -88,7 +88,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
                 map.put("deviceToken", HeaderInterceptor.getMAC());
                 map.put("appVersion", "3.2.0");
                 map.put("osVersion", Build.VERSION.RELEASE);
-                HttpClientProxy.getInstance().postAsyn(url, LOGIN_REQUESTID, map, LoginActivity.this);
+                HttpClientProxy.getInstance().postAsynSQS(url, LOGIN_REQUESTID, map, LoginActivity.this);
             }
 
             @Override

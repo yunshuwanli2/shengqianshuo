@@ -60,7 +60,7 @@ public class LaunchActivity extends MActivity implements HttpCallback<JSONObject
 
     private void request() {
         String url = UrlUtil.getUrl(this, R.string.url_splash_screen);
-        HttpClientProxy.getInstance().postAsyn(url, 1, null, this);
+        HttpClientProxy.getInstance().postAsynSQS(url, 1, null, this);
     }
 
 

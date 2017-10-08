@@ -98,7 +98,7 @@ public class PinkageFragment extends MFragment implements HttpCallback<JSONObjec
         String url = UrlUtil.getUrl(this, R.string.url_category_type_list);
         Map<String, Object> par = new HashMap<>();
         par.put("type", "2");//包邮品类
-        HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID_CATEGROY_TYPE2, par, this);
+        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID_CATEGROY_TYPE2, par, this);
     }
 
     List<CategoryBean> mCategorys_type2;

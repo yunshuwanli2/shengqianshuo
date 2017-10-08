@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,8 +35,10 @@ import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.http.CallBack.DownloadCallBack;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.okhttp.IRequestMethod;
+import yswl.com.klibrary.http.okhttp.MDeviceUtil;
 import yswl.com.klibrary.http.okhttp.OkHttpClientManager;
 import yswl.com.klibrary.util.L;
+import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.com.klibrary.util.ToastUtil;
 
 /**
@@ -165,6 +168,17 @@ public class HttpClientProxy implements IRequestMethod {
         }
     }
 
+    public void postAsynSQS(String url, final int requestId, Map<String, Object> paramsMap, final HttpCallback<JSONObject> httpCallback) {
+        if (paramsMap == null) {
+            paramsMap = new HashMap<>();
+        }
+        paramsMap.put("deviceToken", MDeviceUtil.getMAC());
+        paramsMap.put("deviceType", "2");
+        paramsMap.put("osVersion", Build.VERSION.RELEASE);
+        paramsMap.put("appVersion", MAppInfoUtil.getVersionCode());
+        postAsyn(url, requestId, paramsMap, httpCallback);
+    }
+
     @Override
     public void postAsyn(String url, final int requestId, Map<String, Object> paramsMap, final HttpCallback<JSONObject> httpCallback) {
         try {
@@ -201,7 +215,7 @@ public class HttpClientProxy implements IRequestMethod {
                     analysisResponse(requestId, response, httpCallback);
                 }
             });
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

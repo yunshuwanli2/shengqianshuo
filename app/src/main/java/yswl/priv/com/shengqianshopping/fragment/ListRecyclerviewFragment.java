@@ -111,11 +111,7 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
         map.put("pageSize", 20);
         map.put("startTime", mParam1.startTime);
         map.put("endTime", mParam1.endTime);
-        map.put("deviceToken", MDeviceUtil.getMAC());
-        map.put("deviceType", "2");
-        map.put("osVersion", Build.VERSION.RELEASE);
-        map.put("appVersion", MAppInfoUtil.getVersionCode(getActivity()) + "");
-        HttpClientProxy.getInstance().postAsyn(url, REQUEST_ID, map, this);
+        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, map, this);
     }
 
 
