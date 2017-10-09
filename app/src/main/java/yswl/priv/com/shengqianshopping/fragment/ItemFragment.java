@@ -7,8 +7,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import yswl.com.klibrary.base.MFragment;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.CategoryBean;
@@ -67,22 +71,20 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
         return inflater.inflate(R.layout.fragment_item, container, false);
     }
 
+    @BindView(R.id.tv_hot)
+    TextView hotProduct;
+    @BindView(R.id.tv_new)
+    TextView newProduct;
+    @BindView(R.id.tv_price)
+    TextView priceProduct;
+    @BindView(R.id.tv_sell_count)
+    TextView sellCountProduct;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
-        TextView hotProduct = (TextView) view.findViewById(R.id.tv_hot);
-        TextView newProduct = (TextView) view.findViewById(R.id.tv_new);
-
-        TextView sellCountProduct = (TextView) view.findViewById(R.id.tv_sell_count);
-        TextView priceProduct = (TextView) view.findViewById(R.id.tv_price);
-
-        hotProduct.setOnClickListener(this);
-        newProduct.setOnClickListener(this);
-        sellCountProduct.setOnClickListener(this);
-        priceProduct.setOnClickListener(this);
+        ButterKnife.bind(this, view);
 
         mFragments = DataGenerator.getRecyclerViewFragments(mCategory);
-
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.content, mFragments[0])
                 .commitAllowingStateLoss();
@@ -90,8 +92,7 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
 
     private MFragment[] mFragments;
     private int index = 0;
-
-    @Override
+    @OnClick({R.id.tv_hot,R.id.tv_new,R.id.tv_price,R.id.tv_sell_count})
     public void onClick(View v) {
         int postion = 0;
         MFragment fragment = null;

@@ -26,7 +26,7 @@ public class App extends MApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-//        CustomActivityOnCrash.install(this);
+        CustomActivityOnCrash.install(this);
         AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
             @Override
             public void onSuccess() {

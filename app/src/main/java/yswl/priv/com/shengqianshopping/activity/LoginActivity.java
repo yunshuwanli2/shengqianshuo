@@ -1,5 +1,6 @@
 package yswl.priv.com.shengqianshopping.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -39,7 +40,10 @@ import yswl.priv.com.shengqianshopping.util.UrlUtil;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends MToolBarActivity implements HttpCallback<JSONObject> {
-
+    public static void startActivity(Activity context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
 
     private static final String TAG = "LoginActivity";
     private String nick;
@@ -52,9 +56,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         setTitle("登录");
-
         Button mLogin = findView(R.id.btn_login);
         mLogin.setOnClickListener(new OnClickListener() {
             @Override
@@ -62,7 +64,6 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
                 login();
             }
         });
-
 
     }
 
@@ -73,7 +74,6 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
 
             @Override
             public void onSuccess() {
-                //获取淘宝用户信息
                 L.i(TAG, "获取淘宝用户信息: " + AlibcLogin.getInstance().getSession());
                 nick = AlibcLogin.getInstance().getSession().nick;
                 headImg = AlibcLogin.getInstance().getSession().avatarUrl;
@@ -84,10 +84,6 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
                 map.put("channelNickname", nick);
                 map.put("channelAvatar", headImg);
                 map.put("aFrom", "");
-                map.put("deviceType", "2");
-                map.put("deviceToken", HeaderInterceptor.getMAC());
-                map.put("appVersion", "3.2.0");
-                map.put("osVersion", Build.VERSION.RELEASE);
                 HttpClientProxy.getInstance().postAsynSQS(url, LOGIN_REQUESTID, map, LoginActivity.this);
             }
 

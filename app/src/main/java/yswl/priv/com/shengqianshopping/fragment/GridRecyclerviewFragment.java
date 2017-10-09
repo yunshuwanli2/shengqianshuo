@@ -35,6 +35,7 @@ import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
@@ -110,36 +111,13 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
                 List<ProductDetail> products = getmProductList();
                 if (products == null || products.size() == 0) return;
                 ProductDetail detail = products.get(position);
-                openAlibcPage(detail);
+                AlibcUtil.openAlibcPage(getActivity(), detail);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
         requestData();
     }
 
-
-    void openAlibcPage(ProductDetail detail) {
-        Map<String, String> exParams = new HashMap<>();
-        exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
-
-        //商品详情page
-        AlibcBasePage detailPage = new AlibcDetailPage(detail.iid);
-        //设置页面打开方式
-        AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
-        AlibcTrade.show(getActivity(), detailPage, showParams, null, exParams, new AlibcTradeCallback() {
-
-            @Override
-            public void onTradeSuccess(TradeResult tradeResult) {
-                L.e(TAG,tradeResult.resultType.name());
-                //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
-            }
-        });
-    }
 
     /**
      * 1. pid | 不可 | 选品库ID |

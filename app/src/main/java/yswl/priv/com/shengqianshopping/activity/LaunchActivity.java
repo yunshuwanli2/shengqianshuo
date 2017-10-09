@@ -1,17 +1,11 @@
 package yswl.priv.com.shengqianshopping.activity;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
 
 import org.json.JSONObject;
 
@@ -29,6 +23,9 @@ public class LaunchActivity extends MActivity implements HttpCallback<JSONObject
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_launch);
 
         request();

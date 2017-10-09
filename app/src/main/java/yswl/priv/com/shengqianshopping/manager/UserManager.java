@@ -28,9 +28,15 @@ public class UserManager {
 
     }
 
+
     //将用户信息保存
     public static void saveInfo(Context context, String jsonInfo) {
         SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.USERINFO, jsonInfo);
+    }
+
+    //用户是否在线
+    public static boolean isOnline(Context context) {
+        return SharedPreUtils.getInstance(context).getBooleanValueBySharedPreferences(SharedPreUtils.ISONLINE, false);
     }
 
     //获取储存的用户信息

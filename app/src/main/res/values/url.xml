@@ -21,6 +21,13 @@
     <string name="url_crazy_buy_list">/ju/tqg/list</string>
     <!--  搜索 -->
     <string name="url_product_search">/u_item/like</string>
+
+
+    <!--启动页图片-->
+    <string name="url_splash_screen">/config/screening</string>
+
+
+    <!-- ***************用户**************** -->
     <!--  登录 -->
     <string name="url_login">/login/third_party</string>
     <!-- 用户信息 -->
@@ -31,8 +38,14 @@
     <string name="url_verification_code">/phone/send</string>
     <!--  绑定手机号－检测验证码 -->
     <string name="url_check_verification_code">/phone/code/check</string>
-
-
-    <!--启动页图片-->
-    <string name="url_splash_screen">/config/screening</string>
+    <!--  收入明细 -->
+    <string name="url_balance_detail">/revenue/get</string>
+    <!--  提现历史 -->
+    <string name="url_withdraw_detail">/withdraw/cash</string>
+    <!--  我粉丝 -->
+    <string name="url_fans_list">/friends/get</string>
+    <!--    提现申请 -->
+    <string name="url_withdraw_request">withdraw/cash/request</string>
+    <!--    每日签到 -->
+    <string name="url_sign_day">/sign/day</string>
 </resources>

@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,13 +24,20 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="1"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
         android:text="笔袋金牌卖家出品"
-        android:textColor="@color/colorAccent"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/tv_product_price"
@@ -41,16 +47,17 @@
             android:layout_alignParentStart="true"
             android:text="￥ 88"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_product_old_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_toEndOf="@+id/tv_product_price"
             android:layout_toRightOf="@+id/tv_product_price"
-            android:text="￥ 2000000"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_time_start"
@@ -59,14 +66,17 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="开始时间 2017-09-29 23:0:0"
-            android:textColor="@color/colorAccent"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/tv_selled_numb"
@@ -76,7 +86,7 @@
             android:layout_alignParentStart="true"
             android:text="已抢购：1380/8000"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_time_end"
@@ -85,8 +95,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="结束时间 2017-09-29 23:56:56"
-            android:textColor="@color/colorAccent"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

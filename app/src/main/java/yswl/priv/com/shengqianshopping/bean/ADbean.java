@@ -28,7 +28,6 @@ public class ADbean implements Serializable{
     public static ADbean jsonToBean(JSONObject json) {
         JSONObject dataJson = json.optJSONObject(ResultUtil.MSG);
         if (null == dataJson) return null;
-
         try {
             Gson gson = new GsonBuilder().registerTypeAdapter(Date.class,
                     new DateJsonDeserializer()).create();

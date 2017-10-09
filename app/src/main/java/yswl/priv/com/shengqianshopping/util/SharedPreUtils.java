@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import yswl.com.klibrary.MApplication;
+import yswl.com.klibrary.http.okhttp.MSPUtils;
+
 /**
  * 缓存类
  */
@@ -34,6 +37,56 @@ public class SharedPreUtils {
         sp = context.getSharedPreferences(CACHE, Context.MODE_PRIVATE);
     }
 
+
+    /**
+     * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
+     *
+     * @param key
+     * @param object
+     */
+    public static void put(String fileName, String key, Object object) {
+        SharedPreferences sp = MApplication.getApplication().getSharedPreferences(fileName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        if (object instanceof String) {
+            editor.putString(key, (String) object);
+        } else if (object instanceof Integer) {
+            editor.putInt(key, (Integer) object);
+        } else if (object instanceof Boolean) {
+            editor.putBoolean(key, (Boolean) object);
+        } else if (object instanceof Float) {
+            editor.putFloat(key, (Float) object);
+        } else if (object instanceof Long) {
+            editor.putLong(key, (Long) object);
+        } else {
+            editor.putString(key, object.toString());
+        }
+        MSPUtils.SharedPreferencesCompat.apply(editor);
+    }
+
+
+    /**
+     * 得到保存数据的方法，我们根据默认值得到保存的数据的具体类型，然后调用相对于的方法获取值
+     *
+     * @param key
+     * @param defaultObject
+     * @return
+     */
+    public static Object get(String fileName, String key, Object defaultObject) {
+        SharedPreferences sp = MApplication.getApplication().getSharedPreferences(fileName, Context.MODE_PRIVATE);
+        if (defaultObject instanceof String) {
+            return sp.getString(key, (String) defaultObject);
+        } else if (defaultObject instanceof Integer) {
+            return sp.getInt(key, (Integer) defaultObject);
+        } else if (defaultObject instanceof Boolean) {
+            return sp.getBoolean(key, (Boolean) defaultObject);
+        } else if (defaultObject instanceof Float) {
+            return sp.getFloat(key, (Float) defaultObject);
+        } else if (defaultObject instanceof Long) {
+            return sp.getLong(key, (Long) defaultObject);
+        }
+        return null;
+    }
+
     /**
      * SharedPreferences通过key取值
      *
@@ -44,8 +97,13 @@ public class SharedPreUtils {
     public String getValueBySharedPreferences(String key, String dfValue) {
         String value = sp.getString(key, dfValue);
         if ("null".equals(value)) {
-            value = dfValue;
+            return dfValue;
         }
+        return value;
+    }
+
+    public boolean getBooleanValueBySharedPreferences(String key, boolean dfValue) {
+        boolean value = sp.getBoolean(key, dfValue);
         return value;
     }
 

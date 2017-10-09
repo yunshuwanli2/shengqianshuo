@@ -22,15 +22,12 @@ import yswl.priv.com.shengqianshopping.util.DateUtil;
  */
 public class CrazyBuyActivity extends MToolBarActivity implements View.OnClickListener {
 
-
     public static void startActivity(Activity context) {
         Intent intent = new Intent(context, CrazyBuyActivity.class);
         context.startActivity(intent);
 
     }
-
     TextView mYes, mNine, mThirteen, mSevenTeen, mTomorr;
-
     TextView views[];
 
     @Override

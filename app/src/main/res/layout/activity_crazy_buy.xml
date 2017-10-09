@@ -22,8 +22,7 @@
             android:background="@drawable/button_seletor"
             android:gravity="center"
             android:text="昨日"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/tv_nine"
@@ -33,8 +32,7 @@
             android:background="@drawable/button_seletor"
             android:gravity="center"
             android:text="09:00\n正在抢购"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/tv_thirteen"
@@ -44,8 +42,7 @@
             android:background="@drawable/button_seletor"
             android:gravity="center"
             android:text="09:00\n即将开始"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/tv_sevenTeen"
@@ -55,8 +52,7 @@
             android:background="@drawable/button_seletor"
             android:gravity="center"
             android:text="09:00\n即将开始"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/tv_tomorrow"
@@ -66,8 +62,7 @@
             android:background="@drawable/button_seletor"
             android:gravity="center"
             android:text="预告"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textColor="@android:color/white" />
 
 
     </LinearLayout>

@@ -69,13 +69,6 @@ public class ProductDetail {
     public String zkFinalPrice;//商品折扣价格
     public String nick;//卖家昵称
     public String sellerId;// 卖家ID
-
-    public String getVolume() {
-        if (volume == null)
-            return "0";
-        return volume;
-    }
-
     public String volume;//30天销量
     public String tkRate;//收入比例 20% 百分比
     public String shopTitle;
@@ -89,14 +82,16 @@ public class ProductDetail {
     public String couponStartTime;
     public String couponTotalCount;
     public String couponRemainCount;
-
-
     public String couponNum;//优惠券面额价格
 
     public String getCouponNum() {
         return "券:￥" + couponNum;
     }
-
+    public String getVolume() {
+        if (volume == null)
+            return "0";
+        return volume;
+    }
 
     public static List<ProductDetail> jsonToList(JSONArray objarray) {
         if (objarray == null) return null;

@@ -2,7 +2,14 @@ apply plugin: 'com.android.application'
 apply from: '../version.gradle'
 
 android {
-
+    signingConfigs {
+        Alidebug {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('C:/Users/Administrator/Desktop/yunshuwanliMAC/Android_Studio_key/local_mac_debug_key/debug.keystore')
+            storePassword 'android'
+        }
+    }
     compileSdkVersion MCompileSdkVersion
     buildToolsVersion MBuildToolsVersion
     defaultConfig {
@@ -18,8 +25,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.Alidebug
+        }
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -43,17 +52,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(':klibrary')
-
-
-
-
-
-
-
-
-
-
-
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:25.3.1'
@@ -73,6 +71,7 @@ dependencies {
     compile 'com.taobao.android:mtopsdk_allinone_open:1.2.2.4@jar'
     compile 'com.taobao.android:alibc_applink:2.0.0.2@jar'
     compile 'cat.ereza:customactivityoncrash:1.5.0'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.3.0'
 }

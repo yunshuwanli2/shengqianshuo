@@ -51,8 +51,7 @@ public class BrowserActivity extends MActivity {
     }
 
     public void processIntent(Intent intent) {
-        if (intent == null)
-            return;
+        if (intent == null) return;
         String url = intent.getStringExtra(URL);
         mWebViewExtra.loadUrl(this, url);
         String title = intent.getStringExtra(TITTLE);

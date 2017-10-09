@@ -25,6 +25,7 @@ public class GsonUtil {
     private GsonUtil() {
     }
 
+
     /**
      * 转成json
      *
@@ -126,30 +127,31 @@ public class GsonUtil {
 
     /**
      * 通过key获取value
+     *
      * @param json
      * @param key
      * @return
      */
-    public static String getJSONObjectKeyVal(String json, String key){
+    public static String getJSONObjectKeyVal(String json, String key) {
         JSONObject object = null;
         try {
             object = new JSONObject(json);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if(object == null){
+        if (object == null) {
             return "";
         }
-        if(key == null){
+        if (key == null) {
             return "";
         }
         String result = null;
         Object obj;
         try {
             obj = object.get(key);
-            if (obj == null || obj.equals(null)){
+            if (obj == null || obj.equals(null)) {
                 result = "";
-            }else{
+            } else {
                 result = obj.toString();
             }
         } catch (JSONException e) {

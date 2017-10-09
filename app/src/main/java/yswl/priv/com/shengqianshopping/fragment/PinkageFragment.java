@@ -32,21 +32,15 @@ public class PinkageFragment extends MFragment implements HttpCallback<JSONObjec
 
     private static final int REQUEST_ID_CATEGROY_TYPE2 = 102;
     private static final String TAG = PinkageFragment.class.getSimpleName();
-
-    SlidingTabLayout mSlidingTabLayout;
-
-    public PinkageFragment() {
-        // Required empty public constructor
-    }
-
     public static PinkageFragment newInstance(String param1, String param2) {
         PinkageFragment fragment = new PinkageFragment();
         return fragment;
     }
+    SlidingTabLayout mSlidingTabLayout;
+    ViewPager mViewPager;
+    private CommonFragmentPagerAdapter mMyFragmentPagerAdapter;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public PinkageFragment() {
     }
 
     @Override
@@ -55,12 +49,8 @@ public class PinkageFragment extends MFragment implements HttpCallback<JSONObjec
         return inflater.inflate(R.layout.fragment_pinkage, container, false);
     }
 
-    ViewPager mViewPager;
-    private CommonFragmentPagerAdapter mMyFragmentPagerAdapter;
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
         initUI(view);
         requestCategroy();
     }

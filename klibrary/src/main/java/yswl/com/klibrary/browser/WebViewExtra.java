@@ -27,6 +27,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.nostra13.universalimageloader.utils.L;
+
 import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.http.okhttp.MScreenUtils;
 import yswl.com.klibrary.util.MKeyBoardUtils;
@@ -39,6 +41,7 @@ public class WebViewExtra extends WebView {
     private static final String TAG = "WebViewExtra";
     private Progress mProgress;
     public float mScale;
+    boolean pagenotfound = false;
 
 //    public MWebViewExtraInputMethodCallBack mInputLister;
 //    public void setmInputLister(MWebViewExtraInputMethodCallBack mInputLister) {
@@ -88,6 +91,7 @@ public class WebViewExtra extends WebView {
         if (MApplication.getApplication().getDebugSetting()
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
+            L.e(TAG, "----- webview 启动浏览器debug模式调试 ------");
         }
         setWebViewClient();
         setWebChromeClient();
@@ -95,20 +99,20 @@ public class WebViewExtra extends WebView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        settings.setUserAgentString(settings.getUserAgentString() + MScreenUtils.getScreenInfo(MApplication.getApplication()));
+//        settings.setUserAgentString(settings.getUserAgentString() + MScreenUtils.getScreenInfo(MApplication.getApplication()));
         settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
         settings.setLoadWithOverviewMode(true);
-        // // this.getSettings().set
+        // this.getSettings().set
         // this.setInitialScale(1);
-        this.getSettings().setSupportZoom(true);
         this.setScrollContainer(false);
         this.setScrollbarFadingEnabled(false);
         // this.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
         this.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
         settings.setDefaultTextEncodingName("UTF-8");
         // settings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-        settings.setBuiltInZoomControls(true); // 设置显示缩放按钮
-        settings.setDisplayZoomControls(true);
+        settings.setBuiltInZoomControls(false); // 设置显示缩放按钮
+        settings.setDisplayZoomControls(false);
         settings.setSupportZoom(true); // 支持缩放
         settings.setUseWideViewPort(true);
         //
@@ -117,7 +121,7 @@ public class WebViewExtra extends WebView {
     }
 
 
-    boolean pagenotfound = false;
+
 
     public void setWebViewClient() {
         this.setWebViewClient(new WebViewClient() {
@@ -184,16 +188,15 @@ public class WebViewExtra extends WebView {
 
             @Override
             public void onLoadResource(WebView view, String url) {
-                if (checkUrl(url)) {
-                }
+//                if (checkUrl(url)) {
+//                }
                 super.onLoadResource(view, url);
             }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //附件的url 规范
-                if (checkUrl(url)) {
-                }
+//                if (checkUrl(url)) {
+//                }
                 view.loadUrl(url);
                 return true;
             }
