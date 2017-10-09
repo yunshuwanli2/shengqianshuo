@@ -88,7 +88,7 @@ public class WithDrawItemFragment extends MFragment implements HttpCallback<JSON
     }
 
     private void requstDate() {
-        String url = UrlUtil.getUrl(getActivity(), R.string.url_balance_detail);
+        String url = UrlUtil.getUrl(getActivity(), R.string.url_withdraw_detail);
         Map<String, Object> map = new HashMap<>();
         map.put("uid", UserManager.getUserInfo(getContext()).getUid());
         HttpClientProxy.getInstance().postAsynSQS(url, 100, map, this);

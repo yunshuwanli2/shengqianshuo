@@ -106,6 +106,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setNestedScrollingEnabled(false);
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mAdapter = new GridRecyclerFragmentAdapter();
         mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
@@ -131,7 +132,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             mPopupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
             mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
             mPopupWindow.setAnimationStyle(android.R.style.Animation_Translucent);
-            scollview.setAlpha(0.2f);
+
             View ui = LayoutInflater.from(getContext()).inflate(R.layout.menu_grid_recyclerview, null);
             mMenuRecyView = (RecyclerView) ui.findViewById(R.id.recycler_view);
             ui.findViewById(R.id.close_menu).setOnClickListener(new View.OnClickListener() {
@@ -150,17 +151,27 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             adapter.setOnItemClickListener(new GridRecyclerAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(RecyclerView parent, View view, int position) {
-                    if (mCategorys != null) ;
-                    //TODO
+                    if (mCategorys != null) {
+                        mCategory = mCategorys.get(position);
+                        updateBottonItem(mCategory);
+                        closePopWindow();
+                    }
                 }
             });
             mMenuRecyView.setAdapter(adapter);
             mPopupWindow.setContentView(ui);
             mPopupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
             mPopupWindow.setOutsideTouchable(true);
+            mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    scollview.setAlpha(1.0f);
+                }
+            });
             mPopupWindow.setFocusable(true);
         }
 
+        scollview.setAlpha(0.2f);
         if (!mPopupWindow.isShowing())
             mPopupWindow.showAsDropDown(view);
     }
@@ -169,7 +180,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         if (mPopupWindow != null && mPopupWindow.isShowing()) {
             mPopupWindow.dismiss();
             mPopupWindow = null;
-            scollview.setAlpha(1.0f);
+
         }
     }
 
@@ -188,7 +199,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     private void requsetCategoryList(SortEnum sEnum) {
         Map<String, Object> parm = new HashMap<>();
         parm.put("pid", mCategory.pid);
-        parm.put("sort", sEnum.NEW.getValue());
+        parm.put("sort", sEnum.getValue());
         String url = UrlUtil.getUrl(this, R.string.url_category_list);
         HttpClientProxy.getInstance().postAsynSQS(url, 200, parm, this);
     }
@@ -230,17 +241,20 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 AdvanceActivity.startActivity(getActivity());
                 break;
             case R.id.tv_hot:
-
+                requsetCategoryList(SortEnum.HOT);
                 break;
             case R.id.tv_new:
-
+                requsetCategoryList(SortEnum.NEW);
                 break;
             case R.id.tv_sell_count:
+                requsetCategoryList(SortEnum.VOLUME);
                 break;
             case R.id.tv_price:
+                requsetCategoryList(SortEnum.PRICE);
                 break;
         }
     }
+
 
 
     @Override
@@ -260,8 +274,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                     //TODO 默认 赋值
                     if (mCategorys != null && mCategorys.size() > 0) {
                         mCategory = mCategorys.get(0);
-                        mCatetoryTitle.setText(mCategorys.get(0).title);
-                        requsetCategoryList(SortEnum.HOT);
+                        updateBottonItem(mCategory);
                     }
                     break;
                 case 200:
@@ -277,6 +290,10 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     }
 
+    void updateBottonItem(CategoryBean categoryBean) {
+        mCatetoryTitle.setText(categoryBean.title);
+        requsetCategoryList(SortEnum.HOT);
+    }
 //    private void addProductListModule(CategoryBean category) {
 //        getChildFragmentManager().beginTransaction().replace(R.id.content, ItemFragment.newInstance(category), FRAGMENT_TAG).commit();
 //    }
