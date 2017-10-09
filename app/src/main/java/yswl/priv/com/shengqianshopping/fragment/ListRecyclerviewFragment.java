@@ -25,11 +25,14 @@ import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.L;
+import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.TimeBean;
+import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.ListRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
@@ -102,11 +105,23 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new ListRecyclerFragmentAdapter();
-
+        mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView parent, View view, int position) {
+                ToastUtil.showToast("点击了" + position);
+                List<ProductDetail> products = getmProductList();
+                if (products == null || products.size() == 0) return;
+                ProductDetail detail = products.get(position);
+                AlibcUtil.openAlibcPage(getActivity(), detail);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         requestData();
     }
 
+    public List<ProductDetail> getmProductList() {
+        return mProductList;
+    }
 
     /**
      * 1. pageNo | 可 | 页码 | 默认为1

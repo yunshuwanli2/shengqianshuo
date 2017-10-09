@@ -25,11 +25,14 @@ import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.L;
+import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
+import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter2;
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
@@ -50,6 +53,11 @@ public class GridRecyclerviewFragment2 extends MFragment implements HttpCallback
     private int GETDTATYPE = REFRESH;//当前获取数据方式（1刷新，2加载更多）
     private boolean ALLOWLOADMORE = true;//是否允许上拉加载
     private String lastId = "0";
+
+
+    public List<ProductDetail> getmProductList() {
+        return mProductList;
+    }
 
     public SerializableParamsMap getmParam1() {
         return mParam1;
@@ -98,7 +106,16 @@ public class GridRecyclerviewFragment2 extends MFragment implements HttpCallback
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new GridRecyclerFragmentAdapter2();
-
+        mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView parent, View view, int position) {
+                ToastUtil.showToast("点击了" + position);
+                List<ProductDetail> products = getmProductList();
+                if (products == null || products.size() == 0) return;
+                ProductDetail detail = products.get(position);
+                AlibcUtil.openAlibcPage(getActivity(), detail);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         requestData();
     }

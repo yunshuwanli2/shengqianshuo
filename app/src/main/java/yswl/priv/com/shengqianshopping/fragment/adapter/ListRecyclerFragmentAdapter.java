@@ -31,6 +31,16 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
         this.mProductList = mProductList;
     }
 
+
+    private GridRecyclerFragmentAdapter.OnItemClickListener onItemClickListener;
+    public GridRecyclerFragmentAdapter.OnItemClickListener getOnItemClickListener() {
+        return onItemClickListener;
+    }
+
+    public void setOnItemClickListener(GridRecyclerFragmentAdapter.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     public ListRecyclerFragmentAdapter() {
     }
 

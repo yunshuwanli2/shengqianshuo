@@ -45,7 +45,7 @@ import yswl.priv.com.shengqianshopping.util.UrlUtil;
 /**
  *
  */
-public class GridRecyclerviewFragment extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
+public class GridRecyclerviewFragment extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener, GridRecyclerFragmentAdapter.OnItemClickListener {
 
     private static final String TAG = GridRecyclerviewFragment.class.getSimpleName();
     private static final int REQUEST_ID = 1003;
@@ -210,5 +210,11 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         GETDTATYPE = REFRESH;
         ALLOWLOADMORE = true;
         requestData();
+    }
+
+    @Override
+    public void onItemClick(RecyclerView parent, View view, int position) {
+
+
     }
 }
