@@ -1,4 +1,3 @@
-/*
 package yswl.priv.com.shengqianshopping.view;
 
 import android.content.Context;
@@ -14,10 +13,7 @@ import com.aspsine.swipetoloadlayout.SwipeRefreshHeaderLayout;
 
 import yswl.priv.com.shengqianshopping.R;
 
-*/
-/**
- * Created by Aspsine on 2015/9/9.
- *//*
+
 
 public class TwitterRefreshHeaderView extends SwipeRefreshHeaderLayout {
 
@@ -126,4 +122,3 @@ public class TwitterRefreshHeaderView extends SwipeRefreshHeaderLayout {
     }
 
 }
-*/
