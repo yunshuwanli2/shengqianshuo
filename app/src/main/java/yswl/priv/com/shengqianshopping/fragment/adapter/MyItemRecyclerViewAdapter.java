@@ -6,11 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.BalanceDetailItemBean;
-import yswl.priv.com.shengqianshopping.fragment.BalanceDetailItemFragment.OnListFragmentInteractionListener;
-
-import java.util.List;
 
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
@@ -19,15 +18,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     }
 
     private List<BalanceDetailItemBean> mValues;
-    private final OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<BalanceDetailItemBean> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
-    }
 
-    public MyItemRecyclerViewAdapter(OnListFragmentInteractionListener mListener) {
-        this.mListener = mListener;
+    public MyItemRecyclerViewAdapter() {
     }
 
 
@@ -40,21 +33,10 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
         holder.mTitle.setText(mValues.get(position).title);
         holder.mContentView.setText(mValues.get(position).content);
         holder.mTime.setText(mValues.get(position).title);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
     }
 
     @Override
@@ -67,7 +49,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public final TextView mTitle;
         public final TextView mContentView;
         public final TextView mTime;
-        public BalanceDetailItemBean mItem;
 
         public ViewHolder(View view) {
             super(view);

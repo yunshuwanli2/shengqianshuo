@@ -80,7 +80,7 @@ public class WithDrawItemFragment extends MFragment implements HttpCallback<JSON
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new MyWithdrawItemRecyclerViewAdapter(mListener);
+            mAdapter = new MyWithdrawItemRecyclerViewAdapter();
             recyclerView.setAdapter(mAdapter);
         }
         requstDate();
@@ -98,12 +98,6 @@ public class WithDrawItemFragment extends MFragment implements HttpCallback<JSON
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
     }
 
     @Override

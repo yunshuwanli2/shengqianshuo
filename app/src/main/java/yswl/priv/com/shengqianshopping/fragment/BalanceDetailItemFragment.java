@@ -35,7 +35,6 @@ public class BalanceDetailItemFragment extends MFragment implements HttpCallback
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -79,7 +78,7 @@ public class BalanceDetailItemFragment extends MFragment implements HttpCallback
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new MyItemRecyclerViewAdapter(mListener);
+            mAdapter = new MyItemRecyclerViewAdapter();
             recyclerView.setAdapter(mAdapter);
         }
         requestData();
@@ -99,18 +98,11 @@ public class BalanceDetailItemFragment extends MFragment implements HttpCallback
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     List<BalanceDetailItemBean> balanceDetailItemBeans;
@@ -130,8 +122,4 @@ public class BalanceDetailItemFragment extends MFragment implements HttpCallback
 
     }
 
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(BalanceDetailItemBean item);
-    }
 }

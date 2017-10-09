@@ -24,7 +24,7 @@ import yswl.priv.com.shengqianshopping.fragment.WithDrawItemFragment;
 import yswl.priv.com.shengqianshopping.view.SlidingTabLayout;
 
 
-public class BalanceOfPaymentDetailActivity extends MToolBarActivity implements BalanceDetailItemFragment.OnListFragmentInteractionListener, WithDrawItemFragment.OnListFragmentInteractionListener {
+public class BalanceOfPaymentDetailActivity extends MToolBarActivity {
     public static void startAct(Context context) {
         context.startActivity(new Intent(context, BalanceOfPaymentDetailActivity.class));
     }
@@ -67,15 +67,6 @@ public class BalanceOfPaymentDetailActivity extends MToolBarActivity implements 
 
     }
 
-    @Override
-    public void onListFragmentInteraction(OrderBean item) {
-        //TODO 提现详情
-    }
-
-    @Override
-    public void onListFragmentInteraction(BalanceDetailItemBean item) {
-        //TODO 收入明细
-    }
 
     class BalanceOfPaymentAdapter extends FragmentPagerAdapter {
         List<MFragment> fragments;

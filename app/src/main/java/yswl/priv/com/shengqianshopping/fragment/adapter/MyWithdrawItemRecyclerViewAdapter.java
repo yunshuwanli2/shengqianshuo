@@ -19,11 +19,7 @@ public class MyWithdrawItemRecyclerViewAdapter extends RecyclerView.Adapter<MyWi
     }
 
     private List<OrderBean> mValues;
-    private final OnListFragmentInteractionListener mListener;
 
-    public MyWithdrawItemRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
-        mListener = listener;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,22 +30,12 @@ public class MyWithdrawItemRecyclerViewAdapter extends RecyclerView.Adapter<MyWi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
         holder.mOrder.setText(mValues.get(position).order);
         holder.mAmount.setText(mValues.get(position).amount);
         holder.mStatus.setText(mValues.get(position).status);
         holder.mDateTime.setText(mValues.get(position).dateTime);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+
     }
 
     @Override
@@ -63,7 +49,6 @@ public class MyWithdrawItemRecyclerViewAdapter extends RecyclerView.Adapter<MyWi
         public final TextView mAmount;
         public final TextView mStatus;
         public final TextView mDateTime;
-        public OrderBean mItem;
 
         public ViewHolder(View view) {
             super(view);
