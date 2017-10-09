@@ -2,14 +2,7 @@ apply plugin: 'com.android.application'
 apply from: '../version.gradle'
 
 android {
-    signingConfigs {
-        Alidebug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file('C:/Users/Administrator/Desktop/yunshuwanliMAC/Android_Studio_key/local_mac_debug_key/debug.keystore')
-            storePassword 'android'
-        }
-    }
+
     compileSdkVersion MCompileSdkVersion
     buildToolsVersion MBuildToolsVersion
     defaultConfig {
@@ -24,9 +17,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            signingConfig signingConfigs.Alidebug
         }
     }
     buildTypes {
@@ -74,4 +64,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.3.0'
+    compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
 }
