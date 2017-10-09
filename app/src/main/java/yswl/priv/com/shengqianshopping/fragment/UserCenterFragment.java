@@ -49,8 +49,8 @@ import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
  * Emial kangpeng@yunhetong.net
  */
 
-public class UserInfoFragment2 extends MFragment {
-    public static final String TAG = UserInfoFragment2.class.getSimpleName();
+public class UserCenterFragment extends MFragment {
+    public static final String TAG = UserCenterFragment.class.getSimpleName();
     @BindView(R.id.iv_head)
     ImageView ivHead;
 

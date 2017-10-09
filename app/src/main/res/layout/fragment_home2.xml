@@ -87,7 +87,7 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/ic_crazy_bug" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/ic_recommed" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -127,7 +127,7 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/ic_top_100" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -147,7 +147,7 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/ic_advance" />
 
                     <TextView
                         android:layout_width="match_parent"

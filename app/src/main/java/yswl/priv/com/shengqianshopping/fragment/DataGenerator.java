@@ -22,7 +22,7 @@ public class DataGenerator {
         fragments[0] = new HomeFragment2();
         fragments[2] = new RebateFragment();
         fragments[1] = new PinkageFragment();
-        fragments[3] = new UserInfoFragment2();
+        fragments[3] = new UserCenterFragment();
         return fragments;
     }
 
