@@ -108,7 +108,7 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@color/colorAccent" />
+                        android:src="@mipmap/ic_sqtx" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@color/colorAccent" />
+                        android:src="@mipmap/ic_sign" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -172,7 +172,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@mipmap/ic_zuji" />
 
 
                 <TextView
@@ -216,7 +216,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@mipmap/ic_szmx" />
 
 
                 <TextView
@@ -260,7 +260,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@mipmap/ic_fans" />
 
 
                 <TextView
@@ -314,7 +314,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@mipmap/ic_order" />
 
 
                 <TextView
@@ -358,7 +358,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@mipmap/ic_tb_shopping_cat" />
 
 
                 <TextView
@@ -412,7 +412,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@mipmap/ic_yxb" />
 
 
                 <TextView
@@ -456,7 +456,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@mipmap/ic_yjyq" />
 
 
                 <TextView
@@ -500,7 +500,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@mipmap/ic_kf" />
 
 
                 <TextView
@@ -544,7 +544,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@mipmap/ic_setting" />
 
 
                 <TextView
@@ -584,7 +584,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="save RMB 0.0"
+                    android:text="用省多多节省  0.0"
                     android:textColor="@color/background_dark"
                     android:textSize="18sp" />
 

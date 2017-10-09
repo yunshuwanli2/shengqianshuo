@@ -163,6 +163,7 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
         Map<String, Object> map = new HashMap<>();
         map.put("like", key);
         map.put("count", 20);
+        map.put("lastId", 0);
         HttpClientProxy.getInstance().postAsynSQS(url, 1002, map, this);
     }
 
