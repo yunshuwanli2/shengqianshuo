@@ -1,9 +1,11 @@
 package yswl.priv.com.shengqianshopping.fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,18 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
     private static final int REQUEST_ID = 1003;
 
     private static final String ARG_PARAM1 = "param1";
+
+
+    private boolean hotAsc = false;//升序:asc 降序:desc-默认--人气
+    private boolean newAsc = false;//升序:asc 降序:desc-默认--最新
+    private boolean volumeAsc = false;//升序:asc 降序:desc-默认--销量
+    private boolean priceAsc = false;//升序:asc 降序:desc-默认--价格
+
+    private Drawable drawableAsc;
+    private Drawable drawableDesc;
+    private TextView lastTv;
+    private int currentPosition = 0;
+
 
     public CategoryBean getmCategory() {
         return mCategory;
@@ -83,16 +97,24 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
+        drawableAsc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_ace);
+        drawableDesc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_desc);
+        drawableAsc.setBounds(0, 0, drawableAsc.getMinimumWidth(), drawableAsc.getMinimumHeight());//对图片进行压缩
+        drawableDesc.setBounds(0, 0, drawableDesc.getMinimumWidth(), drawableDesc.getMinimumHeight());//对图片进行压缩
 
         mFragments = DataGenerator.getRecyclerViewFragments(mCategory);
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.content, mFragments[0])
                 .commitAllowingStateLoss();
+        currentPosition = 0;
+        hotProduct.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+        lastTv = hotProduct;
     }
 
     private MFragment[] mFragments;
     private int index = 0;
-    @OnClick({R.id.tv_hot,R.id.tv_new,R.id.tv_price,R.id.tv_sell_count})
+
+    @OnClick({R.id.tv_hot, R.id.tv_new, R.id.tv_price, R.id.tv_sell_count})
     public void onClick(View v) {
         int postion = 0;
         MFragment fragment = null;
@@ -101,18 +123,86 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
             case R.id.tv_hot:
                 fragment = mFragments[0];
                 postion = 0;
+                if (currentPosition == 0) {
+                    hotAsc = !hotAsc;
+                    if (hotAsc) {
+                        hotProduct.setCompoundDrawables(null, null, drawableAsc, null);
+                    } else {
+                        hotProduct.setCompoundDrawables(null, null, drawableDesc, null);
+                    }
+                    ((GridRecyclerviewFragment) fragment).setAsc(hotAsc);
+                } else {
+                    currentPosition = 0;
+                    if (lastTv != null) {
+                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                    }
+                    hotProduct.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+                    lastTv = hotProduct;
+                }
+                ((GridRecyclerviewFragment) fragment).requestData();
                 break;
             case R.id.tv_new:
                 fragment = mFragments[1];
                 postion = 1;
+                if (currentPosition == 1) {
+                    newAsc = !newAsc;
+                    if (newAsc) {
+                        newProduct.setCompoundDrawables(null, null, drawableAsc, null);
+                    } else {
+                        newProduct.setCompoundDrawables(null, null, drawableDesc, null);
+                    }
+                    ((GridRecyclerviewFragment) fragment).setAsc(newAsc);
+                } else {
+                    currentPosition = 1;
+                    if (lastTv != null) {
+                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                    }
+                    newProduct.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+                    lastTv = newProduct;
+                }
+                ((GridRecyclerviewFragment) fragment).requestData();
                 break;
             case R.id.tv_sell_count:
                 fragment = mFragments[2];
                 postion = 2;
+                if (currentPosition == 2) {
+                    volumeAsc = !volumeAsc;
+                    if (volumeAsc) {
+                        sellCountProduct.setCompoundDrawables(null, null, drawableAsc, null);
+                    } else {
+                        sellCountProduct.setCompoundDrawables(null, null, drawableDesc, null);
+                    }
+                    ((GridRecyclerviewFragment) fragment).setAsc(volumeAsc);
+                } else {
+                    currentPosition = 2;
+                    if (lastTv != null) {
+                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                    }
+                    sellCountProduct.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+                    lastTv = sellCountProduct;
+                }
+                ((GridRecyclerviewFragment) fragment).requestData();
                 break;
             case R.id.tv_price:
                 fragment = mFragments[3];
                 postion = 3;
+                if (currentPosition == 3) {
+                    priceAsc = !priceAsc;
+                    if (priceAsc) {
+                        priceProduct.setCompoundDrawables(null, null, drawableAsc, null);
+                    } else {
+                        priceProduct.setCompoundDrawables(null, null, drawableDesc, null);
+                    }
+                    ((GridRecyclerviewFragment) fragment).setAsc(priceAsc);
+                } else {
+                    currentPosition = 3;
+                    if (lastTv != null) {
+                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                    }
+                    priceProduct.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+                    lastTv = priceProduct;
+                }
+                ((GridRecyclerviewFragment) fragment).requestData();
                 break;
         }
         if (fragment == null) return;

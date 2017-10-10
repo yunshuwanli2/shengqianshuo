@@ -66,6 +66,8 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
     private boolean ALLOWLOADMORE = true;//是否允许上拉加载
     private String lastId = "0";
 
+    private boolean asc = false;
+
     public List<ProductDetail> getmProductList() {
         return mProductList;
     }
@@ -149,6 +151,11 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
             Map<String, Object> parm = mParam1.map;
             parm.put("lastId", lastId);
             parm.put("count", "20");
+            if(asc){
+                parm.put("sortBy", "asc");
+            }else{
+                parm.put("sortBy", "desc");
+            }
             String url = UrlUtil.getUrl(this, R.string.url_category_list);
             HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, parm, this);
         }
@@ -216,5 +223,13 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
     public void onItemClick(RecyclerView parent, View view, int position) {
 
 
+    }
+
+    public boolean isAsc() {
+        return asc;
+    }
+
+    public void setAsc(boolean asc) {
+        this.asc = asc;
     }
 }
