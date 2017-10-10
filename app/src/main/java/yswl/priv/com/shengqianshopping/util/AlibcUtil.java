@@ -2,6 +2,7 @@ package yswl.priv.com.shengqianshopping.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.ali.auth.third.login.callback.LogoutCallback;
@@ -20,6 +21,7 @@ import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
 import java.util.HashMap;
 import java.util.Map;
 
+import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
@@ -33,6 +35,19 @@ import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
 public class AlibcUtil {
 
     private static final String TAG = AlibcUtil.class.getSimpleName();
+
+    public static void openBrower(ProductDetail detail, Activity context) {
+        String jumpUrl = detail.couponClickUrl;
+        if (TextUtils.isEmpty(jumpUrl)) {
+            jumpUrl = detail.clickUrl;
+        }
+
+        if (TextUtils.isEmpty(jumpUrl)) {
+            jumpUrl = detail.itemUrl;
+        }
+
+        BrowserActivity.start(detail.title, jumpUrl, context);
+    }
 
     //打开详情
     public static void openAlibcPage(Activity context, ProductDetail detail) {

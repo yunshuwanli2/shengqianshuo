@@ -128,7 +128,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
                 List<ProductDetail> products = getmProductList();
                 if (products == null || products.size() == 0) return;
                 ProductDetail detail = products.get(position);
-                AlibcUtil.openAlibcPage(getActivity(), detail);
+                AlibcUtil.openBrower(detail, getActivity());
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -151,9 +151,9 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
             Map<String, Object> parm = mParam1.map;
             parm.put("lastId", lastId);
             parm.put("count", "20");
-            if(asc){
+            if (asc) {
                 parm.put("sortBy", "asc");
-            }else{
+            } else {
                 parm.put("sortBy", "desc");
             }
             String url = UrlUtil.getUrl(this, R.string.url_category_list);

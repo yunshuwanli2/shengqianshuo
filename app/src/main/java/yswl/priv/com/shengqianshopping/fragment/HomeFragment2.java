@@ -184,7 +184,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 List<ProductDetail> products = getProductList();
                 if (products == null || products.size() == 0) return;
                 ProductDetail detail = products.get(position);
-                AlibcUtil.openAlibcPage(getActivity(), detail);
+                AlibcUtil.openBrower(detail, getActivity());
             }
         });
         mRecyclerView.setAdapter(mAdapter);

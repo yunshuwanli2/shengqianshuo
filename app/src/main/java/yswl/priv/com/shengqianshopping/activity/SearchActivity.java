@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import yswl.com.klibrary.base.MActivity;
+import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.http.okhttp.MDeviceUtil;
@@ -44,6 +45,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 public class SearchActivity extends MActivity implements HttpCallback<JSONObject> {
@@ -121,34 +123,13 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
                 List<ProductDetail> products = mProductList;
                 if (products == null || products.size() == 0) return;
                 ProductDetail detail = products.get(position);
-                openAlibcPage(detail);
+                AlibcUtil.openBrower(detail, SearchActivity.this);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
 
     }
 
-
-    void openAlibcPage(ProductDetail detail) {
-        Map<String, String> exParams = new HashMap<>();
-        exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
-        //商品详情page
-        AlibcBasePage detailPage = new AlibcDetailPage(detail.iid);
-        //设置页面打开方式
-        AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
-        AlibcTrade.show(this, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
-
-            @Override
-            public void onTradeSuccess(TradeResult tradeResult) {
-                //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
-            }
-        });
-    }
 
     /**
      * 1. like | 不可 | 查询关键字 | 女装
