@@ -13,6 +13,7 @@ import java.util.List;
 
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
+import yswl.priv.com.shengqianshopping.util.MTextViewUtil;
 
 /**
  * Created by yunshuwanli on 17/10/1.
@@ -75,6 +76,10 @@ public class GridRecyclerFragmentAdapter2 extends RecyclerView.Adapter<GridRecyc
         holder.produce_buy_count.setText(detail.getVolume());
         holder.product_desc.setText(detail.title);
         holder.product_price.setText(detail.couponPrice);
+        if ("0".equalsIgnoreCase(detail.userType))//0是淘宝 1是天猫
+            MTextViewUtil.setCompoundDrawablesLeft(holder.product_desc, R.mipmap.ic_drawleft_tb);
+        else
+            MTextViewUtil.setCompoundDrawablesLeft(holder.product_desc, R.mipmap.ic_drawleft_tm);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

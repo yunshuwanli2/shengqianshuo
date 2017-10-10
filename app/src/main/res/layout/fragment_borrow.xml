@@ -6,7 +6,6 @@
    >
 
     <RelativeLayout
-        android:background="@mipmap/ic_banner_1"
         android:layout_width="match_parent"
         android:fitsSystemWindows="true"
         android:layout_height="120dp">

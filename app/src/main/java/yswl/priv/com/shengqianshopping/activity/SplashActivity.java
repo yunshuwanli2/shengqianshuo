@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONObject;
 
@@ -53,7 +55,7 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
         mTextView.setVisibility(View.GONE);
         request();
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.2f, 1f);
-        alphaAnimation.setDuration(3000);
+        alphaAnimation.setDuration(2000);
         screenImg.startAnimation(alphaAnimation);
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -75,7 +77,6 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
 
         });
 
-
     }
 
 
@@ -83,7 +84,6 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
         String url = UrlUtil.getUrl(this, R.string.url_splash_screen);
         HttpClientProxy.getInstance().postAsynSQS(url, 1, null, this);
     }
-
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
@@ -100,7 +100,7 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
             });
 
             if (!TextUtils.isEmpty(aDbean.imgUrl)) {
-                Glide.with(this).asDrawable().load(aDbean.imgUrl).into(screenImg);
+                Glide.with(this).load(aDbean.imgUrl).transition(new DrawableTransitionOptions().crossFade(1000)).apply(new RequestOptions().placeholder(R.mipmap.app_launch_bg)).into(screenImg);
             }
 
             if (!TextUtils.isEmpty(aDbean.link)) {

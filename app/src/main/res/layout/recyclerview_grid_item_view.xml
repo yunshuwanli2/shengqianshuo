@@ -14,8 +14,7 @@
             android:id="@+id/iv_product_preview"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_app" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tv_coup_price"
@@ -23,11 +22,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@color/colorAccent"
-            android:padding="5dp"
+            android:background="@color/red2"
+            android:padding="3dp"
             android:text="券:￥3"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
 
     </RelativeLayout>
@@ -36,14 +35,14 @@
         android:id="@+id/tv_product_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_allow_right"
-        android:drawablePadding="2dp"
+        android:drawableLeft="@mipmap/ic_drawleft_tb"
+        android:drawablePadding="4dp"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="1"
         android:padding="2dp"
         android:text="笔袋金牌卖家出品"
-        android:textColor="@color/colorAccent" />
+        android:textSize="12sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -56,7 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="券后 ：" />
+            android:text="券后 ："
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_product_price"
@@ -65,7 +65,8 @@
             android:layout_toEndOf="@+id/text"
             android:layout_toRightOf="@+id/text"
             android:text="￥ 2000000"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_number_people"
@@ -74,7 +75,8 @@
             android:layout_toLeftOf="@+id/text2"
             android:layout_toStartOf="@+id/text2"
             android:text="2000"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/text2"
@@ -83,7 +85,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="人已买"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12sp" />
     </RelativeLayout>
 
 </LinearLayout>

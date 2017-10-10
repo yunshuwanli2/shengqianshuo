@@ -13,6 +13,7 @@ import java.util.List;
 
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
+import yswl.priv.com.shengqianshopping.util.MTextViewUtil;
 
 /**
  * Created by yunshuwanli on 17/10/1.
@@ -71,10 +72,21 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
     @Override
     public void onBindViewHolder(GridRecyHolder holder, final int position) {
         ProductDetail detail = mProductList.get(position);
-        holder.coup_price.setText(detail.getCouponNum());
+
         Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
         holder.produce_buy_count.setText(detail.getVolume());
         holder.product_desc.setText(detail.title);
+        if ("0".equalsIgnoreCase(detail.userType))//0是淘宝 1是天猫
+            MTextViewUtil.setCompoundDrawablesLeft(holder.product_desc, R.mipmap.ic_drawleft_tb);
+        else
+            MTextViewUtil.setCompoundDrawablesLeft(holder.product_desc, R.mipmap.ic_drawleft_tm);
+
+        if ("0".equalsIgnoreCase(detail.couponNum)) {
+            holder.coup_price.setVisibility(View.GONE);
+        } else {
+            holder.coup_price.setVisibility(View.VISIBLE);
+            holder.coup_price.setText(detail.getCouponNum());
+        }
         holder.product_price.setText(detail.couponPrice);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

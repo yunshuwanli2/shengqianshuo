@@ -38,9 +38,9 @@ public class BannerUtil {
      */
     private void setDefulBanner(List<BannerBean> imgs) {
         imgs = new ArrayList<>();
-        imgs.add(new BannerBean("" + R.mipmap.ic_banner_1));
-        imgs.add(new BannerBean("" + R.mipmap.ic_banner_1));
-        imgs.add(new BannerBean("" + R.mipmap.ic_banner_1));
+        imgs.add(new BannerBean("" + R.mipmap.bg_tool));
+        imgs.add(new BannerBean("" + R.mipmap.bg_tool));
+        imgs.add(new BannerBean("" + R.mipmap.bg_tool));
         setLocalPic(imgs);
     }
 
