@@ -135,56 +135,61 @@
                 android:layout_height="10dp"
                 android:background="@color/lighter_gray" />
 
-            <LinearLayout
+            <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_hot"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="人气" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_new"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="最新" />
+                        <TextView
+                            android:id="@+id/tv_hot"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="人气" />
 
-                    <TextView
-                        android:id="@+id/tv_sell_count"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="销量" />
+                        <TextView
+                            android:id="@+id/tv_new"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="最新" />
 
-                    <TextView
-                        android:id="@+id/tv_price"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="价格" />
+                        <TextView
+                            android:id="@+id/tv_sell_count"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="销量" />
 
+                        <TextView
+                            android:id="@+id/tv_price"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="价格" />
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
                 </LinearLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+            </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

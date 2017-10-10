@@ -62,6 +62,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     @Subscribe(sticky = true)
     public void onEvent(UserInfoRequestEvent event) {
         EventBus.getDefault().removeStickyEvent(UserInfoRequestEvent.class);
+        requestUserInfo();
     }
 
     public static void publishUserInfoRequestEvent() {
@@ -134,7 +135,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
             R.id.user_info_ll_balance_of_payments, R.id.user_info_ll_fans,
             R.id.user_info_ll_order, R.id.user_info_ll_shopping_cart,
             R.id.user_info_ll_heroes_list, R.id.user_info_ll_invitation,
-            R.id.user_info_ll_customer_service})
+            R.id.user_info_ll_customer_service, R.id.ll_sqtx, R.id.ll_sign_day})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.user_info_ll_setting:
@@ -151,7 +152,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 break;
             case R.id.user_info_ll_fans:
                 //TODO 我的粉丝
-                if (UserManager.isLogin(getContext()))
+                if (UserManager.isOnlin(getContext()))
                     MyFansActivity.startAct(getActivity());
                 else
                     LoginActivity.startActivity(getActivity());
@@ -163,8 +164,10 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 AlibcUtil.gotoAliShoppingChe(getActivity());
                 break;
             case R.id.user_info_ll_heroes_list:
-                if (UserManager.isLogin(getContext()))
+                if (UserManager.isOnlin(getContext()))
                     startActivity(new Intent(activity, ScoreboardActivity.class));
+                else
+                    LoginActivity.startActivity(getActivity());
                 break;
             case R.id.user_info_ll_invitation:
                 //TODO 邀请
@@ -172,6 +175,12 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 break;
             case R.id.user_info_ll_customer_service:
                 //TODO 客服
+                break;
+            case R.id.ll_sqtx:
+                //TODO 申请提现
+                break;
+            case R.id.ll_sign_day:
+                //TODO 签到有礼
                 break;
         }
     }
@@ -207,9 +216,8 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
             UserBean userInfo = UserBean.jsonToBean(ResultUtil.analysisData(result));
             updateUI(userInfo);
             //保存状态
-            UserManager.saveInfo(getActivity(), ResultUtil.analysisData(result).toString());
             UserManager.saveLogin(getActivity());
-
+            UserManager.saveInfo(getActivity(), ResultUtil.analysisData(result).toString());
         }
     }
 

@@ -96,6 +96,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:id="@+id/ll_sqtx"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -124,6 +125,7 @@
                     android:background="@color/app_main_bg" />
 
                 <LinearLayout
+                    android:id="@+id/ll_sign_day"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
