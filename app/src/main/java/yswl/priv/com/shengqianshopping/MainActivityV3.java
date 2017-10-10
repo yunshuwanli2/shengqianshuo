@@ -11,6 +11,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 
 import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.base.MFragment;
+import yswl.com.klibrary.manager.ActivityManager;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.fragment.DataGenerator;
@@ -30,8 +31,8 @@ public class MainActivityV3 extends MActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_v3);
 
+        setContentView(R.layout.activity_main_v3);
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
@@ -73,7 +74,6 @@ public class MainActivityV3 extends MActivity {
     private int index = 0;
 
     private void onTabItemSelected(int postion) {
-        if (index == postion) return;
         Fragment fragment = null;
         switch (postion) {
             case 0:
@@ -101,6 +101,10 @@ public class MainActivityV3 extends MActivity {
         ft.show(fragment); // 显示目标tab
         ft.commitAllowingStateLoss();
         index = postion;
+    }
+
+
+    public void gotoHomeTab() {
     }
 
 }

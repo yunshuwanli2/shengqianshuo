@@ -23,8 +23,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
+import yswl.priv.com.shengqianshopping.MainActivity;
+import yswl.priv.com.shengqianshopping.MainActivityV3;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.BalanceOfPaymentDetailActivity;
 import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
@@ -35,6 +38,7 @@ import yswl.priv.com.shengqianshopping.activity.ScoreboardActivity;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.UserBean;
+import yswl.priv.com.shengqianshopping.event.ExitEvent;
 import yswl.priv.com.shengqianshopping.event.UserInfoRequestEvent;
 import yswl.priv.com.shengqianshopping.event.UserInfoEvent;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
@@ -70,6 +74,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
         EventBus.getDefault().removeStickyEvent(UserInfoRequestEvent.class);
         EventBus.getDefault().postSticky(new UserInfoRequestEvent());
     }
+
 
     /***************EvenBus end***********************/
 
@@ -133,6 +138,71 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     }
 
 
+    public boolean isLogin() {
+        return UserManager.isLogin(getContext());
+    }
+
+    public boolean isAuth() {
+        return UserManager.isBindPhone(getContext());
+    }
+
+
+    private void gotoHome() {
+        MActivity act = getMActivity();
+        if (act instanceof MainActivityV3) {
+            ((MainActivityV3) act).gotoHomeTab();
+        }
+    }
+
+
+    @Override
+    public void onSucceed(int requestId, JSONObject result) {
+        if (requestId == GET_USERINFO_REQUESTID && ResultUtil.isCodeOK(result)) {
+            Log.i("znh", result.toString() + "----用户详细信息");
+            UserBean userInfo = UserBean.jsonToBean(ResultUtil.analysisData(result));
+            updateUI(userInfo);
+            //保存状态
+            UserManager.saveLogin(getActivity());
+            UserManager.saveInfo(getActivity(), ResultUtil.analysisData(result).toString());
+        }
+    }
+
+    @Override
+    public void onFail(int requestId, String errorMsg) {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!isLogin()) {
+            LoginActivity.startActivity(getActivity());
+        } else if (!isAuth()) {
+            BindPhoneActivity.startActivity(getActivity());
+        } else {
+            updateUI(UserManager.getUserInfo(activity));
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
     @OnClick({R.id.user_info_ll_setting, R.id.user_info_ll_tracks,
             R.id.user_info_ll_balance_of_payments, R.id.user_info_ll_fans,
             R.id.user_info_ll_order, R.id.user_info_ll_shopping_cart,
@@ -185,59 +255,5 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 //TODO 签到有礼
                 break;
         }
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
-
-    //初始化界面--登录状态设置头像-昵称
-    private void initUserInfo() {
-//        if (SharedPreUtils.getInstance(activity).getBooleanValueBySharedPreferences(SharedPreUtils.ISONLINE, false)) {
-
-//        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-
-    public boolean isLogin() {
-        return UserManager.isLogin(getContext());
-    }
-
-    public boolean isAuth() {
-        return UserManager.isBindPhone(getContext());
-    }
-
-
-    @Override
-    public void onSucceed(int requestId, JSONObject result) {
-        if (requestId == GET_USERINFO_REQUESTID && ResultUtil.isCodeOK(result)) {
-            Log.i("znh", result.toString() + "----用户详细信息");
-            UserBean userInfo = UserBean.jsonToBean(ResultUtil.analysisData(result));
-            updateUI(userInfo);
-            //保存状态
-            UserManager.saveLogin(getActivity());
-            UserManager.saveInfo(getActivity(), ResultUtil.analysisData(result).toString());
-        }
-    }
-
-    @Override
-    public void onFail(int requestId, String errorMsg) {
-
     }
 }

@@ -106,7 +106,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
             UserManager.saveUid(this, uid);
             UserManager.saveBindPhoneState(this, phoneStatus);
 
-            if (UserManager.isBindPhone(this)) {
+            if (!UserManager.isBindPhone(this)) {
                 BindPhoneActivity.startActivity(this);
             } else {
                 UserCenterFragment.publishUserInfoRequestEvent();

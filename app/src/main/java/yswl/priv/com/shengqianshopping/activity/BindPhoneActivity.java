@@ -157,6 +157,11 @@ public class BindPhoneActivity extends MToolBarActivity implements HttpCallback<
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();

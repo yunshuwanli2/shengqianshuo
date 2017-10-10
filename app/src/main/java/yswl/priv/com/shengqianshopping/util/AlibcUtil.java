@@ -23,6 +23,7 @@ import java.util.Map;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
+import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
 
 /**
  * Created by kangpAdministrator on 2017/10/9 0009.
@@ -109,8 +110,6 @@ public class AlibcUtil {
             public void onSuccess() {
                 //TODO 发出退出全局信息
                 Toast.makeText(activity, "退出登录成功", Toast.LENGTH_SHORT).show();
-                //设置退出状态
-                SharedPreUtils.getInstance(activity).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, false);
                 //清除数据
                 SharedPreUtils.getInstance(activity).clearAllData();
             }
