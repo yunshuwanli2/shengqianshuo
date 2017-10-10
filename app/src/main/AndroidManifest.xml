@@ -17,11 +17,13 @@
         tools:replace="android:allowBackup">
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoToolBar.Main" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".MainActivityV3"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoToolBar.Main" />
         <activity
             android:name=".activity.ScrollingActivity"

@@ -23,6 +23,7 @@ import java.util.Map;
 
 import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.com.klibrary.util.L;
+import yswl.priv.com.shengqianshopping.MainActivityV3;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
@@ -127,6 +128,7 @@ public class AlibcUtil {
                 Toast.makeText(activity, "退出登录成功", Toast.LENGTH_SHORT).show();
                 //清除数据
                 SharedPreUtils.getInstance(activity).clearAllData();
+                MainActivityV3.publishHomeTabEvent();
             }
 
             @Override

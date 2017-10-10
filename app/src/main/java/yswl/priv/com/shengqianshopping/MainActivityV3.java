@@ -9,12 +9,17 @@ import android.support.v4.app.FragmentTransaction;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.manager.ActivityManager;
 import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
+import yswl.priv.com.shengqianshopping.event.ExitEvent;
+import yswl.priv.com.shengqianshopping.event.UserInfoRequestEvent;
 import yswl.priv.com.shengqianshopping.fragment.DataGenerator;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 
@@ -32,8 +37,8 @@ public class MainActivityV3 extends MActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main_v3);
+
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
@@ -120,7 +125,32 @@ public class MainActivityV3 extends MActivity {
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(ExitEvent event) {
+        EventBus.getDefault().removeStickyEvent(ExitEvent.class);
+        gotoHomeTab();
+    }
+
+    public static void publishHomeTabEvent() {
+        EventBus.getDefault().removeStickyEvent(ExitEvent.class);
+        EventBus.getDefault().postSticky(new ExitEvent());
+    }
+
+
     public void gotoHomeTab() {
+        bottomNavigationBar.selectTab(0, true);
     }
 
 }
