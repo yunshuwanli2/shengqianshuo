@@ -4,42 +4,38 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.alibaba.baichuan.android.trade.AlibcTrade;
-import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
-import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
-import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
-import com.alibaba.baichuan.android.trade.model.OpenType;
-import com.alibaba.baichuan.android.trade.model.TradeResult;
-import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
-import com.alibaba.baichuan.android.trade.page.AlibcMyCartsPage;
-import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
 import com.bumptech.glide.Glide;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import yswl.com.klibrary.base.MFragment;
-import yswl.com.klibrary.imgloader.ImageLoaderProxy;
-import yswl.com.klibrary.util.L;
+import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.BalanceOfPaymentDetailActivity;
+import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
 import yswl.priv.com.shengqianshopping.activity.InvitationActivity;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.activity.MyFansActivity;
 import yswl.priv.com.shengqianshopping.activity.ScoreboardActivity;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
+import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.UserBean;
+import yswl.priv.com.shengqianshopping.event.UserInfoRequestEvent;
+import yswl.priv.com.shengqianshopping.event.UserInfoEvent;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
@@ -49,8 +45,35 @@ import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
  * Emial kangpeng@yunhetong.net
  */
 
-public class UserCenterFragment extends MFragment {
+public class UserCenterFragment extends MFragment implements HttpCallback<JSONObject> {
     public static final String TAG = UserCenterFragment.class.getSimpleName();
+
+    /***************EvenBus start***********************/
+    @Subscribe(sticky = true)
+    public void onEvent(UserInfoEvent event) {
+        EventBus.getDefault().removeStickyEvent(UserInfoEvent.class);
+        updateUI(event.user);
+    }
+
+    public static void publishUpdateUserInfoEvent(UserBean userinfo) {
+        EventBus.getDefault().postSticky(new UserInfoEvent(userinfo));
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(UserInfoRequestEvent event) {
+        EventBus.getDefault().removeStickyEvent(UserInfoRequestEvent.class);
+    }
+
+    public static void publishUserInfoRequestEvent() {
+        EventBus.getDefault().postSticky(new UserInfoRequestEvent());
+    }
+
+    /***************EvenBus end***********************/
+
+    public static MFragment newInstance() {
+        return new UserCenterFragment();
+    }
+
     @BindView(R.id.iv_head)
     ImageView ivHead;
 
@@ -78,33 +101,44 @@ public class UserCenterFragment extends MFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        LinearLayout ll_head = (LinearLayout) view.findViewById(R.id.ll_head);
-        ImageView head = (ImageView) view.findViewById(R.id.iv_head);
-        TextView username = (TextView) view.findViewById(R.id.tv_user_name);
-        ll_head.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!UserManager.isOnline(getActivity()))
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-            }
-        });
-        initView();
+//        LinearLayout ll_head = (LinearLayout) view.findViewById(R.id.ll_head);
+//        ImageView head = (ImageView) view.findViewById(R.id.iv_head);
+//        TextView username = (TextView) view.findViewById(R.id.tv_user_name);
+
+        if (!isLogin()) {
+            LoginActivity.startActivity(getActivity());
+        } else if (!isAuth()) {
+            BindPhoneActivity.startActivity(getActivity());
+        } else {
+            updateUI(UserManager.getUserInfo(activity));
+        }
+    }
+
+    private final int GET_USERINFO_REQUESTID = 1003;
+
+    void requestUserInfo() {
+        String uid = SharedPreUtils.getInstance(getActivity()).getValueBySharedPreferences(SharedPreUtils.UID, "");
+        UserManager.rquestUserInfoDetail(getActivity(), uid, this, GET_USERINFO_REQUESTID);
+    }
+
+    void updateUI(UserBean userBean) {
+        if (userBean == null) return;
+        tvUserName.setText(userBean.getNickname());
+        Glide.with(activity).load(userBean.getAvatar()).into(ivHead);
+        tvBalance.setText("¥" + userBean.getAsset().getRemainder());
+        tvIntegral.setText(userBean.getAsset().getIntegral() + "");
     }
 
 
-    @OnClick({R.id.ll_head, R.id.user_info_ll_setting, R.id.user_info_ll_tracks,
+    @OnClick({R.id.user_info_ll_setting, R.id.user_info_ll_tracks,
             R.id.user_info_ll_balance_of_payments, R.id.user_info_ll_fans,
             R.id.user_info_ll_order, R.id.user_info_ll_shopping_cart,
             R.id.user_info_ll_heroes_list, R.id.user_info_ll_invitation,
             R.id.user_info_ll_customer_service})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_head:
-                if (!UserManager.isOnline(getActivity()))
-                    LoginActivity.startActivity(getActivity());
-                break;
             case R.id.user_info_ll_setting:
-                startActivity(new Intent(activity, SettingActivity.class));
+                SettingActivity.startActivity(getActivity());
                 break;
             case R.id.user_info_ll_tracks:
                 //TODO 我的足迹
@@ -112,12 +146,12 @@ public class UserCenterFragment extends MFragment {
                 break;
             case R.id.user_info_ll_balance_of_payments:
                 //TODO 收支明细
-                if (UserManager.isOnline(getContext()))
+                if (UserManager.isLogin(getContext()))
                     BalanceOfPaymentDetailActivity.startAct(getContext());
                 break;
             case R.id.user_info_ll_fans:
                 //TODO 我的粉丝
-                if (UserManager.isOnline(getContext()))
+                if (UserManager.isLogin(getContext()))
                     MyFansActivity.startAct(getActivity());
                 else
                     LoginActivity.startActivity(getActivity());
@@ -129,7 +163,7 @@ public class UserCenterFragment extends MFragment {
                 AlibcUtil.gotoAliShoppingChe(getActivity());
                 break;
             case R.id.user_info_ll_heroes_list:
-                if (UserManager.isOnline(getContext()))
+                if (UserManager.isLogin(getContext()))
                     startActivity(new Intent(activity, ScoreboardActivity.class));
                 break;
             case R.id.user_info_ll_invitation:
@@ -144,14 +178,10 @@ public class UserCenterFragment extends MFragment {
 
 
     //初始化界面--登录状态设置头像-昵称
-    private void initView() {
-        if (SharedPreUtils.getInstance(activity).getBooleanValueBySharedPreferences(SharedPreUtils.ISONLINE, false)) {
-            UserBean userBean = UserManager.getUserInfo(activity);
-            tvUserName.setText(userBean.getNickname());
-            Glide.with(activity).load(userBean.getAvatar()).into(ivHead);
-            tvBalance.setText("¥" + userBean.getAsset().getRemainder());
-            tvIntegral.setText(userBean.getAsset().getIntegral() + "");
-        }
+    private void initUserInfo() {
+//        if (SharedPreUtils.getInstance(activity).getBooleanValueBySharedPreferences(SharedPreUtils.ISONLINE, false)) {
+
+//        }
     }
 
     @Override
@@ -161,4 +191,30 @@ public class UserCenterFragment extends MFragment {
     }
 
 
+    public boolean isLogin() {
+        return UserManager.isLogin(getContext());
+    }
+
+    public boolean isAuth() {
+        return UserManager.isBindPhone(getContext());
+    }
+
+
+    @Override
+    public void onSucceed(int requestId, JSONObject result) {
+        if (requestId == GET_USERINFO_REQUESTID && ResultUtil.isCodeOK(result)) {
+            Log.i("znh", result.toString() + "----用户详细信息");
+            UserBean userInfo = UserBean.jsonToBean(ResultUtil.analysisData(result));
+            updateUI(userInfo);
+            //保存状态
+            UserManager.saveInfo(getActivity(), ResultUtil.analysisData(result).toString());
+            UserManager.saveLogin(getActivity());
+
+        }
+    }
+
+    @Override
+    public void onFail(int requestId, String errorMsg) {
+
+    }
 }

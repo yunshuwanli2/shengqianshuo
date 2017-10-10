@@ -1,5 +1,7 @@
 package yswl.priv.com.shengqianshopping.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -22,6 +24,8 @@ import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
+import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
+import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 import yswl.priv.com.shengqianshopping.util.TimerUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
@@ -32,6 +36,11 @@ import yswl.priv.com.shengqianshopping.util.VerifyUtils;
  */
 
 public class BindPhoneActivity extends MToolBarActivity implements HttpCallback<JSONObject> {
+
+    public static void startActivity(Activity context) {
+        Intent intent = new Intent(context, BindPhoneActivity.class);
+        context.startActivity(intent);
+    }
 
     @BindView(R.id.bind_phone_edt_phone)
     EditText edtPhone;//手机号码
@@ -81,9 +90,10 @@ public class BindPhoneActivity extends MToolBarActivity implements HttpCallback<
             } else if (requestId == BIND_PHONE_REQUEST_ID) {
                 //绑定成功
                 ToastUtil.showToast("绑定手机号成功");
-
-
-
+                //需要刷新用户信息 手机号有更新
+                UserCenterFragment.publishUserInfoRequestEvent();
+                UserManager.saveBindPhoneState(this, true);
+                finish();
             }
         }
     }

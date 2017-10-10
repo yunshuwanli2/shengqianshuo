@@ -110,8 +110,8 @@
     <string name="action_settings">Settings</string>
 
     <!--userInfoFragment-->
-    <string name="user_info_balance">余额:</string>
-    <string name="user_info_ji_bao">积分:</string>
+    <string name="user_info_balance">余额</string>
+    <string name="user_info_ji_bao">积分</string>
     <string name="user_info_apply_cash">申请提现</string>
     <string name="user_info_sign">签到有礼</string>
     <string name="user_info_my_tracks">我的足迹</string>

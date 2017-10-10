@@ -11,8 +11,10 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 
 import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.base.MFragment;
+import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.fragment.DataGenerator;
+import yswl.priv.com.shengqianshopping.manager.UserManager;
 
 
 public class MainActivityV3 extends MActivity {

@@ -1,5 +1,7 @@
 package yswl.priv.com.shengqianshopping.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -8,16 +10,27 @@ import android.widget.Toast;
 import com.ali.auth.third.login.callback.LogoutCallback;
 import com.alibaba.baichuan.android.trade.adapter.login.AlibcLogin;
 
+import org.json.JSONObject;
+
+import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.util.AppCacheCleanManager;
 import yswl.com.klibrary.util.CacheDataManager;
 import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
+import yswl.priv.com.shengqianshopping.manager.UserManager;
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 
 //设置
 public class SettingActivity extends MToolBarActivity {
 
+    public static void startActivity(Activity context) {
+        Intent intent = new Intent(context, SettingActivity.class);
+        context.startActivity(intent);
+    }
+
+    TextView cache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +40,7 @@ public class SettingActivity extends MToolBarActivity {
 
         TextView version = findView(R.id.app_version);
         TextView name = findView(R.id.app_name);
-        TextView cache = findView(R.id.app_cache);
+        cache = findView(R.id.app_cache);
         version.setText(MAppInfoUtil.getVersionCode(this) + "");
         name.setText(R.string.app_name);
         cache.setText(AppCacheCleanManager.getCacheSize(this));
@@ -36,6 +49,7 @@ public class SettingActivity extends MToolBarActivity {
             @Override
             public void onClick(View v) {
                 //TODO 个人信息
+                UserInfoActivity.startActivity(SettingActivity.this);
             }
         });
 
@@ -44,6 +58,7 @@ public class SettingActivity extends MToolBarActivity {
             public void onClick(View v) {
                 //TODO 清除缓存
                 AppCacheCleanManager.cleanApplicationData(SettingActivity.this);
+                cache.setText(0 + "");
             }
         });
 
@@ -57,29 +72,11 @@ public class SettingActivity extends MToolBarActivity {
         findView(R.id.app_logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout();
-
+                AlibcUtil.logout(SettingActivity.this);
+                finish();
             }
         });
     }
 
-    public void logout() {
-        AlibcLogin alibcLogin = AlibcLogin.getInstance();
-        alibcLogin.logout(SettingActivity.this, new LogoutCallback() {
-            @Override
-            public void onSuccess() {
-                //TODO 发出退出全局信息
-                Toast.makeText(SettingActivity.this, "退出登录成功", Toast.LENGTH_SHORT).show();
-                //设置退出状态
-                SharedPreUtils.getInstance(SettingActivity.this).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, false);
-                //清除数据
-                SharedPreUtils.getInstance(SettingActivity.this).clearAllData();
-            }
 
-            @Override
-            public void onFailure(int code, String msg) {
-                Toast.makeText(SettingActivity.this, "退出登录失败 " + code + msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

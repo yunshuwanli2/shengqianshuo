@@ -18,6 +18,8 @@ public class SharedPreUtils {
 
     public final static String TOKEN = "token";//令牌
 
+    public final static String PHONE_STATE = "phoneStatus";//绑定手机状态
+
     public final static String USERINFO = "userInfo";//用户信息
 
     public final static String ISONLINE = "isONLine";//在线状态

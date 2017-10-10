@@ -31,17 +31,15 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.fragment.adapter.AdvanceGridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.DateUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
-/**
- * TOP100
- */
 public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
 
 
     private static final int REQUEST_ID = 1003;
-
 
     private final int REFRESH = 1;//刷新标志
     private final int LOADMORE = 2;//加载更多
@@ -87,6 +85,14 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new AdvanceGridRecyclerFragmentAdapter();
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView parent, View view, int position) {
+                if (mProductList != null && mProductList.size() > 0) {
+                    AlibcUtil.openAlibcPage(getActivity(), mProductList.get(0));
+                }
+            }
+        });
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         requestData();

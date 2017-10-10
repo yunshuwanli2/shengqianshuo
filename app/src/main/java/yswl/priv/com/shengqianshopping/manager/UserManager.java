@@ -12,6 +12,7 @@ import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.GsonUtil;
 import yswl.priv.com.shengqianshopping.R;
+import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.bean.UserBean;
 import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
@@ -34,10 +35,34 @@ public class UserManager {
         SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.USERINFO, jsonInfo);
     }
 
-    //用户是否在线
-    public static boolean isOnline(Context context) {
+    //用户是否登录
+    public static boolean isLogin(Context context) {
         return SharedPreUtils.getInstance(context).getBooleanValueBySharedPreferences(SharedPreUtils.ISONLINE, false);
     }
+
+    public static void saveLogin(Context context) {
+        SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, true);
+    }
+
+    //用户是否绑定手机认证
+    public static boolean isBindPhone(Context context) {
+        return SharedPreUtils.getInstance(context).getBooleanValueBySharedPreferences(SharedPreUtils.PHONE_STATE, false);
+    }
+
+    //用户是否绑定手机认证
+    public static void saveBindPhoneState(Context context, boolean isBind) {
+        SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.PHONE_STATE, isBind);
+    }
+
+    public static boolean isBindPhone(String photoState) {
+        return !photoState.equalsIgnoreCase("0");
+    }
+
+    //在线
+    public static boolean isOnlin(Context context) {
+        return isLogin(context) && isBindPhone(context);
+    }
+
 
     //获取储存的用户信息
     public static UserBean getUserInfo(Context context) {
@@ -51,7 +76,7 @@ public class UserManager {
     }
 
     //调用接口获取用户信息
-    public static void getUser(Context context, String uid, HttpCallback<JSONObject> httpCallback, int requestId) {
+    public static void rquestUserInfoDetail(Context context, String uid, HttpCallback<JSONObject> httpCallback, int requestId) {
         String url = UrlUtil.getUrl(context, R.string.url_get_user_info);
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);

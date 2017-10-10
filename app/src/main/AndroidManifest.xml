@@ -43,9 +43,7 @@
         </activity>
         <activity
             android:name=".activity.LaunchActivity"
-            android:noHistory="true">
-
-        </activity>
+            android:noHistory="true"></activity>
         <activity android:name=".activity.ScoreboardActivity" />
         <activity android:name=".activity.BindPhoneActivity" />
         <activity android:name=".activity.MyFansActivity" />
@@ -53,6 +51,7 @@
         <activity
             android:name=".activity.InvitationActivity"
             android:theme="@style/AppTheme.NoToolBar" />
+        <activity android:name=".activity.UserInfoActivity"></activity>
     </application>
 
 </manifest>

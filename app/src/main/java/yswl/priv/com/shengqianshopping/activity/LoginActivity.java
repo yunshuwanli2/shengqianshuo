@@ -2,8 +2,6 @@ package yswl.priv.com.shengqianshopping.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -12,11 +10,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ali.auth.third.core.model.User;
 import com.ali.auth.third.ui.context.CallbackContext;
 import com.alibaba.baichuan.android.trade.adapter.login.AlibcLogin;
 import com.alibaba.baichuan.android.trade.callback.AlibcLoginCallback;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -24,14 +22,14 @@ import java.util.Map;
 
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
-import yswl.com.klibrary.http.okhttp.HeaderInterceptor;
-import yswl.com.klibrary.http.okhttp.MSPUtils;
 import yswl.com.klibrary.util.GsonUtil;
 import yswl.com.klibrary.util.L;
+import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.UserBean;
+import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
@@ -46,10 +44,8 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     }
 
     private static final String TAG = "LoginActivity";
-    private String nick;
-    private String headImg;
     private final int LOGIN_REQUESTID = 1002;
-    private final int GET_USERINFO_REQUESTID = 1003;
+
     private String phoneStatus = "0";// 用户是否进行手机号绑定 0未绑定 1已绑定
 
     @Override
@@ -64,7 +60,6 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
                 login();
             }
         });
-
     }
 
     private void login() {
@@ -75,8 +70,8 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
             @Override
             public void onSuccess() {
                 L.i(TAG, "获取淘宝用户信息: " + AlibcLogin.getInstance().getSession());
-                nick = AlibcLogin.getInstance().getSession().nick;
-                headImg = AlibcLogin.getInstance().getSession().avatarUrl;
+                String nick = AlibcLogin.getInstance().getSession().nick;
+                String headImg = AlibcLogin.getInstance().getSession().avatarUrl;
                 String url = UrlUtil.getUrl(LoginActivity.this, R.string.url_login);
                 Map<String, Object> map = new HashMap<>();
                 map.put("channel", "1");
@@ -89,7 +84,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
 
             @Override
             public void onFailure(int code, String msg) {
-                Toast.makeText(LoginActivity.this, "授权失败 ", Toast.LENGTH_LONG).show();
+                ToastUtil.showToast("授权失败 请重试");
             }
         });
     }
@@ -103,34 +98,21 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     @Override
     public void onSucceed(int requestId, JSONObject result) {
         if (requestId == LOGIN_REQUESTID && ResultUtil.isCodeOK(result)) {
-            //保存data
-            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.UID, GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid"));
-            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.TOKEN, GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "token"));
-            //获取用户信息
-            Log.i("znh", result.toString() + "授权返回");
-            Log.i("znh", GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid") + "----uid");
-            phoneStatus = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "phoneStatus");
-            UserManager.getUser(LoginActivity.this, GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid"), LoginActivity.this, GET_USERINFO_REQUESTID);
+            String uid = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid");
+            String token = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "token");
+            String phoneStatus = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "phoneStatus");
 
-        } else if (requestId == GET_USERINFO_REQUESTID && ResultUtil.isCodeOK(result)) {
-            Toast.makeText(LoginActivity.this, "登录成功 ", Toast.LENGTH_LONG).show();
-            //保存用户信息
-            Log.i("znh", result.toString() + "----用户信息");
-            Log.i("znh", GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG) + "----用户信息");
-            UserManager.saveInfo(LoginActivity.this, GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG));
-            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, true);
-            //判断是否绑定是手机号
-            if ("0".equals(phoneStatus)) {
-                //未绑定
-                startActivity(new Intent(LoginActivity.this, BindPhoneActivity.class));
+            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.UID, uid);
+            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.TOKEN, token);
+            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.PHONE_STATE, phoneStatus);
+
+            if (UserManager.isBindPhone(phoneStatus)) {
+                BindPhoneActivity.startActivity(this);
             } else {
-                //绑定
-
-
+                UserCenterFragment.publishUserInfoRequestEvent();
             }
             finish();
         }
-
     }
 
     @Override

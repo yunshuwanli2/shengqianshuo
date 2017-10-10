@@ -60,12 +60,22 @@ public class ProductDetail {
     public String pictUrl;//商品主图
     public String picUrl;//商品主图
     public String[] smallImages;//商品小图列
+
+    public String getReservePrice() {
+        return "¥" + reservePrice;
+    }
+
     public String reservePrice;//商品一口价格
     public String itemUrl;
     public String provcity;//所在地 杭州
     public String userType;//卖家类型 0:集市 1:商城
     public String clickUrl;//淘客地址
     public String zkFinalPriceWap;//无线端商品折扣价格
+
+    public String getZkFinalPrice() {
+        return "¥" + zkFinalPrice;
+    }
+
     public String zkFinalPrice;//商品折扣价格
     public String nick;//卖家昵称
     public String sellerId;// 卖家ID
@@ -87,6 +97,7 @@ public class ProductDetail {
     public String getCouponNum() {
         return "券:￥" + couponNum;
     }
+
     public String getVolume() {
         if (volume == null)
             return "0";

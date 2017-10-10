@@ -5,57 +5,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/home_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/home_app_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:src="@mipmap/ic_home_app" />
-
-        <RelativeLayout
-            android:id="@+id/home_toolbar_search"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/view_common_searchbox_bg">
-
-            <ImageView
-                android:id="@+id/img_magnifier"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:src="@mipmap/ic_toolbar_search" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/img_magnifier"
-                android:background="@null"
-                android:textColor="@color/background_dark"
-                android:textSize="15sp" />
-
-        </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/home_menu"
-            android:layout_width="46dp"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:src="@drawable/home_menu_seletor" />
-
-    </LinearLayout>
+    <include layout="@layout/home_actionbar_layout" />
 
     <ScrollView
         android:id="@+id/scollview"
@@ -66,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <com.bigkoo.convenientbanner.ConvenientBanner
                 android:id="@+id/convenientBanner"

@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="username"
+                    android:text="请登录"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -67,7 +67,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/tv_balance_prompt"
-                    android:text="9"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
@@ -88,7 +87,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
-                    android:text="0"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
             </RelativeLayout>

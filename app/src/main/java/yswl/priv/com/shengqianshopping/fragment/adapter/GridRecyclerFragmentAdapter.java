@@ -36,7 +36,7 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
     }
 
     List<ProductDetail> mProductList;
-    RecyclerView recyclerView;
+
 
     public List<ProductDetail> getmProductList() {
         return mProductList;
@@ -49,13 +49,12 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
     public GridRecyclerFragmentAdapter() {
     }
 
-
+    RecyclerView recyclerView;
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         this.recyclerView = recyclerView;
     }
-
     @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);

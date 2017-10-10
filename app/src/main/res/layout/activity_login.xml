@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <include layout="@layout/base_common_toobar" />
 
@@ -12,8 +11,9 @@
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_margin="20dp"
+        android:layout_margin="60dp"
+        android:background="@drawable/button_seletor_2"
         android:text="淘宝授权登录"
         android:textColor="@color/colorAccent"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 </LinearLayout>

@@ -2,8 +2,11 @@ package yswl.priv.com.shengqianshopping.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.Toast;
 
+import com.ali.auth.third.login.callback.LogoutCallback;
 import com.alibaba.baichuan.android.trade.AlibcTrade;
+import com.alibaba.baichuan.android.trade.adapter.login.AlibcLogin;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
 import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
 import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
@@ -18,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import yswl.com.klibrary.util.L;
+import yswl.priv.com.shengqianshopping.activity.SettingActivity;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 
 /**
@@ -97,4 +101,24 @@ public class AlibcUtil {
 
     }
 
+
+    public static void logout(final Activity activity) {
+        AlibcLogin alibcLogin = AlibcLogin.getInstance();
+        alibcLogin.logout(activity, new LogoutCallback() {
+            @Override
+            public void onSuccess() {
+                //TODO 发出退出全局信息
+                Toast.makeText(activity, "退出登录成功", Toast.LENGTH_SHORT).show();
+                //设置退出状态
+                SharedPreUtils.getInstance(activity).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, false);
+                //清除数据
+                SharedPreUtils.getInstance(activity).clearAllData();
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                Toast.makeText(activity, "退出登录失败 " + code + msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

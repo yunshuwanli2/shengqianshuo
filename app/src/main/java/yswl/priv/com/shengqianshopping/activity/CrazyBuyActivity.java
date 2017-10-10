@@ -27,6 +27,7 @@ public class CrazyBuyActivity extends MToolBarActivity implements View.OnClickLi
         context.startActivity(intent);
 
     }
+
     TextView mYes, mNine, mThirteen, mSevenTeen, mTomorr;
     TextView views[];
 
@@ -136,6 +137,9 @@ public class CrazyBuyActivity extends MToolBarActivity implements View.OnClickLi
                 break;
             case 3:
                 fragment = mFragments[3];
+                break;
+            case 4:
+                fragment = mFragments[4];
                 break;
         }
         if (fragment == null) return;
