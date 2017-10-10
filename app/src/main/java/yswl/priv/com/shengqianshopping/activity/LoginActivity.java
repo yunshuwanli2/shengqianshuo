@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.GsonUtil;
@@ -96,7 +97,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     }
 
     @Override
-    public void onSucceed(int requestId, JSONObject result) {
+    public void onSucceed(int requestId, final JSONObject result) {
         if (requestId == LOGIN_REQUESTID && ResultUtil.isCodeOK(result)) {
             String uid = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid");
             String token = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "token");
@@ -106,11 +107,24 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
             UserManager.saveUid(this, uid);
             UserManager.saveBindPhoneState(this, phoneStatus);
 
+            requestUserInfo();
+
+
+        } else if (requestId == GET_USERINFO_REQUESTID && ResultUtil.isCodeOK(result)) {
+            Log.i("znh", result.toString() + "----用户详细信息");
+            UserBean userInfo = UserBean.jsonToBean(ResultUtil.analysisData(result));
             if (!UserManager.isBindPhone(this)) {
                 BindPhoneActivity.startActivity(this);
-            } else {
-                UserCenterFragment.publishUserInfoRequestEvent();
+                UserCenterFragment.publishUpdateUserInfoEvent(userInfo);
             }
+
+            MApplication.getApplication().getGolbalHander().post(new Runnable() {
+                @Override
+                public void run() {
+                    UserManager.saveLogin(LoginActivity.this);
+                    UserManager.saveInfo(LoginActivity.this, ResultUtil.analysisData(result).toString());
+                }
+            });
             finish();
         }
     }
@@ -118,6 +132,13 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     @Override
     public void onFail(int requestId, String errorMsg) {
         Toast.makeText(LoginActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+    }
+
+    private final int GET_USERINFO_REQUESTID = 1003;
+
+    void requestUserInfo() {
+        String uid = UserManager.getUid(this);
+        UserManager.rquestUserInfoDetail(this, uid, this, GET_USERINFO_REQUESTID);
     }
 }
 

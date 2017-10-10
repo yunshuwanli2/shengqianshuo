@@ -12,6 +12,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.manager.ActivityManager;
+import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.fragment.DataGenerator;
@@ -74,6 +75,18 @@ public class MainActivityV3 extends MActivity {
     private int index = 0;
 
     private void onTabItemSelected(int postion) {
+        if (postion == index) return;
+        if (postion == 3) {
+            if (!UserManager.isLogin(this)) {
+                bottomNavigationBar.selectTab(index);
+                LoginActivity.startActivity(this);
+                return;
+            } else if (!UserManager.isBindPhone(this)) {
+                bottomNavigationBar.selectTab(index);
+                BindPhoneActivity.startActivity(this);
+                return;
+            }
+        }
         Fragment fragment = null;
         switch (postion) {
             case 0:
@@ -97,10 +110,13 @@ public class MainActivityV3 extends MActivity {
         } else {
             ft.add(R.id.content, fragment);
         }
+
         ft.hide(mFragments[index]);
         ft.show(fragment); // 显示目标tab
         ft.commitAllowingStateLoss();
         index = postion;
+
+
     }
 
 

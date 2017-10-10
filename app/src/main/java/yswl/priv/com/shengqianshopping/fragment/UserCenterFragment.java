@@ -67,7 +67,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     @Subscribe(sticky = true)
     public void onEvent(UserInfoRequestEvent event) {
         EventBus.getDefault().removeStickyEvent(UserInfoRequestEvent.class);
-        requestUserInfo();
+//        requestUserInfo();
     }
 
     public static void publishUserInfoRequestEvent() {
@@ -146,15 +146,6 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
         return UserManager.isBindPhone(getContext());
     }
 
-
-    private void gotoHome() {
-        MActivity act = getMActivity();
-        if (act instanceof MainActivityV3) {
-            ((MainActivityV3) act).gotoHomeTab();
-        }
-    }
-
-
     @Override
     public void onSucceed(int requestId, JSONObject result) {
         if (requestId == GET_USERINFO_REQUESTID && ResultUtil.isCodeOK(result)) {
@@ -175,13 +166,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     @Override
     public void onResume() {
         super.onResume();
-        if (!isLogin()) {
-            LoginActivity.startActivity(getActivity());
-        } else if (!isAuth()) {
-            BindPhoneActivity.startActivity(getActivity());
-        } else {
-            updateUI(UserManager.getUserInfo(activity));
-        }
+
     }
 
     @Override
