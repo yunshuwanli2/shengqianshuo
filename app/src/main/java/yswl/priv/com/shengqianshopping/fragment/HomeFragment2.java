@@ -1,13 +1,17 @@
 package yswl.priv.com.shengqianshopping.fragment;
 
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +22,15 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 
 import org.json.JSONObject;
 
 import java.security.acl.Group;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +61,7 @@ import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.FullyGridLayoutManager;
 
-public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject> {
+public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
     private static final String FRAGMENT_TAG = "HomeFragment2_ItemFragment";
 
     private static final int REQUEST_ID_CATEGROY = 100;
@@ -64,10 +72,10 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     List<BannerBean> mImags;
     List<CategoryBean> mCategorys;
     CategoryBean mCategory;
-    List<ProductDetail> mProductList;
+    List<ProductDetail> mProductList = new ArrayList<>();
 
-    @BindView(R.id.scollview)
-    ScrollView scollview;
+    @BindView(R.id.swipe_target)
+    NestedScrollView scollview;
     @BindView(R.id.convenientBanner)
     ConvenientBanner mConvenientBanner;
     @BindView(R.id.home_toolbar)
@@ -76,7 +84,41 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     TextView mCatetoryTitle;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+    @BindView(R.id.swipeToLoadLayout)
+    SwipeToLoadLayout swipeToLoadLayout;
+    @BindView(R.id.tv_hot)
+    TextView tvHot;
+    @BindView(R.id.tv_new)
+    TextView tvNew;
+    @BindView(R.id.tv_sell_count)
+    TextView tvSellCount;
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
+
+
+    private final int REFRESH = 1;//刷新标志
+    private final int LOADMORE = 2;//加载更多
+    private int GETDTATYPE = REFRESH;//当前获取数据方式（1刷新，2加载更多）
+
+    private boolean ALLOWLOADMORE = true;//是否允许上拉加载
+
+
     GridRecyclerFragmentAdapter mAdapter;
+
+    private int currentPosition = 0;
+
+    private boolean hotAsc = false;//升序:asc 降序:desc-默认--人气
+    private boolean newAsc = false;//升序:asc 降序:desc-默认--最新
+    private boolean volumeAsc = false;//升序:asc 降序:desc-默认--销量
+    private boolean priceAsc = false;//升序:asc 降序:desc-默认--价格
+    private String hotlastId = "0";
+    private String newlastId = "0";
+    private String volumelastId = "-1";
+    private String pricelastId = "0";
+
+    private Drawable drawableAsc;
+    private Drawable drawableDesc;
+    private TextView lastTv;
 
     public HomeFragment2() {
     }
@@ -99,6 +141,13 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         requestBanner();
 
         initGridView();
+        //设置监听
+        swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout.setOnLoadMoreListener(this);
+        drawableAsc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_ace);
+        drawableDesc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_desc);
+        drawableAsc.setBounds(0, 0, drawableAsc.getMinimumWidth(), drawableAsc.getMinimumHeight());//对图片进行压缩
+        drawableDesc.setBounds(0, 0, drawableDesc.getMinimumWidth(), drawableDesc.getMinimumHeight());//对图片进行压缩
     }
 
     @Override
@@ -215,10 +264,18 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID_BANNER, null, this);
     }
 
-    private void requsetCategoryList(SortEnum sEnum) {
+    private void requsetCategoryList(SortEnum sEnum, boolean asc, String lastId) {
         Map<String, Object> parm = new HashMap<>();
         parm.put("pid", mCategory.pid);
         parm.put("sort", sEnum.getValue());
+        parm.put("lastId", lastId);
+        Log.i("znh", asc + "****lastId" + lastId);
+        parm.put("count", "20");
+        if (asc) {
+            parm.put("sortBy", "asc");
+        } else {
+            parm.put("sortBy", "desc");
+        }
         String url = UrlUtil.getUrl(this, R.string.url_category_list);
         HttpClientProxy.getInstance().postAsynSQS(url, 200, parm, this);
     }
@@ -260,16 +317,80 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 AdvanceActivity.startActivity(getActivity());
                 break;
             case R.id.tv_hot:
-                requsetCategoryList(SortEnum.HOT);
+                if (currentPosition == 0) {
+                    hotAsc = !hotAsc;
+                    if (hotAsc) {
+                        tvHot.setCompoundDrawables(null, null, drawableAsc, null);
+                    } else {
+                        tvHot.setCompoundDrawables(null, null, drawableDesc, null);
+                    }
+                } else {
+                    currentPosition = 0;
+                    if (lastTv != null) {
+                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                    }
+                    tvHot.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+                    lastTv = tvHot;
+                }
+                hotlastId = "0";
+                requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
                 break;
             case R.id.tv_new:
-                requsetCategoryList(SortEnum.NEW);
+                if (currentPosition == 1) {
+                    newAsc = !newAsc;
+                    if (newAsc) {
+                        tvNew.setCompoundDrawables(null, null, drawableAsc, null);
+                    } else {
+                        tvNew.setCompoundDrawables(null, null, drawableDesc, null);
+                    }
+                } else {
+                    currentPosition = 1;
+                    if (lastTv != null) {
+                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                    }
+                    tvNew.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+                    lastTv = tvNew;
+                }
+                newlastId = "0";
+                requsetCategoryList(SortEnum.NEW, newAsc, newlastId);
                 break;
             case R.id.tv_sell_count:
-                requsetCategoryList(SortEnum.VOLUME);
+                if (currentPosition == 2) {
+                    volumeAsc = !volumeAsc;
+                    if (volumeAsc) {
+                        tvSellCount.setCompoundDrawables(null, null, drawableAsc, null);
+                    } else {
+                        tvSellCount.setCompoundDrawables(null, null, drawableDesc, null);
+                    }
+                } else {
+                    currentPosition = 2;
+                    if (lastTv != null) {
+                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                    }
+                    tvSellCount.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+                    lastTv = tvSellCount;
+                }
+                volumelastId = "-1";
+                requsetCategoryList(SortEnum.VOLUME, volumeAsc, volumelastId);
                 break;
             case R.id.tv_price:
-                requsetCategoryList(SortEnum.PRICE);
+                if (currentPosition == 3) {
+                    priceAsc = !priceAsc;
+                    if (priceAsc) {
+                        tvPrice.setCompoundDrawables(null, null, drawableAsc, null);
+                    } else {
+                        tvPrice.setCompoundDrawables(null, null, drawableDesc, null);
+                    }
+                } else {
+                    currentPosition = 3;
+                    if (lastTv != null) {
+                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                    }
+                    tvPrice.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+                    lastTv = tvPrice;
+                }
+                pricelastId = "0";
+                requsetCategoryList(SortEnum.PRICE, priceAsc, pricelastId);
                 break;
         }
     }
@@ -277,6 +398,13 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     @Override
     public void onSucceed(int requestId, final JSONObject result) {
+        if (GETDTATYPE == REFRESH) {
+            swipeToLoadLayout.setRefreshing(false);
+            //清空数据
+
+        } else {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
         if (ResultUtil.isCodeOK(result)) {
 
             switch (requestId) {
@@ -296,11 +424,39 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                     }
                     break;
                 case 200:
+                    if (GETDTATYPE == REFRESH) {
+                        swipeToLoadLayout.setRefreshing(false);
+                        mProductList.clear();
+                    } else {
+                        swipeToLoadLayout.setLoadingMore(false);
+                    }
                     if (ResultUtil.isCodeOK(result)) {
-                        mProductList = ProductDetail.jsonToList(
+                        List<ProductDetail> tempList = ProductDetail.jsonToList(
                                 ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
-                        mAdapter.setmProductList(mProductList);
-                        mAdapter.notifyDataSetChanged();
+                        switch (currentPosition) {
+                            case 0:
+                                hotlastId = ResultUtil.analysisData(result).optString("lastId");
+                                break;
+                            case 1:
+                                newlastId = ResultUtil.analysisData(result).optString("lastId");
+                                break;
+                            case 2:
+                                volumelastId = ResultUtil.analysisData(result).optString("lastId");
+                                break;
+                            case 3:
+                                pricelastId = ResultUtil.analysisData(result).optString("lastId");
+                                break;
+                        }
+                        if (tempList != null && tempList.size() > 0) {
+                            for (int i = 0; i < tempList.size(); i++) {
+                                mProductList.add(tempList.get(i));
+                            }
+                            mAdapter.setmProductList(mProductList);
+                            mAdapter.notifyDataSetChanged();
+                        } else {
+                            ALLOWLOADMORE = false;
+                        }
+                        GETDTATYPE = REFRESH;
                     }
                     break;
             }
@@ -310,7 +466,10 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     void updateBottonItem(CategoryBean categoryBean) {
         mCatetoryTitle.setText(categoryBean.title);
-        requsetCategoryList(SortEnum.HOT);
+        requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
+        tvHot.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+        lastTv = tvHot;
+        currentPosition = 0;
     }
 //    private void addProductListModule(CategoryBean category) {
 //        getChildFragmentManager().beginTransaction().replace(R.id.content, ItemFragment.newInstance(category), FRAGMENT_TAG).commit();
@@ -318,7 +477,63 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     @Override
     public void onFail(int requestId, String errorMsg) {
+        if (GETDTATYPE == REFRESH) {
+            swipeToLoadLayout.setRefreshing(false);
+        } else {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
+        GETDTATYPE = REFRESH;
     }
 
 
+    @Override
+    public void onLoadMore() {
+        //加载
+        GETDTATYPE = LOADMORE;
+        if (ALLOWLOADMORE) {
+            switch (currentPosition) {
+                case 0:
+                    requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
+                    break;
+                case 1:
+                    requsetCategoryList(SortEnum.NEW, newAsc, newlastId);
+                    break;
+                case 2:
+                    requsetCategoryList(SortEnum.VOLUME, volumeAsc, volumelastId);
+                    break;
+                case 3:
+                    requsetCategoryList(SortEnum.PRICE, priceAsc, pricelastId);
+                    break;
+            }
+        } else {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        //刷新
+        GETDTATYPE = REFRESH;
+        ALLOWLOADMORE = true;
+
+        switch (currentPosition) {
+            case 0:
+                hotlastId = "0";
+                requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
+                break;
+            case 1:
+                newlastId = "0";
+                requsetCategoryList(SortEnum.NEW, newAsc, newlastId);
+                break;
+            case 2:
+                volumelastId = "-1";
+                requsetCategoryList(SortEnum.VOLUME, volumeAsc, volumelastId);
+                break;
+            case 3:
+                pricelastId = "0";
+                requsetCategoryList(SortEnum.PRICE, priceAsc, pricelastId);
+                break;
+        }
+
+    }
 }

@@ -7,137 +7,143 @@
 
     <include layout="@layout/home_actionbar_layout" />
 
-    <ScrollView
-        android:id="@+id/scollview"
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/swipeToLoadLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <include
+            android:id="@id/swipe_refresh_header"
+            layout="@layout/layout_twitter_header" />
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/swipe_target"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.bigkoo.convenientbanner.ConvenientBanner
-                android:id="@+id/convenientBanner"
-                android:layout_width="match_parent"
-                android:layout_height="140dp" />
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.bigkoo.convenientbanner.ConvenientBanner
+                    android:id="@+id/convenientBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp" />
 
                 <LinearLayout
-                    android:id="@+id/ll_fkq"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
 
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@mipmap/ic_crazy_bug" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/ll_fkq"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:text="疯狂抢" />
-                </LinearLayout>
+                        android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/ll_tj"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@mipmap/ic_crazy_bug" />
 
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@mipmap/ic_recommed" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="疯狂抢" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/ll_tj"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:text="小编推荐" />
-                </LinearLayout>
+                        android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/ll_sort"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@mipmap/ic_recommed" />
 
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@mipmap/ic_top_100" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="小编推荐" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/ll_sort"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:text="疯狂排名" />
-                </LinearLayout>
+                        android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/ll_plan"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@mipmap/ic_top_100" />
 
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@mipmap/ic_advance" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="疯狂排名" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/ll_plan"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:text="上线预告" />
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@mipmap/ic_advance" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="上线预告" />
+                    </LinearLayout>
+
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/lighter_gray" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
 
                 <View
-                    android:layout_width="6dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/colorAccent" />
-
-                <TextView
-                    android:id="@+id/tv_catetory_title"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical" />
-            </LinearLayout>
+                    android:layout_height="10dp"
+                    android:background="@color/lighter_gray" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/lighter_gray" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
 
-            <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <View
+                        android:layout_width="6dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/colorAccent" />
+
+                    <TextView
+                        android:id="@+id/tv_catetory_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/lighter_gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -156,7 +162,9 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="人气" />
+                            android:text="人气"
+                            android:drawableRight="@mipmap/icon_desc"
+                            />
 
                         <TextView
                             android:id="@+id/tv_new"
@@ -164,7 +172,9 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="最新" />
+                            android:text="最新"
+                            android:drawableRight="@mipmap/icon_desc"
+                            />
 
                         <TextView
                             android:id="@+id/tv_sell_count"
@@ -172,7 +182,9 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="销量" />
+                            android:text="销量"
+                            android:drawableRight="@mipmap/icon_desc"
+                            />
 
                         <TextView
                             android:id="@+id/tv_price"
@@ -180,7 +192,9 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="价格" />
+                            android:text="价格"
+                            android:drawableRight="@mipmap/icon_desc"
+                            />
 
                     </LinearLayout>
 
@@ -189,7 +203,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
-            </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
-        </LinearLayout>
-    </ScrollView>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <include
+            android:id="@id/swipe_load_more_footer"
+            layout="@layout/layout_classic_footer" />
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 </LinearLayout>
