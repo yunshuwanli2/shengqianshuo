@@ -54,10 +54,10 @@ public class MainActivityV3 extends MActivity {
         bottomNavigationBar.setBackgroundStyle(0);
 
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "首页").setActiveColorResource(R.color.colorAccent)/*.setBadgeItem(numberBadgeItem)*/)
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher_round, "包邮").setActiveColorResource(R.color.colorAccent))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher_round, "返利").setActiveColorResource(R.color.colorAccent)/*.setBadgeItem(shapeBadgeItem)*/)
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher_round, "我的").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_navigation_home, "首页").setActiveColorResource(R.color.colorAccent)/*.setBadgeItem(numberBadgeItem)*/)
+                .addItem(new BottomNavigationItem(R.mipmap.ic_navigation_pinkage, "包邮").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_navigation_rebate, "返利").setActiveColorResource(R.color.colorAccent)/*.setBadgeItem(shapeBadgeItem)*/)
+                .addItem(new BottomNavigationItem(R.mipmap.ic_navigation_my, "我的").setActiveColorResource(R.color.colorAccent))
                 .setFirstSelectedPosition(lastSelectedPosition > 3 ? 3 : lastSelectedPosition)
                 .initialise();
 

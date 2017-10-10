@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
@@ -39,30 +41,31 @@ import yswl.priv.com.shengqianshopping.util.UrlUtil;
  * TOP100
  */
 public class ListRecyclerviewFragment extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
-    RecyclerView mRecyclerView;
-    ListRecyclerFragmentAdapter mAdapter;
+
 
 
     private static final int REQUEST_ID = 1003;
-
     private static final String ARG_PARAM1 = "param1";
 
-    private SwipeToLoadLayout swipeToLoadLayout;
     private final int REFRESH = 1;//刷新标志
     private final int LOADMORE = 2;//加载更多
     private int GETDTATYPE = REFRESH;//当前获取数据方式（1刷新，2加载更多）
     private String pageNo = "1";
     private boolean ALLOWLOADMORE = true;//是否允许上拉加载
 
+    @BindView(R.id.swipeToLoadLayout)
+    SwipeToLoadLayout swipeToLoadLayout;
+
+    @BindView(R.id.swipe_target)
+    RecyclerView mRecyclerView;
+    ListRecyclerFragmentAdapter mAdapter;
 
     public TimeBean getmParam1() {
         return mParam1;
     }
-
     public void setmParam1(TimeBean mParam1) {
         this.mParam1 = mParam1;
     }
-
     private TimeBean mParam1;//已经封装好的参数
 
 
@@ -95,11 +98,10 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
+        ButterKnife.bind(this, view);
         //设置监听
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.swipe_target);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
 
         mRecyclerView.setLayoutManager(manager);
@@ -108,7 +110,6 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
         mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position) {
-                ToastUtil.showToast("点击了" + position);
                 List<ProductDetail> products = getmProductList();
                 if (products == null || products.size() == 0) return;
                 ProductDetail detail = products.get(position);

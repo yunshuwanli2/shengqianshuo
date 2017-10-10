@@ -28,16 +28,15 @@ public class RebateFragment extends MFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_rebate, container, false);
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mEdit = (EditText) view.findViewById(R.id.al_search_input);
-        view.findViewById(R.id.introduce_fanli).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BrowserActivity.start("返利说明", "https://www.baidu.com", getActivity());
-            }
-        });
+//        view.findViewById(R.id.introduce_fanli).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                BrowserActivity.start("返利说明", "https://www.baidu.com", getActivity());
+//            }
+//        });
         view.findViewById(R.id.al_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

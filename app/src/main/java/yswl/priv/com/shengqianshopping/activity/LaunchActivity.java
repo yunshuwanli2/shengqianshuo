@@ -19,7 +19,7 @@ import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 public class LaunchActivity extends MActivity implements HttpCallback<JSONObject> {
-
+    ADbean aDbean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +61,7 @@ public class LaunchActivity extends MActivity implements HttpCallback<JSONObject
     }
 
 
-    ADbean aDbean;
+
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {

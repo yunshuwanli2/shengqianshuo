@@ -10,12 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
@@ -30,17 +37,27 @@ import yswl.priv.com.shengqianshopping.util.UrlUtil;
 /**
  * TOP100
  */
-public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallback<JSONObject> {
-    RecyclerView mRecyclerView;
-    AdvanceGridRecyclerFragmentAdapter mAdapter;
+public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
 
 
     private static final int REQUEST_ID = 1003;
 
 
+    private final int REFRESH = 1;//刷新标志
+    private final int LOADMORE = 2;//加载更多
+    private int GETDTATYPE = REFRESH;//当前获取数据方式（1刷新，2加载更多）
+    private String pageNo = "1";
+    private boolean ALLOWLOADMORE = true;//是否允许上拉加载
+
+    @BindView(R.id.swipeToLoadLayout)
+    SwipeToLoadLayout swipeToLoadLayout;
+
+    @BindView(R.id.swipe_target)
+    RecyclerView mRecyclerView;
+    AdvanceGridRecyclerFragmentAdapter mAdapter;
+
     public AdvanceGridRecyclerFragment() {
     }
-
 
     public static AdvanceGridRecyclerFragment newInstance() {
         AdvanceGridRecyclerFragment fragment = new AdvanceGridRecyclerFragment();
@@ -62,15 +79,16 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
+        ButterKnife.bind(this, view);
 
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new AdvanceGridRecyclerFragmentAdapter();
-
         mRecyclerView.setAdapter(mAdapter);
+        swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout.setOnLoadMoreListener(this);
         requestData();
     }
 
@@ -82,9 +100,15 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
      * 1. endTime | 不可 | 查询结束时间 | 2017-09-24 18:00:00
      */
     public void requestData() {
+        if (GETDTATYPE == REFRESH) {
+            pageNo = "1";
+        } else {
+            int temp = Integer.parseInt(pageNo);
+            pageNo = ++temp + "";
+        }
         String url = UrlUtil.getUrl(this, R.string.url_crazy_buy_list);
         Map<String, Object> map = new HashMap<>();
-        map.put("pageNo", 1);
+        map.put("pageNo", pageNo);
         map.put("pageSize", 20);
         map.put("startTime", DateUtil.getTomorroFixedTime2("00:00:00"));
         map.put("endTime", DateUtil.getTomorroFixedTime2("09:00:00"));
@@ -93,22 +117,62 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
 
 
     private static final String TAG = AdvanceGridRecyclerFragment.class.getSimpleName();
-    List<ProductDetail> mProductList;
+    List<ProductDetail> mProductList = new ArrayList<>();
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
         L.e(TAG, "onSucceed result :" + result);
+        if (GETDTATYPE == REFRESH) {
+            swipeToLoadLayout.setRefreshing(false);
+            mProductList.clear();
+        } else {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
         if (ResultUtil.isCodeOK(result)) {
-            mProductList = ProductDetail.jsonToList(
+            List<ProductDetail> tempList = ProductDetail.jsonToList(
                     ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
-            mAdapter.setmProductList(mProductList);
-            mAdapter.notifyDataSetChanged();
+            if (tempList != null && tempList.size() > 0) {
+                for (int i = 0; i < tempList.size(); i++) {
+                    mProductList.add(tempList.get(i));
+                }
+                mAdapter.setmProductList(mProductList);
+                mAdapter.notifyDataSetChanged();
+
+            } else {
+                ALLOWLOADMORE = false;
+            }
+            GETDTATYPE = REFRESH;
         }
 
     }
 
     @Override
     public void onFail(int requestId, String errorMsg) {
+        if (GETDTATYPE == REFRESH) {
+            swipeToLoadLayout.setRefreshing(false);
+        } else {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
+        GETDTATYPE = REFRESH;
+    }
 
+
+    @Override
+    public void onLoadMore() {
+        //加载
+        GETDTATYPE = LOADMORE;
+        if (ALLOWLOADMORE) {
+            requestData();
+        } else {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        //刷新
+        GETDTATYPE = REFRESH;
+        ALLOWLOADMORE = true;
+        requestData();
     }
 }

@@ -212,7 +212,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         banner.loadPic(mImags);
     }
 
-    @OnClick({R.id.home_toolbar_search, R.id.home_menu, R.id.ll_fkq,
+    @OnClick({R.id.home_app_icon,R.id.home_toolbar_search, R.id.home_menu, R.id.ll_fkq,
             R.id.ll_tj, R.id.ll_sort, R.id.ll_plan, R.id.tv_hot,
             R.id.tv_new, R.id.tv_price, R.id.tv_sell_count})
     public void onClick(View v) {

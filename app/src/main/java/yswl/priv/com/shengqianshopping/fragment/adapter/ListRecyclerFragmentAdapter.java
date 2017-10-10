@@ -31,8 +31,8 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
         this.mProductList = mProductList;
     }
 
-
     private GridRecyclerFragmentAdapter.OnItemClickListener onItemClickListener;
+
     public GridRecyclerFragmentAdapter.OnItemClickListener getOnItemClickListener() {
         return onItemClickListener;
     }
@@ -42,6 +42,26 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
     }
 
     public ListRecyclerFragmentAdapter() {
+    }
+
+    RecyclerView recyclerView;
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        this.recyclerView = null;
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(GridRecyHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+
     }
 
     @Override
@@ -59,6 +79,15 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
         holder.product_desc.setText(detail.title);
         holder.product_price.setText("￥:" + detail.zkFinalPrice);
         holder.product_old_price.setText("￥:" + detail.reservePrice);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null && v != null && recyclerView != null) {
+                    int position = recyclerView.getChildAdapterPosition(v);
+                    onItemClickListener.onItemClick(recyclerView, v, position);
+                }
+            }
+        });
     }
 
 
@@ -69,17 +98,19 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
 
 
     class GridRecyHolder extends RecyclerView.ViewHolder {
-        ImageView preview_img;
-        TextView product_old_price;
-        TextView product_desc;
-        TextView product_price;
-        TextView produce_buy_count;
-        TextView time_start;
-        TextView time_end;
+        final ImageView preview_img;
+        final TextView product_old_price;
+        final TextView product_desc;
+        final TextView product_price;
+        final TextView produce_buy_count;
+        final TextView time_start;
+        final TextView time_end;
+        final View itemView;
 
 
         public GridRecyHolder(View view) {
             super(view);
+            itemView = view;
             preview_img = (ImageView) view.findViewById(R.id.iv_product_preview);
             product_desc = (TextView) view.findViewById(R.id.tv_product_desc);
             product_price = (TextView) view.findViewById(R.id.tv_product_price);

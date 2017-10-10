@@ -149,7 +149,7 @@ public class UserCenterFragment extends MFragment {
             UserBean userBean = UserManager.getUserInfo(activity);
             tvUserName.setText(userBean.getNickname());
             Glide.with(activity).load(userBean.getAvatar()).into(ivHead);
-            tvBalance.setText("￥" + userBean.getAsset().getRemainder());
+            tvBalance.setText("¥" + userBean.getAsset().getRemainder());
             tvIntegral.setText(userBean.getAsset().getIntegral() + "");
         }
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@mipmap/ic_menu" android:state_selected="true" />
-
-    <item android:drawable="@mipmap/ic_menu_act" android:state_window_focused="false" />
+    <item android:drawable="@mipmap/ic_menu" android:state_enabled="true" android:state_focused="true" android:state_pressed="false" />
+    <item android:drawable="@mipmap/ic_menu" android:state_enabled="true" android:state_pressed="true" />
+    <item android:drawable="@mipmap/ic_menu" android:state_focused="true" android:state_pressed="true" />
+    <item android:drawable="@mipmap/ic_menu_act" />
 </selector>

@@ -96,7 +96,6 @@ public class GridRecyclerviewFragment2 extends MFragment implements HttpCallback
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
-        //设置监听
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.swipe_target);

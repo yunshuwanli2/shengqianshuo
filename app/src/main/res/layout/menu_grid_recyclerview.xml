@@ -12,13 +12,13 @@
     <Button
         android:id="@+id/close_menu"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="38dp"
         android:layout_below="@+id/recycler_view"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
-        android:text="关闭菜单"
-        android:textColor="@color/colorAccent"
+        android:background="@drawable/button_seletor_2"
+        android:text="收起菜单"
         android:textSize="16sp" />
 </RelativeLayout>

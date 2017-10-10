@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scaleType="centerCrop"
-    android:src="@mipmap/app_launch"
+    android:src="@mipmap/app_launch_bg"
     tools:context="yswl.priv.com.shengqianshopping.activity.LaunchActivity">
 
 

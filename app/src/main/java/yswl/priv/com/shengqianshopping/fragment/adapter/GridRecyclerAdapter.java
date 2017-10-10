@@ -37,7 +37,6 @@ public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapte
 
     List<CategoryBean> mCategorys;
     RecyclerView recyclerView;
-
     public List<CategoryBean> getmProductList() {
         return mCategorys;
     }

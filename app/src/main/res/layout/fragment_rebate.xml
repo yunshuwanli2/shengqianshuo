@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/app_launch">
+    android:background="@color/rebate_bg">
 
     <LinearLayout
         android:id="@+id/title_bar"
@@ -19,7 +19,7 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_bar"
@@ -44,9 +44,16 @@
             android:text="怎么返"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
-    </LinearLayout>
+    </LinearLayout>-->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_search"
+        android:src="@mipmap/bg_tool" />
 
     <LinearLayout
+        android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -57,10 +64,9 @@
 
 
         <ImageView
-
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_toolbar_search" />
+            android:src="@mipmap/ic_search_act" />
 
         <EditText
             android:id="@+id/al_search_input"
@@ -81,7 +87,7 @@
             android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="搜淘宝"
+            android:text="搜索"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 

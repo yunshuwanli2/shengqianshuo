@@ -27,7 +27,6 @@ public class GridRecyclerFragmentAdapter2 extends RecyclerView.Adapter<GridRecyc
     }
 
 
-
     private GridRecyclerFragmentAdapter.OnItemClickListener onItemClickListener;
 
     public GridRecyclerFragmentAdapter.OnItemClickListener getOnItemClickListener() {
@@ -46,6 +45,20 @@ public class GridRecyclerFragmentAdapter2 extends RecyclerView.Adapter<GridRecyc
     public GridRecyclerFragmentAdapter2() {
     }
 
+    RecyclerView recyclerView;
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        this.recyclerView = null;
+    }
+
     @Override
     public GridRecyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
@@ -62,6 +75,15 @@ public class GridRecyclerFragmentAdapter2 extends RecyclerView.Adapter<GridRecyc
         holder.produce_buy_count.setText(detail.getVolume());
         holder.product_desc.setText(detail.title);
         holder.product_price.setText(detail.couponPrice);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null && v != null && recyclerView != null) {
+                    int position = recyclerView.getChildAdapterPosition(v);
+                    onItemClickListener.onItemClick(recyclerView, v, position);
+                }
+            }
+        });
     }
 
 
@@ -77,9 +99,11 @@ public class GridRecyclerFragmentAdapter2 extends RecyclerView.Adapter<GridRecyc
         TextView product_desc;
         TextView product_price;
         TextView produce_buy_count;
+        View itemView;
 
         public GridRecyHolder(View view) {
             super(view);
+            itemView = view;
             preview_img = (ImageView) view.findViewById(R.id.iv_product_preview);
             top_numb = (TextView) view.findViewById(R.id.tv_top_numb);
             product_desc = (TextView) view.findViewById(R.id.tv_product_desc);
