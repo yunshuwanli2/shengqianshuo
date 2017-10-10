@@ -46,12 +46,36 @@ public class UserManager {
 
     //用户是否绑定手机认证
     public static boolean isBindPhone(Context context) {
-        return SharedPreUtils.getInstance(context).getBooleanValueBySharedPreferences(SharedPreUtils.PHONE_STATE, false);
+        String boole = SharedPreUtils.getInstance(context).getValueBySharedPreferences(SharedPreUtils.PHONE_STATE, "false");
+        return Boolean.parseBoolean(boole);
     }
 
     //用户是否绑定手机认证
-    public static void saveBindPhoneState(Context context, boolean isBind) {
-        SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.PHONE_STATE, isBind);
+    public static void saveBindPhoneState(Context context, String isBind) {
+        String boo = "1";
+        if (isBind.equalsIgnoreCase("0"))
+            boo = "false";
+        else if (isBind.equalsIgnoreCase("1"))
+            boo = "true";
+        else if (isBind.equalsIgnoreCase("true") || isBind.equalsIgnoreCase("false"))
+            boo = isBind;
+        SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.PHONE_STATE, boo);
+    }
+
+    public static String getUid(Context context) {
+        return SharedPreUtils.getInstance(context).getValueBySharedPreferences(SharedPreUtils.UID, "");
+    }
+
+    public static void saveUid(Context context, String uid) {
+        SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.UID, uid);
+    }
+
+    public static String getToken(Context context) {
+        return SharedPreUtils.getInstance(context).getValueBySharedPreferences(SharedPreUtils.TOKEN, "");
+    }
+
+    public static void saveToken(Context context, String token) {
+        SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.TOKEN, token);
     }
 
     public static boolean isBindPhone(String photoState) {

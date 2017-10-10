@@ -102,11 +102,11 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
             String token = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "token");
             String phoneStatus = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "phoneStatus");
 
-            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.UID, uid);
-            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.TOKEN, token);
-            SharedPreUtils.getInstance(LoginActivity.this).saveValueBySharedPreferences(SharedPreUtils.PHONE_STATE, phoneStatus);
+            UserManager.saveToken(this, token);
+            UserManager.saveUid(this, uid);
+            UserManager.saveBindPhoneState(this, phoneStatus);
 
-            if (UserManager.isBindPhone(phoneStatus)) {
+            if (UserManager.isBindPhone(this)) {
                 BindPhoneActivity.startActivity(this);
             } else {
                 UserCenterFragment.publishUserInfoRequestEvent();

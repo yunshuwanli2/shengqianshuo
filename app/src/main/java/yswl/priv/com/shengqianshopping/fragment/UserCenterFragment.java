@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ali.auth.third.core.model.User;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
@@ -66,6 +67,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     }
 
     public static void publishUserInfoRequestEvent() {
+        EventBus.getDefault().removeStickyEvent(UserInfoRequestEvent.class);
         EventBus.getDefault().postSticky(new UserInfoRequestEvent());
     }
 
@@ -118,7 +120,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     private final int GET_USERINFO_REQUESTID = 1003;
 
     void requestUserInfo() {
-        String uid = SharedPreUtils.getInstance(getActivity()).getValueBySharedPreferences(SharedPreUtils.UID, "");
+        String uid = UserManager.getUid(getActivity());
         UserManager.rquestUserInfoDetail(getActivity(), uid, this, GET_USERINFO_REQUESTID);
     }
 
@@ -147,7 +149,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 break;
             case R.id.user_info_ll_balance_of_payments:
                 //TODO 收支明细
-                if (UserManager.isLogin(getContext()))
+                if (UserManager.isOnlin(getContext()))
                     BalanceOfPaymentDetailActivity.startAct(getContext());
                 break;
             case R.id.user_info_ll_fans:
@@ -183,6 +185,19 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 //TODO 签到有礼
                 break;
         }
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
 
