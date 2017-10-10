@@ -163,7 +163,6 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="人气"
-                            android:drawableRight="@mipmap/icon_desc"
                             />
 
                         <TextView
@@ -173,7 +172,6 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="最新"
-                            android:drawableRight="@mipmap/icon_desc"
                             />
 
                         <TextView
@@ -183,7 +181,6 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="销量"
-                            android:drawableRight="@mipmap/icon_desc"
                             />
 
                         <TextView
@@ -193,7 +190,6 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="价格"
-                            android:drawableRight="@mipmap/icon_desc"
                             />
 
                     </LinearLayout>
