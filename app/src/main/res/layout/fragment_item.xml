@@ -17,7 +17,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:drawableRight="@mipmap/icon_desc"
             android:text="人气" />
 
         <TextView
@@ -26,7 +25,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:drawableRight="@mipmap/icon_desc"
             android:text="最新" />
 
         <TextView
@@ -35,7 +33,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:drawableRight="@mipmap/icon_desc"
             android:text="销量" />
 
         <TextView
@@ -44,7 +41,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:drawableRight="@mipmap/icon_desc"
             android:text="价格" />
 
     </LinearLayout>

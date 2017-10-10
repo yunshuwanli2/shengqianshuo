@@ -34,8 +34,8 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
 
     private Drawable drawableAsc;
     private Drawable drawableDesc;
-    private TextView lastTv;
     private int currentPosition = 0;
+    private TextView lastTv;
 
 
     public CategoryBean getmCategory() {
@@ -107,7 +107,7 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
                 .replace(R.id.content, mFragments[0])
                 .commitAllowingStateLoss();
         currentPosition = 0;
-        hotProduct.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+        hotProduct.setCompoundDrawables(null, null, drawableDesc, null);
         lastTv = hotProduct;
     }
 
@@ -125,19 +125,18 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
                 postion = 0;
                 if (currentPosition == 0) {
                     hotAsc = !hotAsc;
-                    if (hotAsc) {
-                        hotProduct.setCompoundDrawables(null, null, drawableAsc, null);
-                    } else {
-                        hotProduct.setCompoundDrawables(null, null, drawableDesc, null);
-                    }
                     ((GridRecyclerviewFragment) fragment).setAsc(hotAsc);
                 } else {
                     currentPosition = 0;
                     if (lastTv != null) {
-                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                        lastTv.setCompoundDrawables(null, null, null, null);
                     }
-                    hotProduct.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
                     lastTv = hotProduct;
+                }
+                if (hotAsc) {
+                    hotProduct.setCompoundDrawables(null, null, drawableAsc, null);
+                } else {
+                    hotProduct.setCompoundDrawables(null, null, drawableDesc, null);
                 }
                 ((GridRecyclerviewFragment) fragment).requestData();
                 break;
@@ -146,19 +145,18 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
                 postion = 1;
                 if (currentPosition == 1) {
                     newAsc = !newAsc;
-                    if (newAsc) {
-                        newProduct.setCompoundDrawables(null, null, drawableAsc, null);
-                    } else {
-                        newProduct.setCompoundDrawables(null, null, drawableDesc, null);
-                    }
                     ((GridRecyclerviewFragment) fragment).setAsc(newAsc);
                 } else {
                     currentPosition = 1;
                     if (lastTv != null) {
-                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                        lastTv.setCompoundDrawables(null, null, null, null);
                     }
-                    newProduct.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
                     lastTv = newProduct;
+                }
+                if (newAsc) {
+                    newProduct.setCompoundDrawables(null, null, drawableAsc, null);
+                } else {
+                    newProduct.setCompoundDrawables(null, null, drawableDesc, null);
                 }
                 ((GridRecyclerviewFragment) fragment).requestData();
                 break;
@@ -167,19 +165,18 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
                 postion = 2;
                 if (currentPosition == 2) {
                     volumeAsc = !volumeAsc;
-                    if (volumeAsc) {
-                        sellCountProduct.setCompoundDrawables(null, null, drawableAsc, null);
-                    } else {
-                        sellCountProduct.setCompoundDrawables(null, null, drawableDesc, null);
-                    }
                     ((GridRecyclerviewFragment) fragment).setAsc(volumeAsc);
                 } else {
                     currentPosition = 2;
                     if (lastTv != null) {
-                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                        lastTv.setCompoundDrawables(null, null, null, null);
                     }
-                    sellCountProduct.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
                     lastTv = sellCountProduct;
+                }
+                if (volumeAsc) {
+                    sellCountProduct.setCompoundDrawables(null, null, drawableAsc, null);
+                } else {
+                    sellCountProduct.setCompoundDrawables(null, null, drawableDesc, null);
                 }
                 ((GridRecyclerviewFragment) fragment).requestData();
                 break;
@@ -188,19 +185,18 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
                 postion = 3;
                 if (currentPosition == 3) {
                     priceAsc = !priceAsc;
-                    if (priceAsc) {
-                        priceProduct.setCompoundDrawables(null, null, drawableAsc, null);
-                    } else {
-                        priceProduct.setCompoundDrawables(null, null, drawableDesc, null);
-                    }
                     ((GridRecyclerviewFragment) fragment).setAsc(priceAsc);
                 } else {
                     currentPosition = 3;
                     if (lastTv != null) {
-                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                        lastTv.setCompoundDrawables(null, null, null, null);
                     }
-                    priceProduct.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
                     lastTv = priceProduct;
+                }
+                if (priceAsc) {
+                    priceProduct.setCompoundDrawables(null, null, drawableAsc, null);
+                } else {
+                    priceProduct.setCompoundDrawables(null, null, drawableDesc, null);
                 }
                 ((GridRecyclerviewFragment) fragment).requestData();
                 break;

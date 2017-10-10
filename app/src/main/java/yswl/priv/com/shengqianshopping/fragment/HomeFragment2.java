@@ -120,6 +120,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     private Drawable drawableDesc;
     private TextView lastTv;
 
+
     public HomeFragment2() {
     }
 
@@ -319,18 +320,17 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             case R.id.tv_hot:
                 if (currentPosition == 0) {
                     hotAsc = !hotAsc;
-                    if (hotAsc) {
-                        tvHot.setCompoundDrawables(null, null, drawableAsc, null);
-                    } else {
-                        tvHot.setCompoundDrawables(null, null, drawableDesc, null);
-                    }
                 } else {
                     currentPosition = 0;
                     if (lastTv != null) {
-                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                        lastTv.setCompoundDrawables(null, null, null, null);
                     }
-                    tvHot.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
                     lastTv = tvHot;
+                }
+                if (hotAsc) {
+                    tvHot.setCompoundDrawables(null, null, drawableAsc, null);
+                } else {
+                    tvHot.setCompoundDrawables(null, null, drawableDesc, null);
                 }
                 hotlastId = "0";
                 requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
@@ -338,18 +338,17 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             case R.id.tv_new:
                 if (currentPosition == 1) {
                     newAsc = !newAsc;
-                    if (newAsc) {
-                        tvNew.setCompoundDrawables(null, null, drawableAsc, null);
-                    } else {
-                        tvNew.setCompoundDrawables(null, null, drawableDesc, null);
-                    }
                 } else {
                     currentPosition = 1;
                     if (lastTv != null) {
-                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                        lastTv.setCompoundDrawables(null, null, null, null);
                     }
-                    tvNew.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
                     lastTv = tvNew;
+                }
+                if (newAsc) {
+                    tvNew.setCompoundDrawables(null, null, drawableAsc, null);
+                } else {
+                    tvNew.setCompoundDrawables(null, null, drawableDesc, null);
                 }
                 newlastId = "0";
                 requsetCategoryList(SortEnum.NEW, newAsc, newlastId);
@@ -357,18 +356,17 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             case R.id.tv_sell_count:
                 if (currentPosition == 2) {
                     volumeAsc = !volumeAsc;
-                    if (volumeAsc) {
-                        tvSellCount.setCompoundDrawables(null, null, drawableAsc, null);
-                    } else {
-                        tvSellCount.setCompoundDrawables(null, null, drawableDesc, null);
-                    }
                 } else {
                     currentPosition = 2;
                     if (lastTv != null) {
-                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                        lastTv.setCompoundDrawables(null, null, null, null);
                     }
-                    tvSellCount.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
                     lastTv = tvSellCount;
+                }
+                if (volumeAsc) {
+                    tvSellCount.setCompoundDrawables(null, null, drawableAsc, null);
+                } else {
+                    tvSellCount.setCompoundDrawables(null, null, drawableDesc, null);
                 }
                 volumelastId = "-1";
                 requsetCategoryList(SortEnum.VOLUME, volumeAsc, volumelastId);
@@ -376,18 +374,17 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             case R.id.tv_price:
                 if (currentPosition == 3) {
                     priceAsc = !priceAsc;
-                    if (priceAsc) {
-                        tvPrice.setCompoundDrawables(null, null, drawableAsc, null);
-                    } else {
-                        tvPrice.setCompoundDrawables(null, null, drawableDesc, null);
-                    }
                 } else {
                     currentPosition = 3;
                     if (lastTv != null) {
-                        lastTv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                        lastTv.setCompoundDrawables(null, null, null, null);
                     }
-                    tvPrice.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
                     lastTv = tvPrice;
+                }
+                if (priceAsc) {
+                    tvPrice.setCompoundDrawables(null, null, drawableAsc, null);
+                } else {
+                    tvPrice.setCompoundDrawables(null, null, drawableDesc, null);
                 }
                 pricelastId = "0";
                 requsetCategoryList(SortEnum.PRICE, priceAsc, pricelastId);
@@ -467,7 +464,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     void updateBottonItem(CategoryBean categoryBean) {
         mCatetoryTitle.setText(categoryBean.title);
         requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
-        tvHot.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red2));
+        tvHot.setCompoundDrawables(null, null, drawableDesc, null);
         lastTv = tvHot;
         currentPosition = 0;
     }
