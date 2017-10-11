@@ -108,6 +108,8 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
                 screenImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        timer.cancel();
+                        MainActivityV3.startAct(SplashActivity.this);
                         AlibcUtil.openBrower2(aDbean.link, SplashActivity.this);
                     }
                 });
@@ -140,5 +142,7 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 
 }

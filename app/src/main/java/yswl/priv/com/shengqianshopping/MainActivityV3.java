@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -29,12 +30,19 @@ import yswl.priv.com.shengqianshopping.event.ExitEvent;
 import yswl.priv.com.shengqianshopping.event.UserInfoRequestEvent;
 import yswl.priv.com.shengqianshopping.fragment.DataGenerator;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 
 
 public class MainActivityV3 extends MActivity {
 
     public static void startAct(Context context) {
         Intent intent = new Intent(context, MainActivityV3.class);
+        context.startActivity(intent);
+    }
+
+    public static void startActJumpAD(Context context, String url) {
+        Intent intent = new Intent(context, MainActivityV3.class);
+        intent.putExtra("url", url);
         context.startActivity(intent);
     }
 
@@ -45,6 +53,12 @@ public class MainActivityV3 extends MActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_v3);
+
+        String url = getIntent().getStringExtra("url");
+        if (TextUtils.isEmpty(url)) {
+            AlibcUtil.openBrower2(url, this);
+        }
+
 
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
@@ -177,6 +191,7 @@ public class MainActivityV3 extends MActivity {
         } else {
             handler.removeMessages(EXITWHAT);
             MApplication.AppExit(this);
+            AlibcUtil.destory();
         }
     }
 
