@@ -4,16 +4,17 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:padding="2dp">
+    android:padding="1dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_product_preview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="180dp"
+            android:scaleType="centerInside" />
 
         <TextView
             android:layout_width="70dp"

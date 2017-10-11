@@ -27,6 +27,7 @@ import yswl.priv.com.shengqianshopping.MainActivityV3;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ADbean;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 public class SplashActivity extends MActivity implements HttpCallback<JSONObject> {
@@ -107,15 +108,7 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
                 screenImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setAction("android.intent.action.VIEW");
-                        Uri content_url = Uri.parse(aDbean.link);
-                        intent.setData(content_url);
-                        startActivity(intent);
-
-//                        BrowserActivity.start(
-//                                MAppInfoUtil.getAppName(v.getContext())
-//                                , "https://www.baidu.com", SplashActivity.this);
+                        AlibcUtil.openBrower2(aDbean.link, SplashActivity.this);
                     }
                 });
             }

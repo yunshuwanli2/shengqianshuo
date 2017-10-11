@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,11 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -29,7 +25,6 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 
 import org.json.JSONObject;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +36,6 @@ import butterknife.OnClick;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
-import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.AdvanceActivity;
@@ -59,7 +53,7 @@ import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
-import yswl.priv.com.shengqianshopping.view.FullyGridLayoutManager;
+import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
 
 public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
     private static final String FRAGMENT_TAG = "HomeFragment2_ItemFragment";
@@ -104,7 +98,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
 
     GridRecyclerFragmentAdapter mAdapter;
-
     private int currentPosition = 0;
 
     private boolean hotAsc = false;//升序:asc 降序:desc-默认--人气
@@ -171,17 +164,16 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     }
 
     private void initGridView() {
-        FullyGridLayoutManager manager = new FullyGridLayoutManager(getActivity(), 2);
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setNestedScrollingEnabled(false);
-//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+//        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(), 10, R.color.white));
         mAdapter = new GridRecyclerFragmentAdapter();
         mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position) {
-                ToastUtil.showToast("点击了" + position);
                 List<ProductDetail> products = getProductList();
                 if (products == null || products.size() == 0) return;
                 ProductDetail detail = products.get(position);
@@ -465,6 +457,8 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         mCatetoryTitle.setText(categoryBean.title);
         requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
         tvHot.setCompoundDrawables(null, null, drawableDesc, null);
+        if (lastTv != null)
+            lastTv.setCompoundDrawables(null, null, null, null);
         lastTv = tvHot;
         currentPosition = 0;
     }

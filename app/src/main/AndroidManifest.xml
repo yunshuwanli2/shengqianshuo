@@ -66,15 +66,12 @@
         <activity
             android:name=".activity.LaunchActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ScoreboardActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BindPhoneActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MyFansActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BalanceOfPaymentDetailActivity"
@@ -85,7 +82,8 @@
             android:theme="@style/AppTheme.NoToolBar" />
         <activity
             android:name=".activity.UserInfoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.Myfans2Activity"></activity>
     </application>
 
 </manifest>

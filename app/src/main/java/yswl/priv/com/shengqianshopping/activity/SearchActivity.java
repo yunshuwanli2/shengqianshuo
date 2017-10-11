@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,13 +27,19 @@ import com.alibaba.baichuan.android.trade.model.OpenType;
 import com.alibaba.baichuan.android.trade.model.TradeResult;
 import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
 import com.alibaba.baichuan.android.trade.page.AlibcDetailPage;
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
@@ -42,35 +49,60 @@ import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
+import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.fragment.adapter.ListRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
-public class SearchActivity extends MActivity implements HttpCallback<JSONObject> {
+public class SearchActivity extends MActivity implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
 
     public static void startActivity(Activity context) {
         Intent intent = new Intent(context, SearchActivity.class);
         context.startActivity(intent);
     }
 
+    private final int REFRESH = 1;//刷新标志
+    private final int LOADMORE = 2;//加载更多
+    private int GETDTATYPE = REFRESH;//当前获取数据方式（1刷新，2加载更多）
+    private String lastID = "1";
+    private boolean ALLOWLOADMORE = true;//是否允许上拉加载
+
+    @BindView(R.id.swipeToLoadLayout)
+    SwipeToLoadLayout swipeToLoadLayout;
+
+    @BindView(R.id.swipe_target)
     RecyclerView mRecyclerView;
     GridRecyclerFragmentAdapter mAdapter;
     EditText mEdit;
     ImageView mClear;
     ImageView mSearch;
-    List<ProductDetail> mProductList;
+    List<ProductDetail> mProductList = new ArrayList<>();
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
+        ButterKnife.bind(this);
         Toolbar toolbar = findView(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        setHomeAsUpShowAndEnabled(true);
+        initRefesh();
         mEdit = findView(R.id.toolbar_search_edit);
         mSearch = findView(R.id.toolbar_search);
         mClear = findView(R.id.toobar_clear);
@@ -97,7 +129,6 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
@@ -109,9 +140,17 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
             }
         });
 
-        mRecyclerView = findView(R.id.recycler_view);
-        GridLayoutManager manager = new GridLayoutManager(this, 2);
+    }
 
+    void setHomeAsUpShowAndEnabled(boolean boo) {
+        getSupportActionBar().setHomeButtonEnabled(boo); //设置返回键可用
+        getSupportActionBar().setDisplayHomeAsUpEnabled(boo);
+    }
+
+    private void initRefesh() {
+        swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout.setOnLoadMoreListener(this);
+        GridLayoutManager manager = new GridLayoutManager(this, 2);
         manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -127,7 +166,6 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
             }
         });
         mRecyclerView.setAdapter(mAdapter);
-
     }
 
 
@@ -137,29 +175,71 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
      * 1. count | 可 | | 默认20
      */
     private void requstData() {
+        if (GETDTATYPE == REFRESH) {
+            lastID = "0";
+        }
         String key = mEdit.getText().toString().trim();
         if (TextUtils.isEmpty(key)) return;
-
         String url = UrlUtil.getUrl(this, R.string.url_product_search);
         Map<String, Object> map = new HashMap<>();
         map.put("like", key);
         map.put("count", 20);
-        map.put("lastId", 0);
+        map.put("lastId", lastID);
         HttpClientProxy.getInstance().postAsynSQS(url, 1002, map, this);
     }
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
+        if (GETDTATYPE == REFRESH) {
+            swipeToLoadLayout.setRefreshing(false);
+            mProductList.clear();
+        } else {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
         if (ResultUtil.isCodeOK(result)) {
-            mProductList = ProductDetail.jsonToList(
+            lastID = ResultUtil.analysisData(result).optString("lastId");
+            List<ProductDetail> tempList = ProductDetail.jsonToList(
                     ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
-            mAdapter.setmProductList(mProductList);
-            mAdapter.notifyDataSetChanged();
+            if (tempList != null && tempList.size() > 0) {
+                for (int i = 0; i < tempList.size(); i++) {
+                    mProductList.add(tempList.get(i));
+                }
+                mAdapter.setmProductList(mProductList);
+                mAdapter.notifyDataSetChanged();
+
+            } else {
+                ALLOWLOADMORE = false;
+            }
+            GETDTATYPE = REFRESH;
         }
     }
 
     @Override
     public void onFail(int requestId, String errorMsg) {
+        if (GETDTATYPE == REFRESH) {
+            swipeToLoadLayout.setRefreshing(false);
+        } else {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
+        GETDTATYPE = REFRESH;
+    }
 
+
+    @Override
+    public void onRefresh() {
+        //刷新
+        GETDTATYPE = REFRESH;
+        ALLOWLOADMORE = true;
+        requstData();
+    }
+
+    @Override
+    public void onLoadMore() {
+        GETDTATYPE = LOADMORE;
+        if (ALLOWLOADMORE) {
+            requstData();
+        } else {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
     }
 }

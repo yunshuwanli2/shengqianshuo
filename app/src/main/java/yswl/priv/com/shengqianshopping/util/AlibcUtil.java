@@ -26,10 +26,13 @@ import java.util.Map;
 import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.MainActivityV3;
+import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
+import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
 import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
+import yswl.priv.com.shengqianshopping.manager.UserManager;
 
 /**
  * Created by kangpAdministrator on 2017/10/9 0009.
@@ -41,6 +44,13 @@ public class AlibcUtil {
     private static final String TAG = AlibcUtil.class.getSimpleName();
 
     public static void openBrower2(String url, Activity context) {
+        if (!UserManager.isLogin(context)) {
+            LoginActivity.startActivity(context);
+            return;
+        } else if (!UserManager.isBindPhone(context)) {
+            BindPhoneActivity.startActivity(context);
+            return;
+        }
         Map<String, String> exParams = new HashMap<>();
         exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
 
@@ -72,12 +82,16 @@ public class AlibcUtil {
 
     //打开详情
     public static void openAlibcPage(Activity context, ProductDetail detail) {
+        if (!UserManager.isLogin(context)) {
+            LoginActivity.startActivity(context);
+            return;
+        } else if (!UserManager.isBindPhone(context)) {
+            BindPhoneActivity.startActivity(context);
+            return;
+        }
         Map<String, String> exParams = new HashMap<>();
         exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
-
-        //商品详情page
         AlibcBasePage detailPage = new AlibcDetailPage(detail.iid);
-        //设置页面打开方式
         AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
         AlibcTrade.show(context, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
 
@@ -96,6 +110,13 @@ public class AlibcUtil {
 
     //打开详情
     public static void openAlibcPage(Activity context, CrazyProductDetail detail) {
+        if (!UserManager.isLogin(context)) {
+            LoginActivity.startActivity(context);
+            return;
+        } else if (!UserManager.isBindPhone(context)) {
+            BindPhoneActivity.startActivity(context);
+            return;
+        }
         Map<String, String> exParams = new HashMap<>();
         exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
 
@@ -119,6 +140,13 @@ public class AlibcUtil {
     }
 
     public static void gotoAliOrder(Activity context) {
+        if (!UserManager.isLogin(context)) {
+            LoginActivity.startActivity(context);
+            return;
+        } else if (!UserManager.isBindPhone(context)) {
+            BindPhoneActivity.startActivity(context);
+            return;
+        }
         Map<String, String> exParams = new HashMap<>();
         exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
         /**
@@ -143,6 +171,13 @@ public class AlibcUtil {
     }
 
     public static void gotoAliShoppingChe(Activity context) {
+        if (!UserManager.isLogin(context)) {
+            LoginActivity.startActivity(context);
+            return;
+        } else if (!UserManager.isBindPhone(context)) {
+            BindPhoneActivity.startActivity(context);
+            return;
+        }
         Map<String, String> exParams = new HashMap<>();
         exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
         AlibcBasePage myCartsPage = new AlibcMyCartsPage();
@@ -169,7 +204,6 @@ public class AlibcUtil {
             @Override
             public void onSuccess() {
                 //TODO 发出退出全局信息
-                Toast.makeText(activity, "退出登录成功", Toast.LENGTH_SHORT).show();
                 //清除数据
                 SharedPreUtils.getInstance(activity).clearAllData();
                 MainActivityV3.publishHomeTabEvent();

@@ -34,6 +34,7 @@ import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdap
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter2;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
+import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
 
 /**
  * TOP100
@@ -100,15 +101,14 @@ public class GridRecyclerviewFragment2 extends MFragment implements HttpCallback
         swipeToLoadLayout.setOnLoadMoreListener(this);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.swipe_target);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
-
         manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(), 10, R.color.white));
         mAdapter = new GridRecyclerFragmentAdapter2();
         mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position) {
-                ToastUtil.showToast("点击了" + position);
                 List<ProductDetail> products = getmProductList();
                 if (products == null || products.size() == 0) return;
                 ProductDetail detail = products.get(position);

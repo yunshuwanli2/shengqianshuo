@@ -28,7 +28,6 @@ public class App extends MApplication {
             @Override
             public void onSuccess() {
                 //初始化成功，设置相关的全局配置参数
-                Toast.makeText(App.this, "TaeSDK 初始化成功", Toast.LENGTH_SHORT).show();
                 AlibcTradeSDK.setForceH5(true);
             }
 

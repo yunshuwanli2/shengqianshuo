@@ -10,14 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alibaba.baichuan.android.trade.AlibcTrade;
-import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
-import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
-import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
-import com.alibaba.baichuan.android.trade.model.OpenType;
-import com.alibaba.baichuan.android.trade.model.TradeResult;
-import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
-import com.alibaba.baichuan.android.trade.page.AlibcDetailPage;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
@@ -25,7 +17,6 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +32,7 @@ import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
+import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
 
 /**
  *
@@ -115,16 +107,14 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         swipeToLoadLayout.setOnLoadMoreListener(this);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.swipe_target);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
-
         manager.setOrientation(OrientationHelper.VERTICAL);
+//        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(), 10, R.color.white));
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mAdapter = new GridRecyclerFragmentAdapter();
         mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position) {
-                ToastUtil.showToast("点击了" + position);
                 List<ProductDetail> products = getmProductList();
                 if (products == null || products.size() == 0) return;
                 ProductDetail detail = products.get(position);
@@ -144,12 +134,16 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
      * 1. sortBy | 可 | 排序方式 | 正序:asc 倒序:desc-默认
      */
     public void requestData() {
-        if (GETDTATYPE == REFRESH) {
-            lastId = "0";
-        }
+
         if (mParam1 != null) {
             Map<String, Object> parm = mParam1.map;
-
+            if (GETDTATYPE == REFRESH) {
+                if ("volume".equals(parm.get("sort"))) {
+                    lastId = "-1";
+                } else {
+                    lastId = "0";
+                }
+            }
             parm.put("lastId", lastId);
             parm.put("count", "20");
             if (asc) {

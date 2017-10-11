@@ -1,10 +1,14 @@
 package yswl.priv.com.shengqianshopping;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -12,6 +16,9 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.ref.WeakReference;
+
+import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.manager.ActivityManager;
@@ -151,6 +158,46 @@ public class MainActivityV3 extends MActivity {
 
     public void gotoHomeTab() {
         bottomNavigationBar.selectTab(0, true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    private Handler handler = new MyHandler(this);
+    private long exitTime = 0;
+    public static final int EXITWHAT = 10086;
+    public static final int EixtDely = 1000;
+
+    public void exit() {
+        if ((System.currentTimeMillis() - exitTime) > EixtDely) {
+            handler.sendEmptyMessage(EXITWHAT);
+            exitTime = System.currentTimeMillis();
+        } else {
+            handler.removeMessages(EXITWHAT);
+            MApplication.AppExit(this);
+        }
+    }
+
+    static class MyHandler extends Handler {
+        WeakReference<Activity> weak = null;
+
+        public MyHandler(Activity activity) {
+            weak = new WeakReference<>(activity);
+        }
+
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case EXITWHAT:
+                    Activity activity = weak.get();
+                    if (activity != null) {
+                        Toast.makeText(activity, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+        }
+
     }
 
 }

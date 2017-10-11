@@ -1,6 +1,7 @@
 package yswl.priv.com.shengqianshopping.manager;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +48,7 @@ public class UserManager {
     //用户是否绑定手机认证
     public static boolean isBindPhone(Context context) {
         String boole = SharedPreUtils.getInstance(context).getValueBySharedPreferences(SharedPreUtils.PHONE_STATE, "false");
+        if (TextUtils.isEmpty(boole)) return false;
         return Boolean.parseBoolean(boole);
     }
 

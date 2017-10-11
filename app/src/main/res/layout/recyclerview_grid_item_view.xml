@@ -4,31 +4,30 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="1dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_product_preview"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:scaleType="centerCrop" />
+            android:layout_height="180dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/tv_coup_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/iv_product_preview"
+            android:layout_alignTop="@+id/iv_product_preview"
             android:background="@color/red2"
             android:padding="3dp"
             android:text="券:¥3"
             android:textColor="@android:color/white"
             android:textSize="12sp" />
-
-
     </RelativeLayout>
 
     <TextView

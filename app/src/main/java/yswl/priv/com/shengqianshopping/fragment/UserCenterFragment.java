@@ -10,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.ali.auth.third.core.model.User;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
@@ -23,27 +21,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
-import yswl.priv.com.shengqianshopping.MainActivity;
-import yswl.priv.com.shengqianshopping.MainActivityV3;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.BalanceOfPaymentDetailActivity;
 import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
 import yswl.priv.com.shengqianshopping.activity.InvitationActivity;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
-import yswl.priv.com.shengqianshopping.activity.MyFansActivity;
+import yswl.priv.com.shengqianshopping.activity.Myfans2Activity;
 import yswl.priv.com.shengqianshopping.activity.ScoreboardActivity;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.UserBean;
-import yswl.priv.com.shengqianshopping.event.ExitEvent;
 import yswl.priv.com.shengqianshopping.event.UserInfoRequestEvent;
 import yswl.priv.com.shengqianshopping.event.UserInfoEvent;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
-import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 
 /**
  * Created by kangpAdministrator on 2017/9/27 0027.
@@ -200,19 +193,14 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 break;
             case R.id.user_info_ll_tracks:
                 //TODO 我的足迹
-
                 break;
             case R.id.user_info_ll_balance_of_payments:
                 //TODO 收支明细
-                if (UserManager.isOnlin(getContext()))
-                    BalanceOfPaymentDetailActivity.startAct(getContext());
+                BalanceOfPaymentDetailActivity.startAct(getContext());
                 break;
             case R.id.user_info_ll_fans:
                 //TODO 我的粉丝
-                if (UserManager.isOnlin(getContext()))
-                    MyFansActivity.startAct(getActivity());
-                else
-                    LoginActivity.startActivity(getActivity());
+                Myfans2Activity.startAct(getActivity());
                 break;
             case R.id.user_info_ll_order:
                 AlibcUtil.gotoAliOrder(getActivity());

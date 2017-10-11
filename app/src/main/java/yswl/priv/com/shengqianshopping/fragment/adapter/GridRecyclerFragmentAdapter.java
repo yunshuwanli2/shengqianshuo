@@ -18,7 +18,6 @@ import yswl.priv.com.shengqianshopping.util.MTextViewUtil;
 /**
  * Created by yunshuwanli on 17/10/1.
  */
-
 public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecyclerFragmentAdapter.GridRecyHolder> {
 
     public interface OnItemClickListener {

@@ -16,7 +16,6 @@ public class MToolBarActivity extends MActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
