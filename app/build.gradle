@@ -34,7 +34,7 @@ android {
             minifyEnabled false
             pseudoLocalesEnabled false
             buildConfigField("String", "base_url", '\"http://api.saveduoduo.com\"')
-            buildConfigField("boolean", "debug", "true")
+            buildConfigField("boolean", "debug", "fase")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
