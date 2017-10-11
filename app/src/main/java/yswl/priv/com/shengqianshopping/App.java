@@ -17,7 +17,7 @@ public class App extends MApplication {
 
     @Override
     public boolean getDebugSetting() {
-        return true;
+        return yswl.com.klibrary.BuildConfig.DEBUG;
     }
 
     @Override

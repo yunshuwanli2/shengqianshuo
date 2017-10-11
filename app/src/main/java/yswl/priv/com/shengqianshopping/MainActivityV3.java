@@ -55,7 +55,7 @@ public class MainActivityV3 extends MActivity {
         setContentView(R.layout.activity_main_v3);
 
         String url = getIntent().getStringExtra("url");
-        if (TextUtils.isEmpty(url)) {
+        if (!TextUtils.isEmpty(url)) {
             AlibcUtil.openBrower2(url, this);
         }
 

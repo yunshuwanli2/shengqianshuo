@@ -61,11 +61,6 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
-//                if (aDbean != null) {
-//                    SplashActivity.startAct(SplashActivity.this, aDbean);
-//                } else {
-//                    MainActivityV3.startAct(SplashActivity.this);
-//                }
             }
 
             @Override
@@ -109,8 +104,7 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
                     @Override
                     public void onClick(View v) {
                         timer.cancel();
-                        MainActivityV3.startAct(SplashActivity.this);
-                        AlibcUtil.openBrower2(aDbean.link, SplashActivity.this);
+                        MainActivityV3.startActJumpAD(SplashActivity.this, aDbean.link);
                     }
                 });
             }
@@ -142,7 +136,6 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
 
 }
