@@ -29,6 +29,7 @@ import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
+import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.TimeBean;
@@ -110,9 +111,9 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
         mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position) {
-                List<ProductDetail> products = getmProductList();
+                List<CrazyProductDetail> products = getmProductList();
                 if (products == null || products.size() == 0) return;
-                ProductDetail detail = products.get(position);
+                CrazyProductDetail detail = products.get(position);
                 AlibcUtil.openAlibcPage(getActivity(), detail);
             }
         });
@@ -120,7 +121,7 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
         requestData();
     }
 
-    public List<ProductDetail> getmProductList() {
+    public List<CrazyProductDetail> getmProductList() {
         return mProductList;
     }
 
@@ -149,7 +150,7 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
 
 
     private static final String TAG = ListRecyclerviewFragment.class.getSimpleName();
-    List<ProductDetail> mProductList = new ArrayList<>();
+    List<CrazyProductDetail> mProductList = new ArrayList<>();
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
@@ -161,7 +162,7 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
         }
         L.e(TAG, "onSucceed result :" + result);
         if (ResultUtil.isCodeOK(result)) {
-            List<ProductDetail> tempList = ProductDetail.jsonToList(
+            List<CrazyProductDetail> tempList = CrazyProductDetail.jsonToList(
                     ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
             if (tempList != null && tempList.size() > 0) {
                 for (int i = 0; i < tempList.size(); i++) {

@@ -86,7 +86,7 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
             holder.coup_price.setVisibility(View.VISIBLE);
             holder.coup_price.setText(detail.getCouponNum());
         }
-        holder.product_price.setText(detail.couponPrice);
+        holder.product_price.setText(detail.getCouponPrice());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

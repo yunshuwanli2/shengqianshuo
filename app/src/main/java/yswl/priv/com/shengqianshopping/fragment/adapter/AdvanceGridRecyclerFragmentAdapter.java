@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import yswl.priv.com.shengqianshopping.R;
+import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 
@@ -22,13 +23,13 @@ import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 
 public class AdvanceGridRecyclerFragmentAdapter extends RecyclerView.Adapter<AdvanceGridRecyclerFragmentAdapter.GridRecyHolder> {
 
-    List<ProductDetail> mProductList;
+    List<CrazyProductDetail> mProductList;
 
-    public List<ProductDetail> getmProductList() {
+    public List<CrazyProductDetail> getmProductList() {
         return mProductList;
     }
 
-    public void setmProductList(List<ProductDetail> mProductList) {
+    public void setmProductList(List<CrazyProductDetail> mProductList) {
         this.mProductList = mProductList;
     }
 
@@ -44,12 +45,12 @@ public class AdvanceGridRecyclerFragmentAdapter extends RecyclerView.Adapter<Adv
 
     @Override
     public void onBindViewHolder(final GridRecyHolder holder, int position) {
-        final ProductDetail detail = mProductList.get(position);
+        final CrazyProductDetail detail = mProductList.get(position);
         Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
         holder.product_desc.setText(detail.title);
-        holder.product_price.setText(detail.getZkFinalPrice());
-        holder.product_old_price.setText(detail.getReservePrice());
-        holder.total.setText("总库存:" + detail.getVolume());
+        holder.product_price.setText("¥ " + detail.zkFinalPrice);
+        holder.product_old_price.setText(detail.reservePrice);
+        holder.total.setText("总库存:" + detail.totalAmount);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +89,7 @@ public class AdvanceGridRecyclerFragmentAdapter extends RecyclerView.Adapter<Adv
 
         }
     }
+
     public interface OnItemClickListener {
         void onItemClick(RecyclerView parent, View view, int position);
     }
@@ -101,12 +103,15 @@ public class AdvanceGridRecyclerFragmentAdapter extends RecyclerView.Adapter<Adv
     public void setOnItemClickListener(GridRecyclerFragmentAdapter.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
     RecyclerView recyclerView;
+
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         this.recyclerView = recyclerView;
     }
+
     @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);

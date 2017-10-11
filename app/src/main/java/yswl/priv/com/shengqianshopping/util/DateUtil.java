@@ -17,6 +17,7 @@ import yswl.com.klibrary.util.L;
 public class DateUtil {
     public static final String FORMAT = "yyyy-MM-dd hh:mm:ss";
     public static final String FORMAT2 = "yyyy-MM-dd";
+    public static final String FORMAT3 = "yyyy-MM-dd hh:mm";
 
     public static int compare_date(String DATE2) {
         DateFormat df = new SimpleDateFormat(FORMAT, Locale.CHINA);
@@ -39,6 +40,12 @@ public class DateUtil {
     }
 
     static final String TAG = "DateUtil";
+
+    public static String longToStringDate(long time){
+        Date date = new Date(time);//取时间
+        SimpleDateFormat formatter = new SimpleDateFormat(FORMAT3, Locale.CHINA);
+        return formatter.format(date);
+    }
 
     // //2017-09-24 15:00:00
     public static String getTodayFixedTime(int hour) {

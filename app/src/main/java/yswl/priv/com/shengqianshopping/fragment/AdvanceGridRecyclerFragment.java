@@ -28,6 +28,7 @@ import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.R;
+import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.fragment.adapter.AdvanceGridRecyclerFragmentAdapter;
@@ -121,9 +122,8 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
         HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, map, this);
     }
 
-
     private static final String TAG = AdvanceGridRecyclerFragment.class.getSimpleName();
-    List<ProductDetail> mProductList = new ArrayList<>();
+    List<CrazyProductDetail> mProductList = new ArrayList<>();
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
@@ -135,7 +135,7 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
             swipeToLoadLayout.setLoadingMore(false);
         }
         if (ResultUtil.isCodeOK(result)) {
-            List<ProductDetail> tempList = ProductDetail.jsonToList(
+            List<CrazyProductDetail> tempList = CrazyProductDetail.jsonToList(
                     ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
             if (tempList != null && tempList.size() > 0) {
                 for (int i = 0; i < tempList.size(); i++) {

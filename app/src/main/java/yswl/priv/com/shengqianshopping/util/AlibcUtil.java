@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.ali.auth.third.login.callback.LogoutCallback;
 import com.alibaba.baichuan.android.trade.AlibcTrade;
+import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.adapter.login.AlibcLogin;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
 import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
@@ -17,6 +18,7 @@ import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
 import com.alibaba.baichuan.android.trade.page.AlibcDetailPage;
 import com.alibaba.baichuan.android.trade.page.AlibcMyCartsPage;
 import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
+import com.alibaba.baichuan.android.trade.page.AlibcPage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +27,7 @@ import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.MainActivityV3;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
+import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
 
@@ -37,21 +40,62 @@ public class AlibcUtil {
 
     private static final String TAG = AlibcUtil.class.getSimpleName();
 
+    public static void openBrower2(String url, Activity context) {
+        Map<String, String> exParams = new HashMap<>();
+        exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
+
+        //商品详情page
+        AlibcPage detailPage = new AlibcPage(url);
+        AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
+        AlibcTrade.show(context, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
+            @Override
+            public void onTradeSuccess(TradeResult tradeResult) {
+                L.e(TAG, tradeResult.resultType.name());
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+            }
+        });
+    }
+
     public static void openBrower(ProductDetail detail, Activity context) {
         String jumpUrl = detail.couponClickUrl;
         if (TextUtils.isEmpty(jumpUrl)) {
             jumpUrl = detail.clickUrl;
         }
-
         if (TextUtils.isEmpty(jumpUrl)) {
             jumpUrl = detail.itemUrl;
         }
-
-        BrowserActivity.start(detail.title, jumpUrl, context);
+        openBrower2(jumpUrl, context);
     }
 
     //打开详情
     public static void openAlibcPage(Activity context, ProductDetail detail) {
+        Map<String, String> exParams = new HashMap<>();
+        exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
+
+        //商品详情page
+        AlibcBasePage detailPage = new AlibcDetailPage(detail.iid);
+        //设置页面打开方式
+        AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
+        AlibcTrade.show(context, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
+
+            @Override
+            public void onTradeSuccess(TradeResult tradeResult) {
+                L.e(TAG, tradeResult.resultType.name());
+                //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
+            }
+        });
+    }
+
+    //打开详情
+    public static void openAlibcPage(Activity context, CrazyProductDetail detail) {
         Map<String, String> exParams = new HashMap<>();
         exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
 
@@ -136,5 +180,9 @@ public class AlibcUtil {
                 Toast.makeText(activity, "退出登录失败 " + code + msg, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public static void destory() {
+        AlibcTradeSDK.destory();
     }
 }

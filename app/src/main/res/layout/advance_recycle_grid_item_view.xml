@@ -68,7 +68,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="总库存：120" />
+            android:text="总库存：120"
+            android:textSize="12sp" />
     </RelativeLayout>
 
 </LinearLayout>

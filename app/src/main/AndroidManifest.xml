@@ -5,6 +5,11 @@
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
         android:name=".App"
@@ -18,25 +23,40 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoToolBar.Main" />
-        <activity android:name=".activity.SettingActivity" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".MainActivityV3"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoToolBar.Main" />
         <activity
             android:name=".activity.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoToolBar" />
-        <activity android:name=".activity.RecommendActivity" />
-        <activity android:name=".activity.AdvanceActivity" />
-        <activity android:name=".activity.CrazyBuyActivity" />
-        <activity android:name=".activity.Top100Activity" />
-        <activity android:name=".activity.SearchActivity" />
+        <activity
+            android:name=".activity.RecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AdvanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CrazyBuyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.Top100Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SplashActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,15 +65,27 @@
         </activity>
         <activity
             android:name=".activity.LaunchActivity"
-            android:noHistory="true"></activity>
-        <activity android:name=".activity.ScoreboardActivity" />
-        <activity android:name=".activity.BindPhoneActivity" />
-        <activity android:name=".activity.MyFansActivity" />
-        <activity android:name=".activity.BalanceOfPaymentDetailActivity" />
+            android:noHistory="true"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ScoreboardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BindPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyFansActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BalanceOfPaymentDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.InvitationActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoToolBar" />
-        <activity android:name=".activity.UserInfoActivity"></activity>
+        <activity
+            android:name=".activity.UserInfoActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

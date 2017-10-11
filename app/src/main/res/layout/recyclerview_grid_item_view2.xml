@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/text"
             android:layout_toRightOf="@+id/text"
-            android:text="￥ 2000000"
+            android:text="¥ 2000000"
             android:textColor="@color/red2"
             android:textSize="12sp" />
 

@@ -1,5 +1,6 @@
 package yswl.priv.com.shengqianshopping.banner;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,12 +9,19 @@ import android.widget.ImageView;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bumptech.glide.Glide;
 
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
+
 /**
  * 本地图片加载
  * 是没有点击事件的
  */
 public class LocalImageHolderView implements Holder<BannerBean> {
     private ImageView imageView;
+    Activity mActivity;
+
+    public LocalImageHolderView(Activity activity) {
+        this.mActivity = activity;
+    }
 
     @Override
     public View createView(Context context) {
@@ -48,7 +56,9 @@ public class LocalImageHolderView implements Holder<BannerBean> {
                     @Override
                     public void onClick(View v) {
                         //链接跳转
-//                        String linkUrl = data.link;
+                        String linkUrl = data.link;
+                        AlibcUtil.openBrower2(linkUrl, mActivity);
+
                     }
                 });
             }

@@ -75,7 +75,7 @@ public class GridRecyclerFragmentAdapter2 extends RecyclerView.Adapter<GridRecyc
         Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
         holder.produce_buy_count.setText(detail.getVolume());
         holder.product_desc.setText(detail.title);
-        holder.product_price.setText(detail.couponPrice);
+        holder.product_price.setText(detail.getCouponPrice());
         if ("0".equalsIgnoreCase(detail.userType))//0是淘宝 1是天猫
             MTextViewUtil.setCompoundDrawablesLeft(holder.product_desc, R.mipmap.ic_drawleft_tb);
         else
@@ -90,7 +90,6 @@ public class GridRecyclerFragmentAdapter2 extends RecyclerView.Adapter<GridRecyc
             }
         });
     }
-
 
     @Override
     public int getItemCount() {

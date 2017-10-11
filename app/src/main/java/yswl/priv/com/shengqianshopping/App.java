@@ -1,6 +1,5 @@
 package yswl.priv.com.shengqianshopping;
 
-import android.app.Application;
 import android.widget.Toast;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
@@ -8,13 +7,11 @@ import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import yswl.com.klibrary.MApplication;
-import yswl.com.klibrary.util.L;
 
 /**
  * Created by kangpAdministrator on 2017/9/27 0027.
  * Emial kangpeng@yunhetong.net
  */
-
 public class App extends MApplication {
     static final String TAG = App.class.getSimpleName();
 

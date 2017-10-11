@@ -13,7 +13,9 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import yswl.priv.com.shengqianshopping.R;
+import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
+import yswl.priv.com.shengqianshopping.util.DateUtil;
 
 /**
  * Created by yunshuwanli on 17/10/1.
@@ -21,13 +23,13 @@ import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 
 public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecyclerFragmentAdapter.GridRecyHolder> {
 
-    List<ProductDetail> mProductList;
+    List<CrazyProductDetail> mProductList;
 
-    public List<ProductDetail> getmProductList() {
+    public List<CrazyProductDetail> getmProductList() {
         return mProductList;
     }
 
-    public void setmProductList(List<ProductDetail> mProductList) {
+    public void setmProductList(List<CrazyProductDetail> mProductList) {
         this.mProductList = mProductList;
     }
 
@@ -73,12 +75,15 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
 
     @Override
     public void onBindViewHolder(GridRecyHolder holder, int position) {
-        ProductDetail detail = mProductList.get(position);
+        CrazyProductDetail detail = mProductList.get(position);
         Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
-        holder.produce_buy_count.setText("已抢购:" + detail.getVolume());
+        holder.produce_buy_count.setText("已抢购:" + detail.soldNum);
         holder.product_desc.setText(detail.title);
-        holder.product_price.setText("￥:" + detail.zkFinalPrice);
-        holder.product_old_price.setText("￥:" + detail.reservePrice);
+        holder.product_price.setText("¥:" + detail.zkFinalPrice);
+        holder.product_old_price.setText(detail.reservePrice);
+
+        holder.time_start.setText("开始时间 " + detail.startTime);
+        holder.time_end.setText("结束时间 " + detail.endTime);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +124,6 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
             produce_buy_count = (TextView) view.findViewById(R.id.tv_selled_numb);
             time_start = (TextView) view.findViewById(R.id.tv_time_start);
             time_end = (TextView) view.findViewById(R.id.tv_time_end);
-
 
         }
     }

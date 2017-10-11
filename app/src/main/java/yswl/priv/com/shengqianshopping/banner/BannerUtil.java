@@ -1,5 +1,7 @@
 package yswl.priv.com.shengqianshopping.banner;
 
+import android.app.Activity;
+
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 
@@ -18,8 +20,12 @@ import yswl.priv.com.shengqianshopping.R;
 public class BannerUtil {
 
     private static final String TAG = "BannerUtil";
-
+    Activity mActivity;
     private ConvenientBanner<BannerBean> convenientBanner;//轮播图
+
+    public BannerUtil(Activity mActivity) {
+        this.mActivity = mActivity;
+    }
 
     public void setConvenientBanner(ConvenientBanner<BannerBean> convenientBanner) {
         this.convenientBanner = convenientBanner;
@@ -48,7 +54,7 @@ public class BannerUtil {
         convenientBanner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
             @Override
             public LocalImageHolderView createHolder() {
-                return new LocalImageHolderView();
+                return new LocalImageHolderView(mActivity);
             }
         }, localImages);
         convenientBanner.setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused});

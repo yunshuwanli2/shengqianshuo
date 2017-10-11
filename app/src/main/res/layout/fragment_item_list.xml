@@ -23,8 +23,7 @@
             android:name="yswl.priv.com.shengqianshopping.fragment.BalanceDetailItemFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp" />
+          />
 
         <include
             android:id="@id/swipe_load_more_footer"

@@ -53,29 +53,18 @@ import yswl.com.klibrary.util.DateJsonDeserializer;
  */
 
 public class ProductDetail {
-
     public String id;
     public String iid;//商品id
     public String title;
     public String pictUrl;//商品主图
     public String picUrl;//商品主图
     public String[] smallImages;//商品小图列
-
-    public String getReservePrice() {
-        return "¥" + reservePrice;
-    }
-
     public String reservePrice;//商品一口价格
     public String itemUrl;
     public String provcity;//所在地 杭州
     public String userType;//卖家类型 0:集市 1:商城
     public String clickUrl;//淘客地址
     public String zkFinalPriceWap;//无线端商品折扣价格
-
-    public String getZkFinalPrice() {
-        return "¥" + zkFinalPrice;
-    }
-
     public String zkFinalPrice;//商品折扣价格
     public String nick;//卖家昵称
     public String sellerId;// 卖家ID
@@ -95,7 +84,18 @@ public class ProductDetail {
     public String couponNum;//优惠券面额价格
 
     public String getCouponNum() {
-        return "券:￥" + couponNum;
+        return "券:¥" + couponNum;
+    }
+    public String getCouponPrice() {
+        return "¥"+couponPrice;
+    }
+
+    public String getReservePrice() {
+        return "¥" + reservePrice;
+    }
+
+    public String getZkFinalPrice() {
+        return "¥" + zkFinalPrice;
     }
 
     public String getVolume() {

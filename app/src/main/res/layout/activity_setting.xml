@@ -43,7 +43,7 @@
             android:background="@drawable/text_item_bg"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="清楚缓存" />
+            android:text="清除缓存" />
 
         <TextView
             android:id="@+id/app_cache"

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.priv.com.shengqianshopping.R;
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
@@ -28,6 +29,7 @@ public class RebateFragment extends MFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_rebate, container, false);
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mEdit = (EditText) view.findViewById(R.id.al_search_input);
@@ -45,8 +47,7 @@ public class RebateFragment extends MFragment {
                     return;
                 }
                 String url = getActivity().getResources().getString(R.string.url_search_tool, key);
-                BrowserActivity.start("搜索：" + key, url, getActivity());
-
+                AlibcUtil.openBrower2(url, getActivity());
             }
         });
 

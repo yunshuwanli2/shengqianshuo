@@ -283,7 +283,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     void initBanner() {
         if (null == banner) {
-            banner = new BannerUtil();
+            banner = new BannerUtil(getActivity());
         }
         banner.setConvenientBanner(mConvenientBanner);
         banner.loadPic(mImags);

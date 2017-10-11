@@ -7,7 +7,6 @@
     android:background="@color/app_main_bg"
     android:orientation="vertical"
     tools:context="yswl.priv.com.shengqianshopping.activity.MyFansActivity">
-
     <include layout="@layout/base_common_toobar" />
 
     <LinearLayout

@@ -149,6 +149,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         }
         if (mParam1 != null) {
             Map<String, Object> parm = mParam1.map;
+
             parm.put("lastId", lastId);
             parm.put("count", "20");
             if (asc) {
