@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/text_item_bg">
+        android:background="@drawable/text_item_bg"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,8 +21,9 @@
             android:text="头像" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/user_info_img_head"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -30,7 +33,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,6 +44,7 @@
             android:text="用户名" />
 
         <TextView
+            android:id="@+id/user_info_tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -49,7 +55,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/text_item_bg">
+        android:background="@drawable/text_item_bg"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,6 +66,7 @@
             android:text="手机号码" />
 
         <TextView
+            android:id="@+id/user_info_tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -68,7 +77,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -76,6 +88,7 @@
             android:text="QQ号码" />
 
         <TextView
+            android:id="@+id/user_info_tv_QQ_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -86,7 +99,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/text_item_bg">
+        android:background="@drawable/text_item_bg"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -95,6 +110,7 @@
             android:text="电子邮箱" />
 
         <TextView
+            android:id="@+id/user_info_tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -105,7 +121,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/text_item_bg">
+        android:background="@drawable/text_item_bg"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -114,6 +132,7 @@
             android:text="淘宝账号" />
 
         <TextView
+            android:id="@+id/user_info_tv_taobao_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
