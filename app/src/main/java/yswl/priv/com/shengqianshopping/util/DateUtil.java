@@ -15,9 +15,9 @@ import yswl.com.klibrary.util.L;
  */
 
 public class DateUtil {
-    public static final String FORMAT = "yyyy-MM-dd hh:mm:ss";
+    public static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String FORMAT2 = "yyyy-MM-dd";
-    public static final String FORMAT3 = "yyyy-MM-dd hh:mm";
+    public static final String FORMAT3 = "yyyy-MM-dd HH:mm";
 
     public static int compare_date(String DATE2) {
         DateFormat df = new SimpleDateFormat(FORMAT, Locale.CHINA);
@@ -41,71 +41,47 @@ public class DateUtil {
 
     static final String TAG = "DateUtil";
 
-    public static String longToStringDate(long time){
+    public static String longToStringDate(long time) {
         Date date = new Date(time);//取时间
         SimpleDateFormat formatter = new SimpleDateFormat(FORMAT3, Locale.CHINA);
         return formatter.format(date);
     }
 
-    // //2017-09-24 15:00:00
     public static String getTodayFixedTime(int hour) {
-        Date date = new Date();//取时间
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR, hour);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        Date date1 = calendar.getTime();
-        SimpleDateFormat formatter = new SimpleDateFormat(FORMAT, Locale.CHINA);
-        return formatter.format(date1);
+        return getTodayFixedTime(hour, 0, 0);
     }
 
-    public static String getYestordayFixedTime(int hour) {
+    public static String getTodayFixedTime(int hour, int minute, int second) {
         Date date = new Date();//取时间
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
-        calendar.add(Calendar.DATE, -1);
-        calendar.set(Calendar.HOUR, hour);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, second);
         Date date1 = calendar.getTime();
         SimpleDateFormat formatter = new SimpleDateFormat(FORMAT, Locale.CHINA);
         return formatter.format(date1);
+
     }
+
 
     public static String getTomorroFixedTime(int hour) {
+        return getTomorroFixedTime(hour, 0, 0);
+    }
+
+    public static String getTomorroFixedTime(int hour, int minute, int second) {
         Date date = new Date();//取时间
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
-        calendar.add(Calendar.DATE, +1);
+        calendar.add(Calendar.DATE, +1); //明天就是+1 昨天就是-1
         calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, second);
         Date date1 = calendar.getTime();
         SimpleDateFormat formatter = new SimpleDateFormat(FORMAT, Locale.CHINA);
         return formatter.format(date1);
     }
 
-    // //2017-09-24 15:00:00
-    public static String getTodayFixedTime2(String time) {
-        Date date = new Date();//取时间
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        Date date1 = calendar.getTime();
-        SimpleDateFormat formatter = new SimpleDateFormat(FORMAT2, Locale.CHINA);
-        return formatter.format(date1) + " " + time;
-    }
-
-
-    public static String getTomorroFixedTime2(String time) {
-        Date date = new Date();//取时间
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, +1);
-        Date date1 = calendar.getTime();
-        SimpleDateFormat formatter = new SimpleDateFormat(FORMAT2, Locale.CHINA);
-        return formatter.format(date1) + " " + time;
-    }
 
     //string转时间戳
     public static long stringToTimeStamp(String time) {

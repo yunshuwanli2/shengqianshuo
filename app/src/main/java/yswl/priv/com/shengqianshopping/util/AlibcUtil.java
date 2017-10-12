@@ -100,33 +100,6 @@ public class AlibcUtil {
         openBrower2(jumpUrl, context);
     }
 
-    //打开商品详情
-    public static void openAlibcPage(Activity context, ProductDetail detail) {
-        if (!UserManager.isLogin(context)) {
-            LoginActivity.startActivity(context);
-            return;
-        } else if (!UserManager.isBindPhone(context)) {
-            BindPhoneActivity.startActivity(context);
-            return;
-        }
-        Map<String, String> exParams = new HashMap<>();
-        exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
-        AlibcBasePage detailPage = new AlibcDetailPage(detail.iid);
-        AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
-        AlibcTrade.show(context, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
-
-            @Override
-            public void onTradeSuccess(TradeResult tradeResult) {
-                L.e(TAG, tradeResult.resultType.name());
-                //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
-            }
-        });
-    }
 
     //打开商品详情详情
     public static void openAlibcPage(Activity context, CrazyProductDetail detail) {

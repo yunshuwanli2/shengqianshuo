@@ -25,12 +25,19 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
 
     List<CrazyProductDetail> mProductList;
 
+
+    boolean mShowShade;
+
     public List<CrazyProductDetail> getmProductList() {
         return mProductList;
     }
 
     public void setmProductList(List<CrazyProductDetail> mProductList) {
         this.mProductList = mProductList;
+    }
+
+    public void setmShowShade(boolean mShowShade) {
+        this.mShowShade = mShowShade;
     }
 
     private GridRecyclerFragmentAdapter.OnItemClickListener onItemClickListener;
@@ -93,6 +100,11 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
                 }
             }
         });
+        if (mShowShade) {
+            holder.showShade.setVisibility(View.VISIBLE);
+        } else {
+            holder.showShade.setVisibility(View.GONE);
+        }
     }
 
 
@@ -111,7 +123,7 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
         final TextView time_start;
         final TextView time_end;
         final View itemView;
-
+        TextView showShade;
 
         public GridRecyHolder(View view) {
             super(view);
@@ -124,7 +136,7 @@ public class ListRecyclerFragmentAdapter extends RecyclerView.Adapter<ListRecycl
             produce_buy_count = (TextView) view.findViewById(R.id.tv_selled_numb);
             time_start = (TextView) view.findViewById(R.id.tv_time_start);
             time_end = (TextView) view.findViewById(R.id.tv_time_end);
-
+            showShade = (TextView) view.findViewById(R.id.tv_shade);
         }
     }
 }

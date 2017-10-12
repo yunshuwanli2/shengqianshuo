@@ -75,6 +75,7 @@ public class AdvanceGridRecyclerFragmentAdapter extends RecyclerView.Adapter<Adv
         TextView product_desc;
         TextView product_price;
         TextView total;
+
         View itemView;
 
         public GridRecyHolder(View view) {
@@ -86,6 +87,7 @@ public class AdvanceGridRecyclerFragmentAdapter extends RecyclerView.Adapter<Adv
             product_desc = (TextView) view.findViewById(R.id.tv_product_desc);
             product_price = (TextView) view.findViewById(R.id.tv_produce_price);
             total = (TextView) view.findViewById(R.id.tv_total);
+
 
         }
     }

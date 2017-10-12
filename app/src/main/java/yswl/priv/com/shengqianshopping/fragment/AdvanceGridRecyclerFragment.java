@@ -31,6 +31,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
+import yswl.priv.com.shengqianshopping.bean.TimeBean;
 import yswl.priv.com.shengqianshopping.fragment.adapter.AdvanceGridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
@@ -48,6 +49,7 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
     private String pageNo = "1";
     private boolean ALLOWLOADMORE = true;//是否允许上拉加载
 
+    static TimeBean time = new TimeBean(DateUtil.getTomorroFixedTime(0), DateUtil.getTomorroFixedTime(9));
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
 
@@ -117,8 +119,8 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
         Map<String, Object> map = new HashMap<>();
         map.put("pageNo", pageNo);
         map.put("pageSize", 20);
-        map.put("startTime", DateUtil.getTomorroFixedTime2("00:00:00"));
-        map.put("endTime", DateUtil.getTomorroFixedTime2("09:00:00"));
+        map.put("startTime", time.startTime);
+        map.put("endTime", time.endTime);
         HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, map, this);
     }
 

@@ -69,26 +69,6 @@
                     android:layout_toRightOf="@+id/tv_balance_prompt"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@+id/tv_integral"
-                    android:text="@string/user_info_ji_bao"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/tv_integral"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
             </RelativeLayout>
 
             <!-- <LinearLayout

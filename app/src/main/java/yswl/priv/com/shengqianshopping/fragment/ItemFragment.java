@@ -26,7 +26,6 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
 
-
     private boolean hotAsc = false;//升序:asc 降序:desc-默认--人气
     private boolean newAsc = false;//升序:asc 降序:desc-默认--最新
     private boolean volumeAsc = false;//升序:asc 降序:desc-默认--销量
@@ -216,5 +215,8 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
 
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+    }
 }

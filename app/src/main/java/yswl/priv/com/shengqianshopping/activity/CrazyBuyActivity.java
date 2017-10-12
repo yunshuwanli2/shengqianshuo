@@ -25,17 +25,18 @@ public class CrazyBuyActivity extends MToolBarActivity implements View.OnClickLi
     public static void startActivity(Activity context) {
         Intent intent = new Intent(context, CrazyBuyActivity.class);
         context.startActivity(intent);
-
     }
 
     TextView mYes, mNine, mThirteen, mSevenTeen, mTomorr;
     TextView views[];
+    TimeBean times[] = new TimeBean[]{TimeBean.getYTes(), TimeBean.getNine(), TimeBean.getThi(), TimeBean.getSev(), TimeBean.getTom()};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crazy_buy);
         setTitle("疯狂抢");
+
         initUI();
     }
 
@@ -54,26 +55,32 @@ public class CrazyBuyActivity extends MToolBarActivity implements View.OnClickLi
         views = new TextView[]{mYes, mNine, mThirteen, mSevenTeen, mTomorr};
 
         mFragments = new MFragment[5];
-        mFragments[0] = ListRecyclerviewFragment.newInstance(TimeBean.getYTes2());
-        mFragments[1] = ListRecyclerviewFragment.newInstance(TimeBean.getNine2());
-        mFragments[2] = ListRecyclerviewFragment.newInstance(TimeBean.getThi2());
-        mFragments[3] = ListRecyclerviewFragment.newInstance(TimeBean.getSev2());
-        mFragments[4] = ListRecyclerviewFragment.newInstance(TimeBean.getTom2());
+        mFragments[0] = ListRecyclerviewFragment.newInstance(times[0]);
+        mFragments[1] = ListRecyclerviewFragment.newInstance(times[1]);
+        mFragments[2] = ListRecyclerviewFragment.newInstance(times[2]);
+        mFragments[3] = ListRecyclerviewFragment.newInstance(times[3]);
+        mFragments[4] = ListRecyclerviewFragment.newInstance(times[4]);
         setTimeFrame();
         views[0].performClick();
     }
 
     private void setTimeFrame() {
         mYes.setText("昨日");
-        mNine.setText("09:00 \n" + getShowTime(9 * 60 * 60 * 1000, 13 * 60 * 60 * 1000));
-        mThirteen.setText("13:00 \n" + getShowTime(13 * 60 * 60 * 1000, 17 * 60 * 60 * 1000));
-        mSevenTeen.setText("17:00 \n" + getShowTime(17 * 60 * 60 * 1000, 24 * 60 * 60 * 1000));
+        mNine.setText("09:00 \n" + getShowTime(times[1].startTime, times[1].endTime));
+        mThirteen.setText("13:00 \n" + getShowTime(times[2].startTime, times[2].startTime));
+        mSevenTeen.setText("17:00 \n" + getShowTime(times[3].startTime, times[3].startTime));
         mTomorr.setText("预告");
     }
 
-    String getShowTime(long time, long nextTime) {
-        long compareTime = DateUtil.getTodayZero() + time;
-        long compareNextTime = DateUtil.getTodayZero() + nextTime;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+    }
+
+    String getShowTime(String time, String nextTime) {
+        long compareTime = DateUtil.stringToTimeStamp(time);
+        long compareNextTime = DateUtil.stringToTimeStamp(nextTime);
         long currentTime = System.currentTimeMillis();
         if (currentTime < compareTime) {
             return "即将开始";

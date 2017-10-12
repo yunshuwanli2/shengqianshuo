@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.TimeBean;
+import yswl.priv.com.shengqianshopping.util.DateUtil;
 import yswl.priv.com.shengqianshopping.view.DividerItemDecoration;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.ListRecyclerFragmentAdapter;
@@ -40,7 +43,6 @@ import yswl.priv.com.shengqianshopping.util.UrlUtil;
  * TOP100
  */
 public class ListRecyclerviewFragment extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
-
 
 
     private static final int REQUEST_ID = 1003;
@@ -62,9 +64,11 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
     public TimeBean getmParam1() {
         return mParam1;
     }
+
     public void setmParam1(TimeBean mParam1) {
         this.mParam1 = mParam1;
     }
+
     private TimeBean mParam1;//已经封装好的参数
 
 
@@ -106,6 +110,8 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new ListRecyclerFragmentAdapter();
+        boolean showShade = isShowShade(mParam1.startTime);
+        mAdapter.setmShowShade(showShade);
         mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position) {
@@ -166,6 +172,7 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
                 for (int i = 0; i < tempList.size(); i++) {
                     mProductList.add(tempList.get(i));
                 }
+
                 mAdapter.setmProductList(mProductList);
                 mAdapter.notifyDataSetChanged();
 
@@ -174,6 +181,15 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
             }
             GETDTATYPE = REFRESH;
         }
+    }
+
+    boolean isShowShade(String timeStr) {
+        if (TextUtils.isEmpty(timeStr)) return false;
+        long compareTime = DateUtil.stringToTimeStamp(timeStr);
+        long currentTime = System.currentTimeMillis();
+        if (currentTime < compareTime)
+            return true;
+        return false;
 
     }
 

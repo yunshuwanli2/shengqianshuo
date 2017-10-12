@@ -112,7 +112,7 @@ public class GridRecyclerviewFragment2 extends MFragment implements HttpCallback
                 List<ProductDetail> products = getmProductList();
                 if (products == null || products.size() == 0) return;
                 ProductDetail detail = products.get(position);
-                AlibcUtil.openAlibcPage(getActivity(), detail);
+                AlibcUtil.openBrower(detail, getActivity());
             }
         });
         mRecyclerView.setAdapter(mAdapter);

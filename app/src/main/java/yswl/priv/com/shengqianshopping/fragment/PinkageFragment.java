@@ -50,6 +50,11 @@ public class PinkageFragment extends MFragment implements HttpCallback<JSONObjec
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         initUI(view);
         requestCategroy();

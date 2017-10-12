@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,6 +71,52 @@ public class BindPhoneActivity extends MToolBarActivity implements HttpCallback<
 
     private void init() {
         setTitle("绑定手机号");
+        btnGetVcode.setClickable(false);
+        btnBindPhone.setClickable(false);
+        btnGetVcode.setPressed(true);
+        btnBindPhone.setPressed(true);
+        edtPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 11) {
+                    btnGetVcode.setClickable(true);
+                    btnGetVcode.setPressed(false);
+                } else {
+                    btnGetVcode.setClickable(false);
+                    btnGetVcode.setPressed(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtVcode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (hasSend && s.length() > 4) {
+                    btnBindPhone.setClickable(true);
+                    btnBindPhone.setPressed(false);
+                } else {
+                    btnBindPhone.setClickable(false);
+                    btnBindPhone.setPressed(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void dataBind() {

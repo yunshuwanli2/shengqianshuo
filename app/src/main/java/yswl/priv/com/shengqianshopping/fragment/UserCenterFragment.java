@@ -88,11 +88,8 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     @BindView(R.id.tv_balance)
     TextView tvBalance;
 
-    @BindView(R.id.tv_integral)
-    TextView tvIntegral;
     @BindView(R.id.tv_save_money)
     TextView tvSaveMoney;
-
 
     private Unbinder unbinder;
     private Activity activity;
@@ -130,7 +127,6 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
         Glide.with(activity).load(userBean.getAvatar()).into(ivHead);
         if (userBean.getAsset() != null) {
             tvBalance.setText("¥ " + userBean.getAsset().getRemainder());
-            tvIntegral.setText(userBean.getAsset().getIntegral() + "");
             tvSaveMoney.setText("已用省钱说节省:" + userBean.getAsset().getRevenue());
         }
     }
@@ -209,7 +205,6 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 BalanceOfPaymentDetailActivity.startAct(getContext());
                 break;
             case R.id.user_info_ll_fans:
-                //TODO 我的粉丝
                 Myfans2Activity.startAct(getActivity());
                 break;
             case R.id.user_info_ll_order:
@@ -219,25 +214,22 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 AlibcUtil.gotoAliShoppingChe(getActivity());
                 break;
             case R.id.user_info_ll_heroes_list:
-                if (UserManager.isOnlin(getContext()))
-                    startActivity(new Intent(activity, ScoreboardActivity.class));
-                else
-                    LoginActivity.startActivity(getActivity());
+                startActivity(new Intent(activity, ScoreboardActivity.class));
                 break;
             case R.id.user_info_ll_invitation:
                 //TODO 邀请
-                InvitationActivity.startAct(getContext());
+//                InvitationActivity.startAct(getContext());
                 break;
             case R.id.user_info_ll_customer_service:
                 BrowserActivity.start2("常见问题", "http://api.saveduoduo.com/config/faq", getContext());
                 break;
             case R.id.ll_sqtx:
                 //TODO 申请提现
-                if (UserManager.isBindZFB(getActivity())) {
-                    //提现服务
-                } else {
-                    BindZFBActivity.startActivityForResult(this);
-                }
+//                if (UserManager.isBindZFB(getActivity())) {
+//                    //提现服务
+//                } else {
+//                    BindZFBActivity.startActivityForResult(this);
+//                }
                 break;
             default:
                 break;

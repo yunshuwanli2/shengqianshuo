@@ -4,7 +4,7 @@
     <!-- main color -->
     <item>
         <shape>
-            <solid android:color="@color/app_main_bg" />
+            <solid android:color="@color/dim_foreground_dark" />
         </shape>
     </item>
 
@@ -13,7 +13,7 @@
         android:bottom="1px"
         android:top="1px">
         <shape>
-            <solid android:color="@android:color/white" />
+            <solid android:color="@color/white" />
         </shape>
     </item>
 

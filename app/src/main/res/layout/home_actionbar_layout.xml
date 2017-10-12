@@ -38,7 +38,8 @@
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/img_magnifier"
             android:background="@null"
-            android:textColor="@color/background_dark"
+            android:gravity="center_vertical"
+            android:text="搜索商品"
             android:textSize="15sp" />
 
     </RelativeLayout>
