@@ -243,6 +243,9 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
         }
     }
 
+    /**
+     * 提现
+     */
     void requestTX() {
         String url = UrlUtil.getUrl(this, R.string.url_withdraw_request);
         String uid = UserManager.getUid(getActivity());
