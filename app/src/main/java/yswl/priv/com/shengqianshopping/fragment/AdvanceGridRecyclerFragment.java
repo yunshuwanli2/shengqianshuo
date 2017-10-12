@@ -29,13 +29,11 @@ import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
-import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.TimeBean;
 import yswl.priv.com.shengqianshopping.fragment.adapter.AdvanceGridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
-import yswl.priv.com.shengqianshopping.util.DateUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
@@ -49,7 +47,7 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
     private String pageNo = "1";
     private boolean ALLOWLOADMORE = true;//是否允许上拉加载
 
-    static TimeBean time = new TimeBean(DateUtil.getTomorroFixedTime(0), DateUtil.getTomorroFixedTime(9));
+    static TimeBean time = TimeBean.getTomorrow();
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
 

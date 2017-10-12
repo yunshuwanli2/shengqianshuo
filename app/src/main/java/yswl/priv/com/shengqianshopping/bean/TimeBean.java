@@ -38,7 +38,7 @@ public class TimeBean implements Serializable {
         return new TimeBean(DateUtil.getTodayFixedTime(17), DateUtil.getTodayFixedTime(23, 59, 59));
     }
 
-    public static TimeBean getTom() {
+    public static TimeBean getTomorrow() {
         return new TimeBean(DateUtil.getTomorroFixedTime(0), DateUtil.getTomorroFixedTime(23, 59, 59));
     }
 

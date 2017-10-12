@@ -2,10 +2,8 @@ package yswl.priv.com.shengqianshopping.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -29,7 +27,7 @@ public class CrazyBuyActivity extends MToolBarActivity implements View.OnClickLi
 
     TextView mYes, mNine, mThirteen, mSevenTeen, mTomorr;
     TextView views[];
-    TimeBean times[] = new TimeBean[]{TimeBean.getYTes(), TimeBean.getNine(), TimeBean.getThi(), TimeBean.getSev(), TimeBean.getTom()};
+    TimeBean times[] = new TimeBean[]{TimeBean.getYTes(), TimeBean.getNine(), TimeBean.getThi(), TimeBean.getSev(), TimeBean.getTomorrow()};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +64,9 @@ public class CrazyBuyActivity extends MToolBarActivity implements View.OnClickLi
 
     private void setTimeFrame() {
         mYes.setText("昨日");
-        mNine.setText("09:00 \n" + getShowTime(times[1].startTime, times[1].endTime));
-        mThirteen.setText("13:00 \n" + getShowTime(times[2].startTime, times[2].startTime));
-        mSevenTeen.setText("17:00 \n" + getShowTime(times[3].startTime, times[3].startTime));
+        mNine.setText("09:00 \n" + getShowTime(times[1].startTime, times[2].startTime));
+        mThirteen.setText("13:00 \n" + getShowTime(times[2].startTime, times[3].startTime));
+        mSevenTeen.setText("17:00 \n" + getShowTime(times[3].startTime, times[4].startTime));
         mTomorr.setText("预告");
     }
 
@@ -87,7 +85,7 @@ public class CrazyBuyActivity extends MToolBarActivity implements View.OnClickLi
         } else if (compareTime < currentTime && currentTime < compareNextTime) {
             return "正在抢购";
         } else {
-            return "已在抢购";
+            return "已抢购";
         }
     }
 
