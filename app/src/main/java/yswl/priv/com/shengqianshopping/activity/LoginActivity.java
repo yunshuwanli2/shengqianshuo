@@ -47,8 +47,6 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     private static final String TAG = "LoginActivity";
     private final int LOGIN_REQUESTID = 1002;
 
-    private String phoneStatus = "0";// 用户是否进行手机号绑定 0未绑定 1已绑定
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +63,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
 
     private void login() {
         final AlibcLogin alibcLogin = AlibcLogin.getInstance();
-        Log.i("znh", "--" + android.os.Process.myTid());
+        L.i("znh", "--" + android.os.Process.myTid());
         alibcLogin.showLogin(LoginActivity.this, new AlibcLoginCallback() {
 
             @Override
@@ -79,7 +77,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
                 map.put("channelUid", AlibcLogin.getInstance().getSession().userid);
                 map.put("channelNickname", nick);
                 map.put("channelAvatar", headImg);
-                map.put("aFrom", "");
+                map.put("aFrom", "baidu");
                 HttpClientProxy.getInstance().postAsynSQS(url, LOGIN_REQUESTID, map, LoginActivity.this);
             }
 
@@ -111,7 +109,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
 
 
         } else if (requestId == GET_USERINFO_REQUESTID && ResultUtil.isCodeOK(result)) {
-            Log.i("znh", result.toString() + "----用户详细信息");
+            L.i("znh", result.toString() + "----用户详细信息");
             UserBean userInfo = UserBean.jsonToBean(ResultUtil.analysisData(result));
             if (!UserManager.isBindPhone(this)) {
                 BindPhoneActivity.startActivity(this);
@@ -135,7 +133,6 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     }
 
     private final int GET_USERINFO_REQUESTID = 1003;
-
     void requestUserInfo() {
         String uid = UserManager.getUid(this);
         UserManager.rquestUserInfoDetail(this, uid, this, GET_USERINFO_REQUESTID);

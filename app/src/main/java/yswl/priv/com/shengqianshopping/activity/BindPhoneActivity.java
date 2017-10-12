@@ -140,7 +140,7 @@ public class BindPhoneActivity extends MToolBarActivity implements HttpCallback<
                 ToastUtil.showToast("绑定手机号成功");
                 //需要刷新用户信息 手机号有更新
                 UserManager.saveBindPhoneState(this, "true");
-                UserCenterFragment.publishUserInfoRequestEvent();
+//                UserCenterFragment.publishUserInfoRequestEvent();
                 finish();
             }
         }
