@@ -3,6 +3,6 @@ ext{
     MBuildToolsVersion="25.0.3";
     MminSdkVersion=15;
     MtargetSdkVersion=25;
-    MVersionCode=1;
-    MVersionName="1.0.0";
+    MVersionCode=2;
+    MVersionName="1.1.0";
 }

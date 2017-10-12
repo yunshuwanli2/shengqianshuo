@@ -2,14 +2,20 @@ apply plugin: 'com.android.application'
 apply from: '../version.gradle'
 
 android {
-//    signingConfigs {
-//        Alidebug {
-//            keyAlias 'androiddebugkey'
-//            keyPassword 'android'
-//            storeFile file('C:/Users/Administrator/Desktop/yunshuwanliMAC/Android_Studio_key/local_mac_debug_key/debug.keystore')
-//            storePassword 'android'
-//        }
-//    }
+    signingConfigs {
+        Alidebug {
+            keyAlias 'yunshuwanli'
+            keyPassword '011235'
+            storeFile file('C:/Users/Administrator/Desktop/yunshuwanliMAC/Android_Studio_key/android_studio_strokey.jks')
+            storePassword '011235'
+        }
+        Release {
+            keyAlias 'yunshuwanli'
+            keyPassword '011235'
+            storeFile file('C:/Users/Administrator/Desktop/yunshuwanliMAC/Android_Studio_key/android_studio_strokey.jks')
+            storePassword '011235'
+        }
+    }
     compileSdkVersion MCompileSdkVersion
     buildToolsVersion MBuildToolsVersion
     defaultConfig {
@@ -24,17 +30,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.Release
         }
-//        debug {
-//            signingConfig signingConfigs.Alidebug
-//        }
+        debug {
+            signingConfig signingConfigs.Alidebug
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             pseudoLocalesEnabled false
             buildConfigField("String", "base_url", '\"http://api.saveduoduo.com\"')
-            buildConfigField("boolean", "debug", "fase")
+            buildConfigField("boolean", "debug", "false")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
