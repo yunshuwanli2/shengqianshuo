@@ -31,91 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="140dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp">
-
-                    <LinearLayout
-                        android:id="@+id/ll_fkq"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@mipmap/ic_crazy_bug" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="疯狂抢" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_tj"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@mipmap/ic_recommed" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="小编推荐" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_sort"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@mipmap/ic_top_100" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="疯狂排名" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_plan"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@mipmap/ic_advance" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="上线预告" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                <include layout="@layout/home_middle_menu_layout" />
 
                 <View
                     android:layout_width="match_parent"
@@ -161,8 +77,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="人气"
-                            />
+                            android:text="人气" />
 
                         <TextView
                             android:id="@+id/tv_new"
@@ -170,8 +85,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="最新"
-                            />
+                            android:text="最新" />
 
                         <TextView
                             android:id="@+id/tv_sell_count"
@@ -179,8 +93,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="销量"
-                            />
+                            android:text="销量" />
 
                         <TextView
                             android:id="@+id/tv_price"
@@ -188,8 +101,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="价格"
-                            />
+                            android:text="价格" />
 
                     </LinearLayout>
 
