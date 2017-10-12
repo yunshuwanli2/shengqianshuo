@@ -7,6 +7,7 @@ import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import yswl.com.klibrary.MApplication;
+import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 
 /**
  * Created by kangpAdministrator on 2017/9/27 0027.
@@ -17,26 +18,14 @@ public class App extends MApplication {
 
     @Override
     public boolean getDebugSetting() {
-        return yswl.com.klibrary.BuildConfig.DEBUG;
+        return BuildConfig.debug;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         CustomActivityOnCrash.install(this);
-        AlibcTradeSDK.asyncInit(this, new AlibcTradeInitCallback() {
-            @Override
-            public void onSuccess() {
-                //初始化成功，设置相关的全局配置参数
-                AlibcTradeSDK.setForceH5(true);
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                //初始化失败，可以根据code和msg判断失败原因，详情参见错误说明
-                Toast.makeText(App.this, "TaeSDK 初始化失败 -- " + msg + "  " + code, Toast.LENGTH_SHORT).show();
-            }
-        });
+        AlibcUtil.initAlibc(this);
     }
 
     @Override

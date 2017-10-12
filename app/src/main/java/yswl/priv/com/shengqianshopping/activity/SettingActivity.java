@@ -45,13 +45,13 @@ public class SettingActivity extends MToolBarActivity {
         name.setText(R.string.app_name);
         cache.setText(AppCacheCleanManager.getCacheSize(this));
 
-        findView(R.id.user_info).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO 个人信息
-                UserInfoActivity.startActivity(SettingActivity.this);
-            }
-        });
+//        findView(R.id.user_info).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO 个人信息
+//                UserInfoActivity.startActivity(SettingActivity.this);
+//            }
+//        });
 
         findView(R.id.clear_cache).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -44,6 +44,14 @@ public class UserManager {
     public static void saveLogin(Context context) {
         SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, true);
     }
+    //用户是否绑定支付宝
+    public static boolean isBindZFB(Context context) {
+        return SharedPreUtils.getInstance(context).getBooleanValueBySharedPreferences(SharedPreUtils.IS_BIND_ZFB, false);
+    }
+
+    public static void bindZFB(Context context,boolean boo) {
+        SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.IS_BIND_ZFB, boo);
+    }
 
     //用户是否绑定手机认证
     public static boolean isBindPhone(Context context) {

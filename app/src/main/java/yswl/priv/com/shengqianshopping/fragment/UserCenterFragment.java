@@ -22,10 +22,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import yswl.com.klibrary.base.MFragment;
+import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
+import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.BalanceOfPaymentDetailActivity;
 import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
+import yswl.priv.com.shengqianshopping.activity.BindZFBActivity;
 import yswl.priv.com.shengqianshopping.activity.InvitationActivity;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.activity.Myfans2Activity;
@@ -37,6 +40,7 @@ import yswl.priv.com.shengqianshopping.event.UserInfoRequestEvent;
 import yswl.priv.com.shengqianshopping.event.UserInfoEvent;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
+import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
  * Created by kangpAdministrator on 2017/9/27 0027.
@@ -60,7 +64,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     @Subscribe(sticky = true)
     public void onEvent(UserInfoRequestEvent event) {
         EventBus.getDefault().removeStickyEvent(UserInfoRequestEvent.class);
-//        requestUserInfo();
+        requestUserInfo();
     }
 
     public static void publishUserInfoRequestEvent() {
@@ -86,6 +90,8 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
 
     @BindView(R.id.tv_integral)
     TextView tvIntegral;
+    @BindView(R.id.tv_save_money)
+    TextView tvSaveMoney;
 
 
     private Unbinder unbinder;
@@ -117,19 +123,17 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
 
     private final int GET_USERINFO_REQUESTID = 1003;
 
-    void requestUserInfo() {
-        String uid = UserManager.getUid(getActivity());
-        UserManager.rquestUserInfoDetail(getActivity(), uid, this, GET_USERINFO_REQUESTID);
-    }
 
     void updateUI(UserBean userBean) {
         if (userBean == null) return;
         tvUserName.setText(userBean.getNickname());
         Glide.with(activity).load(userBean.getAvatar()).into(ivHead);
-        tvBalance.setText("¥" + userBean.getAsset().getRemainder());
-        tvIntegral.setText(userBean.getAsset().getIntegral() + "");
+        if (userBean.getAsset() != null) {
+            tvBalance.setText("¥ " + userBean.getAsset().getRemainder());
+            tvIntegral.setText(userBean.getAsset().getIntegral() + "");
+            tvSaveMoney.setText("已用省钱说节省:" + userBean.getAsset().getRevenue());
+        }
     }
-
 
     public boolean isLogin() {
         return UserManager.isLogin(getContext());
@@ -139,12 +143,18 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
         return UserManager.isBindPhone(getContext());
     }
 
+
+    void requestUserInfo() {
+        String uid = UserManager.getUid(getActivity());
+        UserManager.rquestUserInfoDetail(getActivity(), uid, this, GET_USERINFO_REQUESTID);
+    }
+
     @Override
     public void onSucceed(int requestId, JSONObject result) {
         if (requestId == GET_USERINFO_REQUESTID && ResultUtil.isCodeOK(result)) {
             Log.i("znh", result.toString() + "----用户详细信息");
-            UserBean userInfo = UserBean.jsonToBean(ResultUtil.analysisData(result));
-            updateUI(userInfo);
+//            UserBean userInfo = UserBean.jsonToBean(ResultUtil.analysisData(result));
+//            updateUI(userInfo);
             //保存状态
             UserManager.saveLogin(getActivity());
             UserManager.saveInfo(getActivity(), ResultUtil.analysisData(result).toString());
@@ -181,19 +191,19 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
         unbinder.unbind();
     }
 
-    @OnClick({R.id.user_info_ll_setting, R.id.user_info_ll_tracks,
+    @OnClick({R.id.user_info_ll_setting,
             R.id.user_info_ll_balance_of_payments, R.id.user_info_ll_fans,
             R.id.user_info_ll_order, R.id.user_info_ll_shopping_cart,
             R.id.user_info_ll_heroes_list, R.id.user_info_ll_invitation,
-            R.id.user_info_ll_customer_service, R.id.ll_sqtx, R.id.ll_sign_day})
+            R.id.user_info_ll_customer_service, R.id.ll_sqtx})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.user_info_ll_setting:
                 SettingActivity.startActivity(getActivity());
                 break;
-            case R.id.user_info_ll_tracks:
-                //TODO 我的足迹
-                break;
+//            case R.id.user_info_ll_tracks:
+//                //TODO 我的足迹
+//                break;
             case R.id.user_info_ll_balance_of_payments:
                 //TODO 收支明细
                 BalanceOfPaymentDetailActivity.startAct(getContext());
@@ -219,14 +229,36 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 InvitationActivity.startAct(getContext());
                 break;
             case R.id.user_info_ll_customer_service:
-                //TODO 客服
+                BrowserActivity.start2("常见问题", "http://api.saveduoduo.com/config/faq", getContext());
                 break;
             case R.id.ll_sqtx:
                 //TODO 申请提现
+                if (UserManager.isBindZFB(getActivity())) {
+                    //提现服务
+                } else {
+                    BindZFBActivity.startActivityForResult(this);
+                }
                 break;
-            case R.id.ll_sign_day:
-                //TODO 签到有礼
+            default:
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Activity.RESULT_FIRST_USER && resultCode == Activity.RESULT_OK) {
+            //
+        }
+    }
+
+    void requestTX() {
+        String url = UrlUtil.getUrl(this, R.string.url_withdraw_request);
+        String uid = UserManager.getUid(getActivity());
+        String amount = "";
+        String phone = "";
+        UserBean userInfo = UserManager.getUserInfo(getActivity());
+        if (userInfo != null)
+            phone = userInfo.getPhone();
+//        HttpClientProxy.getInstance().postAsynSQS(url, map, 122, this);
     }
 }

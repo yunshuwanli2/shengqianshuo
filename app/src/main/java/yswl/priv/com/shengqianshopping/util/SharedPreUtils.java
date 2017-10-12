@@ -24,6 +24,8 @@ public class SharedPreUtils {
 
     public final static String ISONLINE = "isONLine";//在线状态
 
+    public final static String IS_BIND_ZFB = "zfbStatus";//在线状态
+
 
     private SharedPreferences sp;
 

@@ -83,7 +83,8 @@
         <activity
             android:name=".activity.UserInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.Myfans2Activity"></activity>
+        <activity android:name=".activity.Myfans2Activity" />
+        <activity android:name=".activity.BindZFBActivity"></activity>
     </application>
 
 </manifest>

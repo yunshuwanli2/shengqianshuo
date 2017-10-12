@@ -10,6 +10,7 @@ import com.alibaba.baichuan.android.trade.AlibcTrade;
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.adapter.login.AlibcLogin;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
+import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
 import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
 import com.alibaba.baichuan.android.trade.model.OpenType;
@@ -25,6 +26,7 @@ import java.util.Map;
 
 import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.com.klibrary.util.L;
+import yswl.priv.com.shengqianshopping.App;
 import yswl.priv.com.shengqianshopping.MainActivityV3;
 import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
@@ -43,6 +45,23 @@ public class AlibcUtil {
 
     private static final String TAG = AlibcUtil.class.getSimpleName();
 
+    public static void initAlibc(final Context context) {
+        AlibcTradeSDK.asyncInit(context, new AlibcTradeInitCallback() {
+            @Override
+            public void onSuccess() {
+                //初始化成功，设置相关的全局配置参数
+//                AlibcTradeSDK.setForceH5(true);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                //初始化失败，可以根据code和msg判断失败原因，详情参见错误说明
+                Toast.makeText(context, "TaeSDK 初始化失败 -- " + msg + "  " + code, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //打开优惠券/或其他淘宝地址
     public static void openBrower2(String url, Activity context) {
         if (!UserManager.isLogin(context)) {
             LoginActivity.startActivity(context);
@@ -56,7 +75,7 @@ public class AlibcUtil {
 
         //商品详情page
         AlibcPage detailPage = new AlibcPage(url);
-        AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
+        AlibcShowParams showParams = new AlibcShowParams(OpenType.Native, true);
         AlibcTrade.show(context, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
             @Override
             public void onTradeSuccess(TradeResult tradeResult) {
@@ -69,6 +88,7 @@ public class AlibcUtil {
         });
     }
 
+    //打开优惠券
     public static void openBrower(ProductDetail detail, Activity context) {
         String jumpUrl = detail.couponClickUrl;
         if (TextUtils.isEmpty(jumpUrl)) {
@@ -80,7 +100,7 @@ public class AlibcUtil {
         openBrower2(jumpUrl, context);
     }
 
-    //打开详情
+    //打开商品详情
     public static void openAlibcPage(Activity context, ProductDetail detail) {
         if (!UserManager.isLogin(context)) {
             LoginActivity.startActivity(context);
@@ -108,7 +128,7 @@ public class AlibcUtil {
         });
     }
 
-    //打开详情
+    //打开商品详情详情
     public static void openAlibcPage(Activity context, CrazyProductDetail detail) {
         if (!UserManager.isLogin(context)) {
             LoginActivity.startActivity(context);
@@ -119,10 +139,7 @@ public class AlibcUtil {
         }
         Map<String, String> exParams = new HashMap<>();
         exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
-
-        //商品详情page
         AlibcBasePage detailPage = new AlibcDetailPage(detail.iid);
-        //设置页面打开方式
         AlibcShowParams showParams = new AlibcShowParams(OpenType.H5, true);
         AlibcTrade.show(context, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
 
@@ -203,7 +220,6 @@ public class AlibcUtil {
         alibcLogin.logout(activity, new LogoutCallback() {
             @Override
             public void onSuccess() {
-                //TODO 发出退出全局信息
                 //清除数据
                 SharedPreUtils.getInstance(activity).clearAllData();
                 MainActivityV3.publishHomeTabEvent();

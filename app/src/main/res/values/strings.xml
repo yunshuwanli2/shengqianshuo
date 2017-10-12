@@ -121,7 +121,7 @@
     <string name="user_info_shopping_cart">淘宝购物车</string>
     <string name="user_info_heroes_list">英雄榜</string>
     <string name="user_info_invitation">有奖邀请</string>
-    <string name="user_info_customer_service">客服帮助</string>
+    <string name="user_info_customer_service">常见问题</string>
     <string name="user_info_setting">设置</string>
     <string name="back">返回</string>
     <string name="title_activity_invitation">InvitationActivity</string>

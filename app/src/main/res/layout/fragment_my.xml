@@ -91,63 +91,59 @@
                     android:textSize="18sp" />
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <!-- <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/ll_sqtx"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                 <LinearLayout
+                     android:id="@+id/ll_sqtx"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:gravity="center"
+                     android:orientation="vertical"
+                     android:padding="5dp">
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@mipmap/ic_sqtx" />
+                     <ImageView
+                         android:layout_width="40dp"
+                         android:layout_height="40dp"
+                         android:src="@mipmap/ic_sqtx" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/user_info_apply_cash"
-                        android:textColor="@color/background_dark"
-                        android:textSize="15sp" />
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="5dp"
+                         android:text="@string/user_info_apply_cash"
+                         android:textColor="@color/background_dark"
+                         android:textSize="15sp" />
 
-                </LinearLayout>
+                 </LinearLayout>
 
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="match_parent"
-                    android:background="@color/app_main_bg" />
 
-                <LinearLayout
-                    android:id="@+id/ll_sign_day"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                  <LinearLayout
+                      android:id="@+id/ll_sign_day"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:orientation="vertical"
+                      android:padding="5dp">
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@mipmap/ic_sign" />
+                      <ImageView
+                          android:layout_width="40dp"
+                          android:layout_height="40dp"
+                          android:src="@mipmap/ic_sign" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/user_info_sign"
-                        android:textColor="@color/background_dark"
-                        android:textSize="15sp" />
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="5dp"
+                          android:text="@string/user_info_sign"
+                          android:textColor="@color/background_dark"
+                          android:textSize="15sp" />
 
-                </LinearLayout>
-            </LinearLayout>
+                  </LinearLayout>
+        </LinearLayout>-->
 
             <View
                 android:layout_width="match_parent"
@@ -160,7 +156,7 @@
                 android:background="@color/app_main_bg" />
 
             <LinearLayout
-                android:id="@+id/user_info_ll_tracks"
+                android:id="@+id/ll_sqtx"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/list_item_seletor"
@@ -172,14 +168,14 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/ic_zuji" />
+                    android:src="@mipmap/ic_sqtx" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="@string/user_info_my_tracks"
+                    android:text="@string/user_info_apply_cash"
                     android:textColor="@color/background_dark"
                     android:textSize="18sp" />
 
@@ -197,6 +193,45 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <!-- <LinearLayout
+                 android:id="@+id/user_info_ll_tracks"
+                 android:layout_width="match_parent"
+                 android:layout_height="60dp"
+                 android:background="@drawable/list_item_seletor"
+                 android:gravity="center_vertical"
+                 android:orientation="horizontal"
+                 android:paddingLeft="10dp"
+                 android:paddingRight="10dp">
+
+                 <ImageView
+                     android:layout_width="25dp"
+                     android:layout_height="25dp"
+                     android:src="@mipmap/ic_zuji" />
+
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginLeft="10dp"
+                     android:text="@string/user_info_my_tracks"
+                     android:textColor="@color/background_dark"
+                     android:textSize="18sp" />
+
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:gravity="right"
+                     android:orientation="horizontal">
+
+                     <ImageView
+                         android:layout_width="8dp"
+                         android:layout_height="12dp"
+                         android:src="@mipmap/ic_allow_right" />
+
+                 </LinearLayout>
+
+             </LinearLayout>-->
 
             <View
                 android:layout_width="match_parent"
@@ -581,10 +616,11 @@
                 android:background="@color/lighter_gray">
 
                 <TextView
+                    android:id="@+id/tv_save_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="用省多多节省  0.0"
+                    android:text="省钱说节省："
                     android:textColor="@color/background_dark"
                     android:textSize="18sp" />
 

@@ -48,4 +48,6 @@
     <string name="url_withdraw_request">withdraw/cash/request</string>
     <!--    每日签到 -->
     <string name="url_sign_day">/sign/day</string>
+    <!--    绑定支付宝 -->
+    <string name="url_bind_zfb">/binding/alipay</string>
 </resources>
