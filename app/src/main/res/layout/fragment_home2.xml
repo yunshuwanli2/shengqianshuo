@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/home_actionbar_layout" />
@@ -72,13 +73,37 @@
                         android:background="@color/white"
                         android:orientation="horizontal">
 
-                        <TextView
+                        <yswl.priv.com.shengqianshopping.view.SelectionSortView
+                            android:id="@+id/sort_hot"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"></yswl.priv.com.shengqianshopping.view.SelectionSortView>
+
+                        <yswl.priv.com.shengqianshopping.view.SelectionSortView
+                            android:id="@+id/sort_new"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"></yswl.priv.com.shengqianshopping.view.SelectionSortView>
+
+                        <yswl.priv.com.shengqianshopping.view.SelectionSortView
+                            android:id="@+id/sort_sell_count"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"></yswl.priv.com.shengqianshopping.view.SelectionSortView>
+
+                        <yswl.priv.com.shengqianshopping.view.SelectionSortView
+                            android:id="@+id/sort_price"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"></yswl.priv.com.shengqianshopping.view.SelectionSortView>
+                        <!--<TextView
                             android:id="@+id/tv_hot"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="人气" />
+                            android:text="人气"
+                            />
 
                         <TextView
                             android:id="@+id/tv_new"
@@ -86,7 +111,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="最新" />
+                            android:text="最新"
+                            />
 
                         <TextView
                             android:id="@+id/tv_sell_count"
@@ -94,7 +120,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="销量" />
+                            android:text="销量"
+                            />
 
                         <TextView
                             android:id="@+id/tv_price"
@@ -102,8 +129,9 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="价格" />
-
+                            android:text="价格"
+                            />
+-->
                     </LinearLayout>
 
                     <android.support.v7.widget.RecyclerView

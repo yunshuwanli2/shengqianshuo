@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -54,6 +55,7 @@ import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdap
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
+import yswl.priv.com.shengqianshopping.view.SelectionSortView;
 
 public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
     private static final String FRAGMENT_TAG = "HomeFragment2_ItemFragment";
@@ -80,14 +82,14 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     RecyclerView mRecyclerView;
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
-    @BindView(R.id.tv_hot)
-    TextView tvHot;
-    @BindView(R.id.tv_new)
-    TextView tvNew;
-    @BindView(R.id.tv_sell_count)
-    TextView tvSellCount;
-    @BindView(R.id.tv_price)
-    TextView tvPrice;
+    @BindView(R.id.sort_hot)
+    SelectionSortView sortHot;
+    @BindView(R.id.sort_new)
+    SelectionSortView sortNew;
+    @BindView(R.id.sort_sell_count)
+    SelectionSortView sortSellCount;
+    @BindView(R.id.sort_price)
+    SelectionSortView sortPrice;
 
 
     private final int REFRESH = 1;//刷新标志
@@ -100,19 +102,19 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     GridRecyclerFragmentAdapter mAdapter;
     private int currentPosition = 0;
 
-    private boolean hotAsc = false;//升序:asc 降序:desc-默认--人气
-    private boolean newAsc = false;//升序:asc 降序:desc-默认--最新
-    private boolean volumeAsc = false;//升序:asc 降序:desc-默认--销量
-    private boolean priceAsc = false;//升序:asc 降序:desc-默认--价格
+    //    private boolean hotAsc = false;//升序:asc 降序:desc-默认--人气
+//    private boolean newAsc = false;//升序:asc 降序:desc-默认--最新
+//    private boolean volumeAsc = false;//升序:asc 降序:desc-默认--销量
+//    private boolean priceAsc = false;//升序:asc 降序:desc-默认--价格
     private String hotlastId = "0";
     private String newlastId = "0";
     private String volumelastId = "-1";
     private String pricelastId = "0";
 
-    private Drawable drawableAsc;
-    private Drawable drawableDesc;
-    private TextView lastTv;
-
+    //    private Drawable drawableAsc;
+//    private Drawable drawableDesc;
+//    private TextView lastTv;
+    private ImageView lastImg;
 
     public HomeFragment2() {
     }
@@ -138,10 +140,18 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         //设置监听
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
-        drawableAsc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_ace);
-        drawableDesc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_desc);
-        drawableAsc.setBounds(0, 0, drawableAsc.getMinimumWidth(), drawableAsc.getMinimumHeight());//对图片进行压缩
-        drawableDesc.setBounds(0, 0, drawableDesc.getMinimumWidth(), drawableDesc.getMinimumHeight());//对图片进行压缩
+//        drawableAsc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_ace);
+//        drawableDesc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_desc);
+//        drawableAsc.setBounds(0, 0, drawableAsc.getMinimumWidth(), drawableAsc.getMinimumHeight());//对图片进行压缩
+//        drawableDesc.setBounds(0, 0, drawableDesc.getMinimumWidth(), drawableDesc.getMinimumHeight());//对图片进行压缩
+        sortHot.setContent("人气");
+        sortHot.setPosition(0);
+        sortNew.setContent("最新");
+        sortNew.setPosition(1);
+        sortSellCount.setContent("销量");
+        sortSellCount.setPosition(2);
+        sortPrice.setContent("价格");
+        sortPrice.setPosition(3);
     }
 
     @Override
@@ -282,8 +292,8 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     }
 
     @OnClick({R.id.home_app_icon, R.id.home_toolbar_search, R.id.home_menu, R.id.ll_fkq,
-            R.id.ll_tj, R.id.ll_sort, R.id.ll_plan, R.id.tv_hot,
-            R.id.tv_new, R.id.tv_price, R.id.tv_sell_count})
+            R.id.ll_tj, R.id.ll_sort, R.id.ll_plan, R.id.sort_hot,
+            R.id.sort_new, R.id.sort_price, R.id.sort_sell_count})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.home_toolbar_search:
@@ -309,77 +319,101 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 //TODO 预告页
                 AdvanceActivity.startActivity(getActivity());
                 break;
-            case R.id.tv_hot:
-                if (currentPosition == 0) {
-                    hotAsc = !hotAsc;
-                } else {
-                    currentPosition = 0;
-                    if (lastTv != null) {
-                        lastTv.setCompoundDrawables(null, null, null, null);
-                    }
-                    lastTv = tvHot;
+            case R.id.sort_hot:
+//                if (currentPosition == 0) {
+//                    hotAsc = !hotAsc;
+//                } else {
+//                    currentPosition = 0;
+//                    if (lastTv != null) {
+//                        lastTv.setCompoundDrawables(null, null, null, null);
+//                    }
+//                    lastTv = tvHot;
+//                }
+//                if (hotAsc) {
+//                    tvHot.setCompoundDrawables(null, null, drawableAsc, null);
+//                } else {
+//                    tvHot.setCompoundDrawables(null, null, drawableDesc, null);
+//                }
+                if (lastImg != null) {
+                    lastImg.setVisibility(View.INVISIBLE);
                 }
-                if (hotAsc) {
-                    tvHot.setCompoundDrawables(null, null, drawableAsc, null);
-                } else {
-                    tvHot.setCompoundDrawables(null, null, drawableDesc, null);
-                }
+                lastImg = sortHot.getImgStatus();
+                sortHot.onClick(currentPosition);
+                currentPosition = 0;
                 hotlastId = "0";
-                requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
+                requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotlastId);
                 break;
-            case R.id.tv_new:
-                if (currentPosition == 1) {
-                    newAsc = !newAsc;
-                } else {
-                    currentPosition = 1;
-                    if (lastTv != null) {
-                        lastTv.setCompoundDrawables(null, null, null, null);
-                    }
-                    lastTv = tvNew;
+            case R.id.sort_new:
+//                if (currentPosition == 1) {
+//                    newAsc = !newAsc;
+//                } else {
+//                    currentPosition = 1;
+//                    if (lastTv != null) {
+//                        lastTv.setCompoundDrawables(null, null, null, null);
+//                    }
+//                    lastTv = tvNew;
+//                }
+//                if (newAsc) {
+//                    tvNew.setCompoundDrawables(null, null, drawableAsc, null);
+//                } else {
+//                    tvNew.setCompoundDrawables(null, null, drawableDesc, null);
+//                }
+                if (lastImg != null) {
+                    lastImg.setVisibility(View.INVISIBLE);
                 }
-                if (newAsc) {
-                    tvNew.setCompoundDrawables(null, null, drawableAsc, null);
-                } else {
-                    tvNew.setCompoundDrawables(null, null, drawableDesc, null);
-                }
+                lastImg = sortNew.getImgStatus();
+                sortNew.onClick(currentPosition);
+                currentPosition = 1;
                 newlastId = "0";
-                requsetCategoryList(SortEnum.NEW, newAsc, newlastId);
+                requsetCategoryList(SortEnum.NEW, sortNew.isSortAsc(), newlastId);
                 break;
-            case R.id.tv_sell_count:
-                if (currentPosition == 2) {
-                    volumeAsc = !volumeAsc;
-                } else {
-                    currentPosition = 2;
-                    if (lastTv != null) {
-                        lastTv.setCompoundDrawables(null, null, null, null);
-                    }
-                    lastTv = tvSellCount;
+            case R.id.sort_sell_count:
+//                if (currentPosition == 2) {
+//                    volumeAsc = !volumeAsc;
+//                } else {
+//                    currentPosition = 2;
+//                    if (lastTv != null) {
+//                        lastTv.setCompoundDrawables(null, null, null, null);
+//                    }
+//                    lastTv = tvSellCount;
+//                }
+//                if (volumeAsc) {
+//                    tvSellCount.setCompoundDrawables(null, null, drawableAsc, null);
+//                } else {
+//                    tvSellCount.setCompoundDrawables(null, null, drawableDesc, null);
+//                }
+                if (lastImg != null) {
+                    lastImg.setVisibility(View.INVISIBLE);
                 }
-                if (volumeAsc) {
-                    tvSellCount.setCompoundDrawables(null, null, drawableAsc, null);
-                } else {
-                    tvSellCount.setCompoundDrawables(null, null, drawableDesc, null);
-                }
+                lastImg = sortSellCount.getImgStatus();
+                sortSellCount.onClick(currentPosition);
+                currentPosition = 2;
                 volumelastId = "-1";
-                requsetCategoryList(SortEnum.VOLUME, volumeAsc, volumelastId);
+                requsetCategoryList(SortEnum.VOLUME, sortSellCount.isSortAsc(), volumelastId);
                 break;
-            case R.id.tv_price:
-                if (currentPosition == 3) {
-                    priceAsc = !priceAsc;
-                } else {
-                    currentPosition = 3;
-                    if (lastTv != null) {
-                        lastTv.setCompoundDrawables(null, null, null, null);
-                    }
-                    lastTv = tvPrice;
+            case R.id.sort_price:
+//                if (currentPosition == 3) {
+//                    priceAsc = !priceAsc;
+//                } else {
+//                    currentPosition = 3;
+//                    if (lastTv != null) {
+//                        lastTv.setCompoundDrawables(null, null, null, null);
+//                    }
+//                    lastTv = tvPrice;
+//                }
+//                if (priceAsc) {
+//                    tvPrice.setCompoundDrawables(null, null, drawableAsc, null);
+//                } else {
+//                    tvPrice.setCompoundDrawables(null, null, drawableDesc, null);
+//                }
+                if (lastImg != null) {
+                    lastImg.setVisibility(View.INVISIBLE);
                 }
-                if (priceAsc) {
-                    tvPrice.setCompoundDrawables(null, null, drawableAsc, null);
-                } else {
-                    tvPrice.setCompoundDrawables(null, null, drawableDesc, null);
-                }
+                lastImg = sortPrice.getImgStatus();
+                sortPrice.onClick(currentPosition);
+                currentPosition = 3;
                 pricelastId = "0";
-                requsetCategoryList(SortEnum.PRICE, priceAsc, pricelastId);
+                requsetCategoryList(SortEnum.PRICE, sortPrice.isSortAsc(), pricelastId);
                 break;
         }
     }
@@ -455,11 +489,20 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     void updateBottonItem(CategoryBean categoryBean) {
         mCatetoryTitle.setText(categoryBean.title);
-        requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
-        tvHot.setCompoundDrawables(null, null, drawableDesc, null);
-        if (lastTv != null)
-            lastTv.setCompoundDrawables(null, null, null, null);
-        lastTv = tvHot;
+        requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotlastId);
+//        tvHot.setCompoundDrawables(null, null, drawableDesc, null);
+//        if (lastTv != null)
+//            lastTv.setCompoundDrawables(null, null, null, null);
+//        lastTv = tvHot;
+        //设置默认--人气
+        sortHot.setDefault();
+        if (lastImg != null) {
+            lastImg.setVisibility(View.INVISIBLE);
+        }
+        sortNew.hideImg();
+        sortSellCount.hideImg();
+        sortPrice.hideImg();
+        lastImg = sortHot.getImgStatus();
         currentPosition = 0;
     }
 //    private void addProductListModule(CategoryBean category) {
@@ -484,16 +527,16 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         if (ALLOWLOADMORE) {
             switch (currentPosition) {
                 case 0:
-                    requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
+                    requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotlastId);
                     break;
                 case 1:
-                    requsetCategoryList(SortEnum.NEW, newAsc, newlastId);
+                    requsetCategoryList(SortEnum.NEW, sortNew.isSortAsc(), newlastId);
                     break;
                 case 2:
-                    requsetCategoryList(SortEnum.VOLUME, volumeAsc, volumelastId);
+                    requsetCategoryList(SortEnum.VOLUME, sortSellCount.isSortAsc(), volumelastId);
                     break;
                 case 3:
-                    requsetCategoryList(SortEnum.PRICE, priceAsc, pricelastId);
+                    requsetCategoryList(SortEnum.PRICE, sortPrice.isSortAsc(), pricelastId);
                     break;
             }
         } else {
@@ -510,19 +553,19 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         switch (currentPosition) {
             case 0:
                 hotlastId = "0";
-                requsetCategoryList(SortEnum.HOT, hotAsc, hotlastId);
+                requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotlastId);
                 break;
             case 1:
                 newlastId = "0";
-                requsetCategoryList(SortEnum.NEW, newAsc, newlastId);
+                requsetCategoryList(SortEnum.NEW, sortNew.isSortAsc(), newlastId);
                 break;
             case 2:
                 volumelastId = "-1";
-                requsetCategoryList(SortEnum.VOLUME, volumeAsc, volumelastId);
+                requsetCategoryList(SortEnum.VOLUME, sortSellCount.isSortAsc(), volumelastId);
                 break;
             case 3:
                 pricelastId = "0";
-                requsetCategoryList(SortEnum.PRICE, priceAsc, pricelastId);
+                requsetCategoryList(SortEnum.PRICE, sortPrice.isSortAsc(), pricelastId);
                 break;
         }
 

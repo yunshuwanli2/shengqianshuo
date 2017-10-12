@@ -2,20 +2,20 @@ apply plugin: 'com.android.application'
 apply from: '../version.gradle'
 
 android {
-    signingConfigs {
-        Alidebug {
-            keyAlias 'yunshuwanli'
-            keyPassword '011235'
-            storeFile file('C:/Users/Administrator/Desktop/yunshuwanliMAC/Android_Studio_key/android_studio_strokey.jks')
-            storePassword '011235'
-        }
-        Release {
-            keyAlias 'yunshuwanli'
-            keyPassword '011235'
-            storeFile file('C:/Users/Administrator/Desktop/yunshuwanliMAC/Android_Studio_key/android_studio_strokey.jks')
-            storePassword '011235'
-        }
-    }
+//    signingConfigs {
+//        Alidebug {
+//            keyAlias 'yunshuwanli'
+//            keyPassword '011235'
+//            storeFile file('C:/Users/Administrator/Desktop/android_studio_strokey.jks')
+//            storePassword '011235'
+//        }
+//        Release {
+//            keyAlias 'yunshuwanli'
+//            keyPassword '011235'
+//            storeFile file('C:/Users/Administrator/Desktop/android_studio_strokey.jks')
+//            storePassword '011235'
+//        }
+//    }
     compileSdkVersion MCompileSdkVersion
     buildToolsVersion MBuildToolsVersion
     defaultConfig {
@@ -30,11 +30,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.Release
+//            signingConfig signingConfigs.Release
         }
-        debug {
-            signingConfig signingConfigs.Alidebug
-        }
+//        debug {
+//            signingConfig signingConfigs.Alidebug
+//        }
     }
     buildTypes {
         release {
