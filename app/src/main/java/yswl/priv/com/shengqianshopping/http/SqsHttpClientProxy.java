@@ -11,6 +11,7 @@ import java.util.Map;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.http.okhttp.MDeviceUtil;
+import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.com.klibrary.util.MD5Util;
 import yswl.com.klibrary.util.UrlParamsConfig;
@@ -38,6 +39,7 @@ public class SqsHttpClientProxy {
     private static String getMdk(Map<String, Object> params) {
         StringBuffer beforeSign = UrlParamsConfig.getBeforeSign3(params);
         beforeSign.append(SQS_SECRET);
+        L.e("SqsHttpClientProxy", "排序：拼接: " + beforeSign.toString());
         String afterSign = MD5Util.MD5(beforeSign.toString());
         return afterSign;
     }

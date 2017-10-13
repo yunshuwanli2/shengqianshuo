@@ -19,17 +19,13 @@ import yswl.priv.com.shengqianshopping.util.MTextViewUtil;
  * Created by yunshuwanli on 17/10/1.
  */
 
-public class GridRecyclerFragmentAdapter2 extends RecyclerView.Adapter<GridRecyclerFragmentAdapter2.GridRecyHolder> {
+public class Top100GridRecyclerFragmentAdapter extends RecyclerView.Adapter<Top100GridRecyclerFragmentAdapter.GridRecyHolder> {
 
     List<ProductDetail> mProductList;
-
     public List<ProductDetail> getmProductList() {
         return mProductList;
     }
-
-
     private GridRecyclerFragmentAdapter.OnItemClickListener onItemClickListener;
-
     public GridRecyclerFragmentAdapter.OnItemClickListener getOnItemClickListener() {
         return onItemClickListener;
     }
@@ -38,12 +34,11 @@ public class GridRecyclerFragmentAdapter2 extends RecyclerView.Adapter<GridRecyc
         this.onItemClickListener = onItemClickListener;
     }
 
-
     public void setmProductList(List<ProductDetail> mProductList) {
         this.mProductList = mProductList;
     }
 
-    public GridRecyclerFragmentAdapter2() {
+    public Top100GridRecyclerFragmentAdapter() {
     }
 
     RecyclerView recyclerView;
