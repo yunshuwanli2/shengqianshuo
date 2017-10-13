@@ -24,6 +24,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
+import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 public class BindZFBActivity extends MToolBarActivity implements HttpCallback<JSONObject> {
@@ -79,6 +80,7 @@ public class BindZFBActivity extends MToolBarActivity implements HttpCallback<JS
     public void onSucceed(int requestId, JSONObject result) {
         Intent mIntent = new Intent();
         this.setResult(Activity.RESULT_OK, mIntent);
+        UserManager.bindZFB(BindZFBActivity.this, true);
         finish();
     }
 

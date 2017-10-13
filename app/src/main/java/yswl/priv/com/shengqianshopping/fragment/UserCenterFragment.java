@@ -26,6 +26,7 @@ import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.priv.com.shengqianshopping.R;
+import yswl.priv.com.shengqianshopping.activity.ApplyForCashWithdrawalActivity;
 import yswl.priv.com.shengqianshopping.activity.BalanceOfPaymentDetailActivity;
 import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
 import yswl.priv.com.shengqianshopping.activity.BindZFBActivity;
@@ -218,18 +219,19 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
                 break;
             case R.id.user_info_ll_invitation:
                 //TODO 邀请
-//                InvitationActivity.startAct(getContext());
+                InvitationActivity.startAct(getContext());
                 break;
             case R.id.user_info_ll_customer_service:
                 BrowserActivity.start2("常见问题", "http://api.saveduoduo.com/config/faq", getContext());
                 break;
             case R.id.ll_sqtx:
                 //TODO 申请提现
-//                if (UserManager.isBindZFB(getActivity())) {
-//                    //提现服务
-//                } else {
-//                    BindZFBActivity.startActivityForResult(this);
-//                }
+                if (UserManager.isBindZFB(getActivity())) {
+                    //提现服务
+                    ApplyForCashWithdrawalActivity.startActivity(getActivity());
+                } else {
+                    BindZFBActivity.startActivityForResult(this);
+                }
                 break;
             default:
                 break;
