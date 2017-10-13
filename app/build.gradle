@@ -33,7 +33,7 @@ android {
             pseudoLocalesEnabled false // 如果没有提供混淆规则文件，则设置默认的混淆规则文件（SDK/tools/proguard/proguard-android.txt）
             shrinkResources true  // 移除无用的resource文件
             zipAlignEnabled true // //Zipalign优化
-            buildConfigField("String", "base_url", '\"http://api.saveduoduo.com\"')
+            buildConfigField("String", "base_url", '\"http://api.saveduoduo.com/v2\"')
             buildConfigField("boolean", "debug", "false")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -43,7 +43,7 @@ android {
             pseudoLocalesEnabled false
             shrinkResources true
             zipAlignEnabled true
-            buildConfigField("String", "base_url", '\"http://api.saveduoduo.com\"');
+            buildConfigField("String", "base_url", '\"http://api.saveduoduo.com/v2\"');
             buildConfigField("boolean", "debug", "true")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

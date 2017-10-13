@@ -51,9 +51,15 @@ public class UrlParamsConfig {
         while (iter.hasNext()) {
             String keyname = iter.next();
             try {// 对value进行编码
-                if (params.get(keyname) instanceof String) {
-                    orgin.append(URLEncoder.encode(params.get(keyname).toString(), "utf-8"));
+                Object value = params.get(keyname);
+                String valueS = "";
+                if (value instanceof Integer) {
+                    valueS = String.valueOf(value);
+                } else if (value instanceof String) {
+                    valueS = (String) value;
                 }
+                L.e(TAG, "排序：key: " + keyname + "  value: " + params.get(keyname).toString());
+                orgin.append(URLEncoder.encode(valueS, "utf-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
