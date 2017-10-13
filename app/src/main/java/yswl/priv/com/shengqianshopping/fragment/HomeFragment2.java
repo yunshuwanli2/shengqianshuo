@@ -49,6 +49,7 @@ import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.SelectionSortView;
@@ -255,12 +256,12 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         String url = UrlUtil.getUrl(this, R.string.url_category_type_list);
         Map<String, Object> par = new HashMap<>();
         par.put("type", "1");
-        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID_CATEGROY, par, this);
+        SqsHttpClientProxy.postAsynSQS(url, REQUEST_ID_CATEGROY, par, this);
     }
 
     private void requestBanner() {
         String url = UrlUtil.getUrl(this, R.string.url_banner_list);
-        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID_BANNER, null, this);
+        SqsHttpClientProxy.postAsynSQS(url, REQUEST_ID_BANNER, null, this);
     }
 
     private void requsetCategoryList(SortEnum sEnum, boolean asc, String lastId) {
@@ -276,7 +277,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             parm.put("sortBy", "desc");
         }
         String url = UrlUtil.getUrl(this, R.string.url_category_list);
-        HttpClientProxy.getInstance().postAsynSQS(url, 200, parm, this);
+        SqsHttpClientProxy.postAsynSQS(url, 200, parm, this);
     }
 
     void initBanner() {

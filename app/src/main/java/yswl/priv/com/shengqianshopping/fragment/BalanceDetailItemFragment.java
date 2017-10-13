@@ -28,6 +28,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.BalanceDetailItemBean;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.fragment.adapter.MyItemRecyclerViewAdapter;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
@@ -113,7 +114,7 @@ public class BalanceDetailItemFragment extends MFragment implements HttpCallback
         map.put("uid", UserManager.getUserInfo(getContext()).getUid());
         map.put("lastId", lastId);
         map.put("count", "20");
-        HttpClientProxy.getInstance().postAsynSQS(url, 100, map, this);
+        SqsHttpClientProxy.postAsynSQS(url, 100, map, this);
     }
 
 

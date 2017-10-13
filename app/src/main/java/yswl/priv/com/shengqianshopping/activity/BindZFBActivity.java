@@ -22,6 +22,7 @@ import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
@@ -71,7 +72,7 @@ public class BindZFBActivity extends MToolBarActivity implements HttpCallback<JS
         map.put("uid", uid);
         map.put("aliAccount", zfb);
         map.put("aliRealName", nameS);
-        HttpClientProxy.getInstance().postAsynSQS(url, 100, map, this);
+        SqsHttpClientProxy.postAsynSQS(url, 100, map, this);
     }
 
     @Override

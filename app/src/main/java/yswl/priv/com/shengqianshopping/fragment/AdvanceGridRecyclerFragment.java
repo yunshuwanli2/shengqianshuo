@@ -33,6 +33,7 @@ import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.TimeBean;
 import yswl.priv.com.shengqianshopping.fragment.adapter.AdvanceGridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
@@ -119,7 +120,7 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
         map.put("pageSize", 20);
         map.put("startTime", time.startTime);
         map.put("endTime", time.endTime);
-        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, map, this);
+        SqsHttpClientProxy.postAsynSQS(url, REQUEST_ID, map, this);
     }
 
     private static final String TAG = AdvanceGridRecyclerFragment.class.getSimpleName();

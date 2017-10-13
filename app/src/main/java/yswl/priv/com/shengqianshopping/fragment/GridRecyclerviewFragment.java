@@ -30,6 +30,7 @@ import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
@@ -152,7 +153,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
                 parm.put("sortBy", "desc");
             }
             String url = UrlUtil.getUrl(this, R.string.url_category_list);
-            HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, parm, this);
+            SqsHttpClientProxy.postAsynSQS(url, REQUEST_ID, parm, this);
         }
 
     }

@@ -1,4 +1,4 @@
-package yswl.priv.com.shengqianshopping.util;
+package yswl.com.klibrary.util;
 
 
 import java.security.MessageDigest;

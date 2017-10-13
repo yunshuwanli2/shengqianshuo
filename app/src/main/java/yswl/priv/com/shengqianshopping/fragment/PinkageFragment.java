@@ -22,6 +22,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.CategoryBean;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.fragment.adapter.CommonFragmentPagerAdapter;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.SlidingTabLayout;
 
@@ -93,7 +94,7 @@ public class PinkageFragment extends MFragment implements HttpCallback<JSONObjec
         String url = UrlUtil.getUrl(this, R.string.url_category_type_list);
         Map<String, Object> par = new HashMap<>();
         par.put("type", "2");//包邮品类
-        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID_CATEGROY_TYPE2, par, this);
+        SqsHttpClientProxy.postAsynSQS(url, REQUEST_ID_CATEGROY_TYPE2, par, this);
     }
 
     List<CategoryBean> mCategorys_type2;

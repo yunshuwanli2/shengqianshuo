@@ -254,6 +254,6 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
         UserBean userInfo = UserManager.getUserInfo(getActivity());
         if (userInfo != null)
             phone = userInfo.getPhone();
-//        HttpClientProxy.getInstance().postAsynSQS(url, map, 122, this);
+//        SqsHttpClientProxy.postAsynSQS(url, map, 122, this);
     }
 }

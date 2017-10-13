@@ -40,6 +40,7 @@ import yswl.com.klibrary.http.okhttp.OkHttpClientManager;
 import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.com.klibrary.util.ToastUtil;
+import yswl.com.klibrary.util.UrlParamsConfig;
 
 /**
  * Created by kangpAdministrator on 2017/5/3 0003.
@@ -63,6 +64,7 @@ public class HttpClientProxy implements IRequestMethod {
     private static final MediaType MEDIA_TYPE_STREAM = MediaType.parse("application/octet-stream");
 
     public static final String BASE_URL = MApplication.getApplication().getBaseUrl_Https();//请求接口根地址
+
 
     private HttpClientProxy() {
     }
@@ -168,16 +170,7 @@ public class HttpClientProxy implements IRequestMethod {
         }
     }
 
-    public void postAsynSQS(String url, final int requestId, Map<String, Object> paramsMap, final HttpCallback<JSONObject> httpCallback) {
-        if (paramsMap == null) {
-            paramsMap = new HashMap<>();
-        }
-        paramsMap.put("deviceToken", MDeviceUtil.getMAC());
-        paramsMap.put("deviceType", "2");
-        paramsMap.put("osVersion", Build.VERSION.RELEASE);
-        paramsMap.put("appVersion", MAppInfoUtil.getVersionCode());
-        postAsyn(url, requestId, paramsMap, httpCallback);
-    }
+
 
     @Override
     public void postAsyn(String url, final int requestId, Map<String, Object> paramsMap, final HttpCallback<JSONObject> httpCallback) {

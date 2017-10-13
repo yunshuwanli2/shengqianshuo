@@ -24,6 +24,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.OrderBean;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.fragment.adapter.MyWithdrawItemRecyclerViewAdapter;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
@@ -91,7 +92,7 @@ public class WithDrawItemFragment extends MFragment implements HttpCallback<JSON
         String url = UrlUtil.getUrl(getActivity(), R.string.url_withdraw_detail);
         Map<String, Object> map = new HashMap<>();
         map.put("uid", UserManager.getUserInfo(getContext()).getUid());
-        HttpClientProxy.getInstance().postAsynSQS(url, 100, map, this);
+        SqsHttpClientProxy.postAsynSQS(url, 100, map, this);
     }
 
 

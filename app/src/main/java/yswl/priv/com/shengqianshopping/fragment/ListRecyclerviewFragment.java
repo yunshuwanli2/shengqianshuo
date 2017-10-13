@@ -32,6 +32,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.TimeBean;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.DateUtil;
 import yswl.priv.com.shengqianshopping.view.DividerItemDecoration;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
@@ -149,7 +150,7 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
         map.put("pageSize", 20);
         map.put("startTime", mParam1.startTime);
         map.put("endTime", mParam1.endTime);
-        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, map, this);
+        SqsHttpClientProxy.postAsynSQS(url, REQUEST_ID, map, this);
     }
 
 

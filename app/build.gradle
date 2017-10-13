@@ -45,6 +45,7 @@ android {
             zipAlignEnabled true
             buildConfigField("String", "base_url", '\"http://api.saveduoduo.com\"');
             buildConfigField("boolean", "debug", "true")
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }

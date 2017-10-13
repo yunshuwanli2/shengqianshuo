@@ -16,6 +16,7 @@ import yswl.priv.com.shengqianshopping.MainActivityV3;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.bean.ADbean;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 public class LaunchActivity extends MActivity implements HttpCallback<JSONObject> {
@@ -57,7 +58,7 @@ public class LaunchActivity extends MActivity implements HttpCallback<JSONObject
 
     private void request() {
         String url = UrlUtil.getUrl(this, R.string.url_splash_screen);
-        HttpClientProxy.getInstance().postAsynSQS(url, 1, null, this);
+        SqsHttpClientProxy.postAsynSQS(url, 1, null, this);
     }
 
 

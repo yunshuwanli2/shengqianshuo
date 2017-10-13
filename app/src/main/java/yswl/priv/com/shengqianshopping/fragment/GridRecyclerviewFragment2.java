@@ -32,6 +32,7 @@ import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter2;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
@@ -128,7 +129,7 @@ public class GridRecyclerviewFragment2 extends MFragment implements HttpCallback
         map.put("lastId", lastId);
         map.put("count", "20");
         String url = UrlUtil.getUrl(this, R.string.url_top_list);
-        HttpClientProxy.getInstance().postAsynSQS(url, REQUEST_ID, map, this);
+        SqsHttpClientProxy.postAsynSQS(url, REQUEST_ID, map, this);
     }
 
 
