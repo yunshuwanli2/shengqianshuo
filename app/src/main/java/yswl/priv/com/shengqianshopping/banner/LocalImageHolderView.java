@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bumptech.glide.Glide;
 
+import yswl.priv.com.shengqianshopping.bean.BannerBean;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 
 /**

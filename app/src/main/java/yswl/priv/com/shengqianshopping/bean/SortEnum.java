@@ -1,4 +1,4 @@
-package yswl.priv.com.shengqianshopping.banner;
+package yswl.priv.com.shengqianshopping.bean;
 
 /**
  * Created by yunshuwanli on 17/10/1.

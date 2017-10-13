@@ -1,11 +1,5 @@
 package yswl.priv.com.shengqianshopping;
 
-import android.widget.Toast;
-
-import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
-import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
-
-import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import yswl.com.klibrary.MApplication;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 
@@ -24,7 +18,6 @@ public class App extends MApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        CustomActivityOnCrash.install(this);
         AlibcUtil.initAlibc(this);
     }
 

@@ -1,10 +1,8 @@
 package yswl.priv.com.shengqianshopping.fragment;
 
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -37,16 +35,15 @@ import butterknife.OnClick;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
-import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.AdvanceActivity;
 import yswl.priv.com.shengqianshopping.activity.CrazyBuyActivity;
 import yswl.priv.com.shengqianshopping.activity.RecommendActivity;
 import yswl.priv.com.shengqianshopping.activity.SearchActivity;
 import yswl.priv.com.shengqianshopping.activity.Top100Activity;
-import yswl.priv.com.shengqianshopping.banner.BannerBean;
+import yswl.priv.com.shengqianshopping.bean.BannerBean;
 import yswl.priv.com.shengqianshopping.banner.BannerUtil;
-import yswl.priv.com.shengqianshopping.banner.SortEnum;
+import yswl.priv.com.shengqianshopping.bean.SortEnum;
 import yswl.priv.com.shengqianshopping.bean.CategoryBean;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
@@ -54,7 +51,6 @@ import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
-import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
 import yswl.priv.com.shengqianshopping.view.SelectionSortView;
 
 public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {

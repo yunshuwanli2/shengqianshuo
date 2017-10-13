@@ -7,7 +7,7 @@ import java.util.Map;
 
 import yswl.com.klibrary.base.MFragment;
 import yswl.priv.com.shengqianshopping.R;
-import yswl.priv.com.shengqianshopping.banner.SortEnum;
+import yswl.priv.com.shengqianshopping.bean.SortEnum;
 import yswl.priv.com.shengqianshopping.bean.CategoryBean;
 import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
 

@@ -1,4 +1,4 @@
-package yswl.priv.com.shengqianshopping.banner;
+package yswl.priv.com.shengqianshopping.bean;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

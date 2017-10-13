@@ -12,6 +12,7 @@ import java.util.List;
 import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.http.okhttp.MScreenUtils;
 import yswl.priv.com.shengqianshopping.R;
+import yswl.priv.com.shengqianshopping.bean.BannerBean;
 
 /**
  * author  : kangpeng on 2016/4/8 0008.
