@@ -4,7 +4,7 @@
 
     <!--  返利工具 -->
     <!--%1$s&amp;pid=%2$s &amp;-->
-    <string name="url_search_tool">https://ai.taobao.com/search/index.htm?pid=mm_16219563_35232219_124826877source_id=search&amp;key=%1$s</string>
+    <string name="url_search_tool">https://ai.taobao.com/search/index.htm?pid=mm_127147954_36890899_139966371source_id=search&amp;key=%1$s</string>
     <!--  选品库类型列表-->
     <string name="url_category_type_list">/u_type/list</string>
     <!--   首页Banner列表-->
