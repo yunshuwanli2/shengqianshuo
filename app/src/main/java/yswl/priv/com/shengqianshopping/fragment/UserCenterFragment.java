@@ -106,16 +106,13 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        LinearLayout ll_head = (LinearLayout) view.findViewById(R.id.ll_head);
-//        ImageView head = (ImageView) view.findViewById(R.id.iv_head);
-//        TextView username = (TextView) view.findViewById(R.id.tv_user_name);
 
         if (!isLogin()) {
             LoginActivity.startActivity(getActivity());
         } else if (!isAuth()) {
             BindPhoneActivity.startActivity(getActivity());
         } else {
-            updateUI(UserManager.getUserInfo(activity));
+            requestUserInfo();
         }
     }
 
@@ -150,8 +147,8 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     public void onSucceed(int requestId, JSONObject result) {
         if (requestId == GET_USERINFO_REQUESTID && ResultUtil.isCodeOK(result)) {
             Log.i("znh", result.toString() + "----用户详细信息");
-//            UserBean userInfo = UserBean.jsonToBean(ResultUtil.analysisData(result));
-//            updateUI(userInfo);
+            UserBean userInfo = UserBean.jsonToBean(ResultUtil.analysisData(result));
+            updateUI(userInfo);
             //保存状态
             UserManager.saveLogin(getActivity());
             UserManager.saveInfo(getActivity(), ResultUtil.analysisData(result).toString());

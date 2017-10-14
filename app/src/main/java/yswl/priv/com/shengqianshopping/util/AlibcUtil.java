@@ -22,6 +22,7 @@ import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
 import com.alibaba.baichuan.android.trade.page.AlibcPage;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import yswl.com.klibrary.browser.BrowserActivity;
@@ -73,13 +74,29 @@ public class AlibcUtil {
         Map<String, String> exParams = new HashMap<>();
         exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
 
-        //商品详情page
         AlibcPage detailPage = new AlibcPage(url);
         AlibcShowParams showParams = new AlibcShowParams(OpenType.Native, true);
         AlibcTrade.show(context, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
             @Override
             public void onTradeSuccess(TradeResult tradeResult) {
-                L.e(TAG, tradeResult.resultType.name());
+                // TYPECART,
+                // TYPEPAY;
+                L.e(TAG, "---优惠券进入商品详情---： " + tradeResult.resultType.name());
+                if (tradeResult.payResult != null) {
+                    List li = tradeResult.payResult.payFailedOrders;
+                    List li2 = tradeResult.payResult.paySuccessOrders;
+
+                    for (int i = 0; i < li2.size(); i++) {
+                        L.e(TAG, "---优惠券进入商品详情---支付成功的订单详情： " +
+                                tradeResult.payResult.paySuccessOrders.get(i).toString());
+                    }
+                    for (int i = 0; i < li.size(); i++) {
+                        L.e(TAG, "---优惠券进入商品详情---支付失败的订单详情： " +
+                                tradeResult.payResult.payFailedOrders.get(i).toString());
+                    }
+                }
+
+
             }
 
             @Override
@@ -149,7 +166,24 @@ public class AlibcUtil {
                 new AlibcTradeCallback() {
                     @Override
                     public void onTradeSuccess(TradeResult tradeResult) {
+                        // TYPECART,
+                        // TYPEPAY;
                         L.e(TAG, "订单操作 -- 返回成功 result : " + tradeResult.resultType.name());
+                        L.e(TAG, "---订单操作---： " + tradeResult.resultType.name());
+                        if (tradeResult.payResult != null) {
+                            List li = tradeResult.payResult.payFailedOrders;
+                            List li2 = tradeResult.payResult.paySuccessOrders;
+
+                            for (int i = 0; i < li2.size(); i++) {
+                                L.e(TAG, "---订单操作---支付成功的订单详情： " +
+                                        tradeResult.payResult.paySuccessOrders.get(i).toString());
+                            }
+                            for (int i = 0; i < li.size(); i++) {
+                                L.e(TAG, "---订单操作---支付失败的订单详情： " +
+                                        tradeResult.payResult.payFailedOrders.get(i).toString());
+                            }
+                        }
+
                     }
 
                     @Override
@@ -176,7 +210,27 @@ public class AlibcUtil {
                 new AlibcTradeCallback() {
                     @Override
                     public void onTradeSuccess(TradeResult tradeResult) {
+                        // TYPECART,
+                        // TYPEPAY;
                         L.e(TAG, "购物车操作 -- 返回成功 result : " + tradeResult.resultType.name());
+                        L.e(TAG, "---购物车操作---： " + tradeResult.resultType.name());
+                        if (tradeResult.payResult != null) {
+                            List li = tradeResult.payResult.payFailedOrders;
+                            List li2 = tradeResult.payResult.paySuccessOrders;
+
+                            if (li2 != null) {
+                                for (int i = 0; i < li2.size(); i++) {
+                                    L.e(TAG, "---购物车操作---支付成功的订单详情： " +
+                                            tradeResult.payResult.paySuccessOrders.get(i).toString());
+                                }
+                            }
+                            if (li != null) {
+                                for (int i = 0; i < li.size(); i++) {
+                                    L.e(TAG, "---购物车操作---支付失败的订单详情： " +
+                                            tradeResult.payResult.payFailedOrders.get(i).toString());
+                                }
+                            }
+                        }
                     }
 
                     @Override

@@ -41,9 +41,9 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
     @BindView(R.id.edt_apply_for_money)
     EditText edtApplyForMoney;
     @BindView(R.id.tv_zfb_account)
-    EditText tvZfbAccount;
+    TextView tvZfbAccount;
     @BindView(R.id.tv_zfb_name)
-    EditText tvName;
+    TextView tvName;
     @BindView(R.id.edt_phone)
     EditText edtPhone;
     @BindView(R.id.btn_submit)
@@ -56,7 +56,6 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
         context.startActivity(intent);
     }
 
-    private Unbinder unbinder;
 
     UserBean userIfo;
 
@@ -64,14 +63,16 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_applyfor_cash_withdrawal);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         setTitle("申请提现");
-        userIfo = UserManager.getUserInfo(this);
-        remainder = Double.parseDouble(userIfo.asset.remainder);
         init();
+
     }
 
     private void init() {
+        if (userIfo == null) return;
+        userIfo = UserManager.getUserInfo(this);
+        remainder = Double.parseDouble(userIfo.asset.remainder);
         tvBalance.setText(Html.fromHtml("<font color='#e0ff3366'>" + remainder + "</font>元"));
         tvName.setText(userIfo.getAlipay().realName);
         tvZfbAccount.setText(userIfo.getAlipay().getAliAccount());
@@ -127,10 +128,5 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
         SqsHttpClientProxy.postAsynSQS(url, 122, paramsMap, this);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
 
 }

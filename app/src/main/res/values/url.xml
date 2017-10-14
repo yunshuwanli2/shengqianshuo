@@ -2,6 +2,9 @@
 <resources>
 
 
+    <!--  分享出去的网址 -->
+    <!--uid,token,rnd(时间戳),mdk-->
+    <string name="url_sqs_share">http://api.saveduoduo.com/v2/invite/action/{%1$s}/{%2$s}/{%3$s}/{%4$s}</string>
     <!--  返利工具 -->
     <!--%1$s&amp;pid=%2$s &amp;-->
     <string name="url_search_tool">https://ai.taobao.com/search/index.htm?pid=mm_127147954_36890899_139966371source_id=search&amp;key=%1$s</string>

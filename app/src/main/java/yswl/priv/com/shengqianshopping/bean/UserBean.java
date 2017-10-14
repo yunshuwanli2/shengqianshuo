@@ -41,6 +41,13 @@ public class UserBean implements Serializable {
     public String email;
     public Alipay alipay;
     public Asset asset;
+    public Invite invite;
+
+
+    public class Invite{
+        public String totol;
+        public String reward;
+    }
 
     public class Alipay {
         public String realName;
