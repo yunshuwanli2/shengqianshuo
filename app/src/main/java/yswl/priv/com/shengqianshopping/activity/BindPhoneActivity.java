@@ -177,7 +177,8 @@ public class BindPhoneActivity extends MToolBarActivity implements HttpCallback<
         }
         String url = UrlUtil.getUrl(BindPhoneActivity.this, R.string.url_verification_code);
         Map<String, Object> map = new HashMap<>();
-        map.put("uid", SharedPreUtils.getInstance(BindPhoneActivity.this).getValueBySharedPreferences(SharedPreUtils.UID, ""));
+        map.put("uid", UserManager.getUid(this));
+        map.put("token", UserManager.getToken(this));
         map.put("phone", edtPhone.getText().toString());
         SqsHttpClientProxy.postAsynSQS(url, GET_VCODE_REQUEST_ID, map, BindPhoneActivity.this);
     }

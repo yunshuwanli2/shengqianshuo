@@ -26,6 +26,7 @@ import yswl.com.klibrary.http.okhttp.MSPUtils;
 import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
+import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.UserBean;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
@@ -88,8 +89,10 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
-        ToastUtil.showToast("申请提现已提交,请耐心等待1-2个工作日");
-        finish();
+        if (requestId == 122 && ResultUtil.isCodeOK(result)) {
+            ToastUtil.showToast("申请提现已提交,请耐心等待1-2个工作日");
+            finish();
+        }
     }
 
     @Override
@@ -119,10 +122,12 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
     private void submitData() {
         String url = UrlUtil.getUrl(this, R.string.url_withdraw_request);
         String uid = UserManager.getUid(this);
+        String token = UserManager.getToken(this);
         String amount = edtApplyForMoney.getText().toString();
         String phone = edtPhone.getText().toString();
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("uid", uid);
+        paramsMap.put("token", token);
         paramsMap.put("amount", amount);
         paramsMap.put("phone", phone);
         SqsHttpClientProxy.postAsynSQS(url, 122, paramsMap, this);

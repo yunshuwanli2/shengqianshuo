@@ -58,6 +58,7 @@ public class BindZFBActivity extends MToolBarActivity implements HttpCallback<JS
 
     private void requestData() {
         String uid = UserManager.getUid(this);
+        String token = UserManager.getToken(this);
         String nameS = name.getText().toString().trim();
         String zfb = zfbNumb.getText().toString().trim();
 
@@ -72,6 +73,7 @@ public class BindZFBActivity extends MToolBarActivity implements HttpCallback<JS
         String url = UrlUtil.getUrl(this, R.string.url_bind_zfb);
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
+        map.put("token", token);
         map.put("aliAccount", zfb);
         map.put("aliRealName", nameS);
         SqsHttpClientProxy.postAsynSQS(url, 100, map, this);

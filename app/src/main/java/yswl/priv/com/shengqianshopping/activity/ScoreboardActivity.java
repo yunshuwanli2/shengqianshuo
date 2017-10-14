@@ -26,6 +26,7 @@ import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.bean.HeroeListBean;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
+import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
@@ -90,7 +91,8 @@ public class ScoreboardActivity extends MToolBarActivity implements HttpCallback
     private void getData() {
         String url = UrlUtil.getUrl(ScoreboardActivity.this, R.string.url_hero_list);
         Map<String, Object> map = new HashMap<>();
-        map.put("uid", SharedPreUtils.getInstance(ScoreboardActivity.this).getValueBySharedPreferences(SharedPreUtils.UID, ""));
+        map.put("uid", UserManager.getUid(this));
+        map.put("token", UserManager.getToken(this));
         SqsHttpClientProxy.postAsynSQS(url, 1234, map, ScoreboardActivity.this);
     }
 
