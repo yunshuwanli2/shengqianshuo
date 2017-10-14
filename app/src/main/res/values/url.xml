@@ -48,7 +48,7 @@
     <!--  我粉丝 -->
     <string name="url_fans_list">/friends/get</string>
     <!--    提现申请 -->
-    <string name="url_withdraw_request">withdraw/cash/request</string>
+    <string name="url_withdraw_request">/withdraw/cash/request</string>
     <!--    每日签到 -->
     <string name="url_sign_day">/sign/day</string>
     <!--    绑定支付宝 -->
