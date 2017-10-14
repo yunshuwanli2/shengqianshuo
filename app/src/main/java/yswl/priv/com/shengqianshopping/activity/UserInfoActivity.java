@@ -86,7 +86,7 @@ public class UserInfoActivity extends MToolBarActivity implements HttpCallback<J
         } else {
             tvEmail.setText(userBean.getEmail());
         }
-        tvTaobaoAccount.setText(userBean.getAlipay().aliAccount);
+        tvTaobaoAccount.setText(userBean.getAlipay().account);
     }
 
     @Override

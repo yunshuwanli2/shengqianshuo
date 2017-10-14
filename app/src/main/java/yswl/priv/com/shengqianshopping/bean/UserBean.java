@@ -16,18 +16,21 @@ import yswl.com.klibrary.util.DateJsonDeserializer;
 /**
  * 第三方用户信息
  * <p>
- * <p>
- * "uid": "18892440",
- * "nickname": "tb18892440",
- * "avatar": "https%3A%2F%2Fwwc.alicdn.com%2Favatar%2FgetAvatar.",
- * "phone": "",
- * "qq": "",
- * "email": "",
- * "alipay": [],
- * "asset": {
- * "remainder": "0",
- * "integral": "0",
- * "revenue": "0"
+ "uid": "18899992",
+ "nickname": "tb18899992",
+ "avatar": "https://wwc.alicdn.com/avatar/getAvatar.do?userId=784602545&width=160&height=160&type=sns",
+ "phone": "15502192436",
+ "qq": "",
+ "email": "",
+ "alipay": {
+ "name": "kangpeng",
+ "account": "yunshuwanli@foxmail.com"
+ },
+ "asset": {
+ "remainder": 200,
+ "integral": 0,
+ "revenue": 20
+ }
  * }
  */
 
@@ -50,24 +53,9 @@ public class UserBean implements Serializable {
     }
 
     public class Alipay {
-        public String realName;
-        public String aliAccount;
+        public String name;
+        public String account;
 
-        public String getRealName() {
-            return realName;
-        }
-
-        public void setRealName(String realName) {
-            this.realName = realName;
-        }
-
-        public String getAliAccount() {
-            return aliAccount;
-        }
-
-        public void setAliAccount(String aliAccount) {
-            this.aliAccount = aliAccount;
-        }
     }
 
     public class Asset {

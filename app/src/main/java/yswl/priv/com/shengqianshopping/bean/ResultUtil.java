@@ -2,6 +2,8 @@ package yswl.priv.com.shengqianshopping.bean;
 
 import org.json.JSONObject;
 
+import yswl.com.klibrary.util.ToastUtil;
+
 /**
  * Created by kangpAdministrator on 2017/9/30 0030.
  * Emial kangpeng@yunhetong.net
@@ -15,6 +17,8 @@ public class ResultUtil {
     public static boolean isCodeOK(JSONObject jsonObject) {
         if (jsonObject.optInt(CODE) == 100) {
             return true;
+        } else {
+            ToastUtil.showToast(jsonObject.optString(MSG));
         }
         return false;
     }

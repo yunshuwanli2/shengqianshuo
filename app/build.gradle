@@ -25,16 +25,22 @@ android {
         release {
             signingConfig signingConfigs.Release
 
-            minifyEnabled false
-            pseudoLocalesEnabled false
+
+            signingConfig signingConfigs.Release
+            minifyEnabled true
+            pseudoLocalesEnabled false // 如果没有提供混淆规则文件，则设置默认的混淆规则文件（SDK/tools/proguard/proguard-android.txt）
+            shrinkResources true  // 移除无用的resource文件
+            zipAlignEnabled true // //Zipalign优化
             buildConfigField("String", "base_url", '\"http://api.saveduoduo.com\"')
             buildConfigField("boolean", "debug", "false")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             signingConfig signingConfigs.Release
-
-            minifyEnabled false
+            signingConfig signingConfigs.Release
+            minifyEnabled true
+            shrinkResources true  // 移除无用的resource文件
+            zipAlignEnabled true // //Zipalign优化
             pseudoLocalesEnabled false
             buildConfigField("String", "base_url", '\"http://api.saveduoduo.com\"');
             buildConfigField("boolean", "debug", "true")

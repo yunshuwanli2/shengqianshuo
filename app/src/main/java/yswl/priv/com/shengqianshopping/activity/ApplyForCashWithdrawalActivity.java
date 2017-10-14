@@ -70,12 +70,12 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
     }
 
     private void init() {
-        if (userIfo == null) return;
         userIfo = UserManager.getUserInfo(this);
+        if (userIfo == null) return;
         remainder = Double.parseDouble(userIfo.asset.remainder);
         tvBalance.setText(Html.fromHtml("<font color='#e0ff3366'>" + remainder + "</font>元"));
-        tvName.setText(userIfo.getAlipay().realName);
-        tvZfbAccount.setText(userIfo.getAlipay().getAliAccount());
+        tvName.setText(userIfo.getAlipay().name);
+        tvZfbAccount.setText(userIfo.getAlipay().account);
     }
 
     @OnClick({R.id.btn_submit})
