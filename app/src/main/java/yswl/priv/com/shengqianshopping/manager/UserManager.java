@@ -111,10 +111,11 @@ public class UserManager {
     }
 
     //调用接口获取用户信息
-    public static void rquestUserInfoDetail(Context context, String uid, HttpCallback<JSONObject> httpCallback, int requestId) {
+    public static void rquestUserInfoDetail(Context context, String uid,String token, HttpCallback<JSONObject> httpCallback, int requestId) {
         String url = UrlUtil.getUrl(context, R.string.url_get_user_info);
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
+        map.put("token", token);
         SqsHttpClientProxy.postAsynSQS(url, requestId, map, httpCallback);
     }
 

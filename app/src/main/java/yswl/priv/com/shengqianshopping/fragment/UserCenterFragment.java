@@ -139,8 +139,9 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
 
 
     void requestUserInfo() {
+        String token = UserManager.getToken(getActivity());
         String uid = UserManager.getUid(getActivity());
-        UserManager.rquestUserInfoDetail(getActivity(), uid, this, GET_USERINFO_REQUESTID);
+        UserManager.rquestUserInfoDetail(getActivity(), uid, token, this, GET_USERINFO_REQUESTID);
     }
 
     @Override

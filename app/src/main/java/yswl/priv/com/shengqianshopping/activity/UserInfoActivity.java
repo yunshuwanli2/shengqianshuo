@@ -55,8 +55,9 @@ public class UserInfoActivity extends MToolBarActivity implements HttpCallback<J
     }
 
     void requestUserInfo() {
-        String uid = SharedPreUtils.getInstance(this).getValueBySharedPreferences(SharedPreUtils.UID, "");
-        UserManager.rquestUserInfoDetail(this, uid, this, 1009);
+        String uid = UserManager.getUid(this);
+        String token = UserManager.getToken(this);
+        UserManager.rquestUserInfoDetail(this, uid, token, this, 1009);
     }
 
     @Override

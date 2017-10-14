@@ -134,9 +134,11 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     }
 
     private final int GET_USERINFO_REQUESTID = 1003;
+
     void requestUserInfo() {
         String uid = UserManager.getUid(this);
-        UserManager.rquestUserInfoDetail(this, uid, this, GET_USERINFO_REQUESTID);
+        String token = UserManager.getToken(this);
+        UserManager.rquestUserInfoDetail(this, uid, token, this, GET_USERINFO_REQUESTID);
     }
 }
 

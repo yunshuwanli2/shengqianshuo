@@ -88,7 +88,7 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
-        ToastUtil.showToast("申请提现已提交");
+        ToastUtil.showToast("申请提现已提交,请耐心等待1-2个工作日");
         finish();
     }
 

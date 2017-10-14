@@ -110,7 +110,13 @@ public class HttpClientProxy implements IRequestMethod {
                 public void onFailure(Call call, IOException e) {
                     Log.e(TAG, "url:" + finalUrl + "\n msg:" + e.getMessage());
                     if (httpCallback != null) {
-                        httpCallback.onFail(requestId, "访问失败");
+                        MApplication.getApplication().getGolbalHander().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                httpCallback.onFail(requestId, "访问失败");
+                            }
+                        });
+
                     }
                 }
 
@@ -169,7 +175,6 @@ public class HttpClientProxy implements IRequestMethod {
             e.printStackTrace();
         }
     }
-
 
 
     @Override
