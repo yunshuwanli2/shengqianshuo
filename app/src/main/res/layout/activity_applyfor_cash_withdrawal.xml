@@ -184,7 +184,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <TextView
+    <EditText
         android:id="@+id/edt_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
