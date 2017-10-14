@@ -22,6 +22,7 @@ import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
+import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
@@ -81,6 +82,7 @@ public class BindZFBActivity extends MToolBarActivity implements HttpCallback<JS
         Intent mIntent = new Intent();
         this.setResult(Activity.RESULT_OK, mIntent);
         UserManager.bindZFB(BindZFBActivity.this, true);
+        UserCenterFragment.publishUserInfoRequestEvent();
         finish();
     }
 

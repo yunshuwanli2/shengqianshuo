@@ -7,6 +7,9 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import yswl.com.klibrary.util.T;
+
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 
 /**
@@ -20,6 +23,7 @@ public class ExampleInstrumentedTest {
     public void useAppContext() throws Exception {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
+        String str = T.getCertificateSHA1Fingerprint(appContext);
 
         assertEquals("yswl.priv.com.shengqianshopping", appContext.getPackageName());
     }
