@@ -1,4 +1,4 @@
-package yswl.priv.com.shengqianshopping;
+package yswl.priv.com.shengqianshopping.wxapi;
 
 
 import com.umeng.weixin.callback.WXCallbackActivity;

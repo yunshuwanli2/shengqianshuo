@@ -39,6 +39,7 @@ import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.UserBean;
 import yswl.priv.com.shengqianshopping.event.UserInfoRequestEvent;
 import yswl.priv.com.shengqianshopping.event.UserInfoEvent;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
@@ -240,6 +241,7 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Activity.RESULT_FIRST_USER && resultCode == Activity.RESULT_OK) {
             //
+
         }
     }
 

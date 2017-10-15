@@ -152,6 +152,13 @@ public class UserBean implements Serializable {
         this.asset = asset;
     }
 
+    public Invite getInvite() {
+        return invite;
+    }
+
+    public void setInvite(Invite invite) {
+        this.invite = invite;
+    }
 
     public static UserBean jsonToBean(JSONObject json) {
         if (null == json) return null;

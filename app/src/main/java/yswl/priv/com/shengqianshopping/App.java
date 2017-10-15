@@ -7,7 +7,9 @@ import android.widget.Toast;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
+import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import yswl.com.klibrary.MApplication;
@@ -29,9 +31,12 @@ public class App extends MApplication {
     public void onCreate() {
         super.onCreate();
         AlibcUtil.initAlibc(this);
-
+        CustomActivityOnCrash.install(this);
+        Config.DEBUG = true;
+        UMShareAPI.get(this);
         //微信分享配置appid---appsecret
         PlatformConfig.setWeixin("wx124653c63868deed", "ce81af4b4dc73a075e7d6a57e7528d5c");
+        PlatformConfig.setSinaWeibo("3980630687","40e3a0f7b06464614f6f18b1c64fed8c","http://saveduoduo.com/");
     }
 
     @Override
