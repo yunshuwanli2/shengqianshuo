@@ -125,4 +125,6 @@
     <string name="user_info_setting">设置</string>
     <string name="back">返回</string>
     <string name="title_activity_invitation">InvitationActivity</string>
+
+    <string name="share_content">【省钱说】每日万款品质尖货，独家优惠券，抢到手软！赶快下载畅想优惠券吧！下载链接：</string>
 </resources>

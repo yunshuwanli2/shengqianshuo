@@ -12,10 +12,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.MD5Util;
 import yswl.com.klibrary.util.UrlParamsConfig;
@@ -43,6 +45,7 @@ public class InvitationActivity extends MToolBarActivity {
     @BindView(R.id.invitation_tv_reward_num)
     TextView tvRewardNum;
 
+    private Unbinder unbinder;
     private UserBean userInfo;
 
     public static void startAct(Context context) {
@@ -53,7 +56,7 @@ public class InvitationActivity extends MToolBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invitation);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         init();
         eventBind();
     }
@@ -89,8 +92,10 @@ public class InvitationActivity extends MToolBarActivity {
                 paramsMap.put("uid", uid);
                 paramsMap.put("token", token);
                 paramsMap.put("rnd", rnd);
-                String url = String.format(UrlUtil.getUrl(InvitationActivity.this, R.string.url_sqs_share), uid, token, rnd, getMdk(paramsMap));
-                UMShareUtils.share(InvitationActivity.this, url, "XXX", "XXXXXXXXXXXXXXXXXXXXX");
+                String url = String.format(UrlUtil.getUrl(InvitationActivity.this, R.string.url_sqs_share), userInfo.getUid(), token, rnd, getMdk(paramsMap));
+                String title = "省钱说";
+                String shraeContent = getResources().getString(R.string.share_content);
+                UMShareUtils.share(InvitationActivity.this, url, title,shraeContent);
             }
         });
     }
@@ -103,4 +108,9 @@ public class InvitationActivity extends MToolBarActivity {
         return afterSign;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
 }
