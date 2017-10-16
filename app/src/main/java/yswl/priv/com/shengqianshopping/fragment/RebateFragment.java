@@ -9,25 +9,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import yswl.com.klibrary.base.MFragment;
-import yswl.com.klibrary.browser.BrowserActivity;
-import yswl.com.klibrary.http.CallBack.HttpCallback;
-import yswl.com.klibrary.http.HttpClientProxy;
-import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
-import yswl.priv.com.shengqianshopping.activity.SearchActivity;
-import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
-import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
  * Created by kangpAdministrator on 2017/9/27 0027.
@@ -67,7 +54,11 @@ public class RebateFragment extends MFragment {
             if (TextUtils.isEmpty(key)) {
                 return;
             }
-            SearchActivity.startActivity(getActivity(), key);
+            //TODO 等百川sdk 转链接的权限开通 就用淘宝实时搜索
+//            SearchActivity.startActivity(getActivity(), key);
+
+            String url = getActivity().getResources().getString(R.string.url_search_tool, key);
+            AlibcUtil.openBrower2(url, getActivity());
         }
     }
 
