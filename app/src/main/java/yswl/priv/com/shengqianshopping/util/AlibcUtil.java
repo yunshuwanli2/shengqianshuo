@@ -258,7 +258,7 @@ public class AlibcUtil {
             @Override
             public void onSuccess() {
                 //清除数据
-                SharedPreUtils.getInstance(activity).clearAllData();
+                UserManager.saveLogin(activity,false);
                 MainActivityV3.publishHomeTabEvent();
             }
 

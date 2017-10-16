@@ -440,12 +440,13 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     @Override
     public void onFail(int requestId, String errorMsg) {
-        if (GETDTATYPE == REFRESH) {
-            swipeToLoadLayout.setRefreshing(false);
-        } else {
+        if (requestId == REQUEST_ID_PRUDECT_LIST) {
             swipeToLoadLayout.setLoadingMore(false);
+            GETDTATYPE = REFRESH;
+        } else {
+            swipeToLoadLayout.setRefreshEnabled(false);
         }
-        GETDTATYPE = REFRESH;
+
     }
 
 
