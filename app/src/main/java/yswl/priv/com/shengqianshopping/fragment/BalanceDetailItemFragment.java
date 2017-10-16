@@ -111,7 +111,8 @@ public class BalanceDetailItemFragment extends MFragment implements HttpCallback
         }
         String url = UrlUtil.getUrl(getActivity(), R.string.url_balance_detail);
         Map<String, Object> map = new HashMap<>();
-        map.put("uid", UserManager.getUserInfo(getContext()).getUid());
+        map.put("uid", UserManager.getUid(getActivity()));
+        map.put("token", UserManager.getToken(getActivity()));
         map.put("lastId", lastId);
         map.put("count", "20");
         SqsHttpClientProxy.postAsynSQS(url, 100, map, this);

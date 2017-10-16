@@ -6,7 +6,7 @@ android {
         Release {
             keyAlias 'yunshuwanli'
             keyPassword '011235'
-            storeFile file('/Users/yunshuwanli/Desktop/AndroidStudio_key/shengqianshuo/android_studio_strokey.jks')
+            storeFile file('C:/Users/Administrator/Desktop/yunshuwanliMAC/Android_Studio_key/android_studio_strokey.jks')
             storePassword '011235'
         }
     }
@@ -24,9 +24,6 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.Release
-
-
-            signingConfig signingConfigs.Release
             minifyEnabled true
             pseudoLocalesEnabled false // 如果没有提供混淆规则文件，则设置默认的混淆规则文件（SDK/tools/proguard/proguard-android.txt）
             shrinkResources true  // 移除无用的resource文件
@@ -37,13 +34,11 @@ android {
         }
         debug {
             signingConfig signingConfigs.Release
-            signingConfig signingConfigs.Release
-            minifyEnabled true
-            shrinkResources true  // 移除无用的resource文件
-            zipAlignEnabled true // //Zipalign优化
+            minifyEnabled false
             pseudoLocalesEnabled false
             buildConfigField("String", "base_url", '\"http://api.saveduoduo.com/v2\"');
             buildConfigField("boolean", "debug", "true")
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -83,7 +78,4 @@ dependencies {
     compile files('libs/umeng_social_net.jar')
     compile files('libs/umeng_social_shareview.jar')
     compile files('libs/umeng_social_tool.jar')
-
-
-
 }

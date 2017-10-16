@@ -53,4 +53,6 @@
     <string name="url_sign_day">/sign/day</string>
     <!--    绑定支付宝 -->
     <string name="url_bind_zfb">/binding/alipay</string>
+    <!--    支付成功后的回调后端 -->
+    <string name="url_buy">/item/buy</string>
 </resources>

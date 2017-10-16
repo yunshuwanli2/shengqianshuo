@@ -171,12 +171,14 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
         super.onStop();
     }
 
@@ -240,7 +242,8 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Activity.RESULT_FIRST_USER && resultCode == Activity.RESULT_OK) {
-            //
+            //提现服务
+            ApplyForCashWithdrawalActivity.startActivity(getActivity());
 
         }
     }

@@ -21,20 +21,25 @@ import com.alibaba.baichuan.android.trade.page.AlibcMyCartsPage;
 import com.alibaba.baichuan.android.trade.page.AlibcMyOrdersPage;
 import com.alibaba.baichuan.android.trade.page.AlibcPage;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import yswl.com.klibrary.browser.BrowserActivity;
+import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.util.L;
 import yswl.priv.com.shengqianshopping.App;
 import yswl.priv.com.shengqianshopping.MainActivityV3;
+import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
 import yswl.priv.com.shengqianshopping.activity.SettingActivity;
 import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
+import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 
 /**
@@ -63,7 +68,7 @@ public class AlibcUtil {
     }
 
     //打开优惠券/或其他淘宝地址
-    public static void openBrower2(String url, Activity context) {
+    public static void openBrower2(String url, final Activity context) {
         if (!UserManager.isLogin(context)) {
             LoginActivity.startActivity(context);
             return;
@@ -79,21 +84,19 @@ public class AlibcUtil {
         AlibcTrade.show(context, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
             @Override
             public void onTradeSuccess(TradeResult tradeResult) {
-                // TYPECART,
-                // TYPEPAY;
                 L.e(TAG, "---优惠券进入商品详情---： " + tradeResult.resultType.name());
                 if (tradeResult.payResult != null) {
-                    List li = tradeResult.payResult.payFailedOrders;
                     List li2 = tradeResult.payResult.paySuccessOrders;
-
-                    for (int i = 0; i < li2.size(); i++) {
-                        L.e(TAG, "---优惠券进入商品详情---支付成功的订单详情： " +
-                                tradeResult.payResult.paySuccessOrders.get(i).toString());
+                    StringBuilder sbl = new StringBuilder();
+                    if (li2 != null) {
+                        for (int i = 0; i < li2.size(); i++) {
+                            sbl.append(li2.get(i).toString());
+                            sbl.append("|");
+                            L.e(TAG, "---优惠券进入商品详情---支付成功的订单详情： " + li2.get(i).toString());
+                        }
                     }
-                    for (int i = 0; i < li.size(); i++) {
-                        L.e(TAG, "---优惠券进入商品详情---支付失败的订单详情： " +
-                                tradeResult.payResult.payFailedOrders.get(i).toString());
-                    }
+                    sbl.deleteCharAt(sbl.length() - 1);
+                    requestAfterBuy(context, sbl.toString());
                 }
 
 
@@ -119,7 +122,7 @@ public class AlibcUtil {
 
 
     //打开商品详情详情
-    public static void openAlibcPage(Activity context, CrazyProductDetail detail) {
+    public static void openAlibcPage(final Activity context, CrazyProductDetail detail) {
         if (!UserManager.isLogin(context)) {
             LoginActivity.startActivity(context);
             return;
@@ -137,6 +140,17 @@ public class AlibcUtil {
             public void onTradeSuccess(TradeResult tradeResult) {
                 L.e(TAG, tradeResult.resultType.name());
                 //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
+                List li2 = tradeResult.payResult.paySuccessOrders;
+                StringBuilder sbl = new StringBuilder();
+                if (li2 != null) {
+                    for (int i = 0; i < li2.size(); i++) {
+                        sbl.append(li2.get(i).toString());
+                        sbl.append("|");
+                        L.e(TAG, "---订单操作---支付成功的订单详情： " + li2.get(i).toString());
+                    }
+                }
+                sbl.deleteCharAt(sbl.length() - 1);
+                requestAfterBuy(context, sbl.toString());
             }
 
             @Override
@@ -146,7 +160,7 @@ public class AlibcUtil {
         });
     }
 
-    public static void gotoAliOrder(Activity context) {
+    public static void gotoAliOrder(final Activity context) {
         if (!UserManager.isLogin(context)) {
             LoginActivity.startActivity(context);
             return;
@@ -171,17 +185,17 @@ public class AlibcUtil {
                         L.e(TAG, "订单操作 -- 返回成功 result : " + tradeResult.resultType.name());
                         L.e(TAG, "---订单操作---： " + tradeResult.resultType.name());
                         if (tradeResult.payResult != null) {
-                            List li = tradeResult.payResult.payFailedOrders;
                             List li2 = tradeResult.payResult.paySuccessOrders;
-
-                            for (int i = 0; i < li2.size(); i++) {
-                                L.e(TAG, "---订单操作---支付成功的订单详情： " +
-                                        tradeResult.payResult.paySuccessOrders.get(i).toString());
+                            StringBuilder sbl = new StringBuilder();
+                            if (li2 != null) {
+                                for (int i = 0; i < li2.size(); i++) {
+                                    sbl.append(li2.get(i).toString());
+                                    sbl.append("|");
+                                    L.e(TAG, "---订单操作---支付成功的订单详情： " + li2.get(i).toString());
+                                }
                             }
-                            for (int i = 0; i < li.size(); i++) {
-                                L.e(TAG, "---订单操作---支付失败的订单详情： " +
-                                        tradeResult.payResult.payFailedOrders.get(i).toString());
-                            }
+                            sbl.deleteCharAt(sbl.length() - 1);
+                            requestAfterBuy(context, sbl.toString());
                         }
 
                     }
@@ -194,7 +208,7 @@ public class AlibcUtil {
 
     }
 
-    public static void gotoAliShoppingChe(Activity context) {
+    public static void gotoAliShoppingChe(final Activity context) {
         if (!UserManager.isLogin(context)) {
             LoginActivity.startActivity(context);
             return;
@@ -215,21 +229,17 @@ public class AlibcUtil {
                         L.e(TAG, "购物车操作 -- 返回成功 result : " + tradeResult.resultType.name());
                         L.e(TAG, "---购物车操作---： " + tradeResult.resultType.name());
                         if (tradeResult.payResult != null) {
-                            List li = tradeResult.payResult.payFailedOrders;
                             List li2 = tradeResult.payResult.paySuccessOrders;
-
+                            StringBuilder sbl = new StringBuilder();
                             if (li2 != null) {
                                 for (int i = 0; i < li2.size(); i++) {
-                                    L.e(TAG, "---购物车操作---支付成功的订单详情： " +
-                                            tradeResult.payResult.paySuccessOrders.get(i).toString());
+                                    sbl.append(li2.get(i).toString());
+                                    sbl.append("|");
+                                    L.e(TAG, "---购物车操作---支付成功的订单详情： " + li2.get(i).toString());
                                 }
                             }
-                            if (li != null) {
-                                for (int i = 0; i < li.size(); i++) {
-                                    L.e(TAG, "---购物车操作---支付失败的订单详情： " +
-                                            tradeResult.payResult.payFailedOrders.get(i).toString());
-                                }
-                            }
+                            sbl.deleteCharAt(sbl.length() - 1);
+                            requestAfterBuy(context, sbl.toString());
                         }
                     }
 
@@ -261,5 +271,25 @@ public class AlibcUtil {
 
     public static void destory() {
         AlibcTradeSDK.destory();
+    }
+
+    //
+    private static void requestAfterBuy(Context context, String orderId) {
+        String url = UrlUtil.getUrl(context, R.string.url_buy);
+        Map<String, Object> map = new HashMap<>();
+        map.put("uid", UserManager.getUid(context));
+        map.put("token", UserManager.getToken(context));
+        map.put("tid", orderId);
+        SqsHttpClientProxy.postAsynSQS(url, 1, map, new HttpCallback<JSONObject>() {
+            @Override
+            public void onSucceed(int requestId, JSONObject result) {
+                L.e(TAG, "----订单数据上传成功----");
+            }
+
+            @Override
+            public void onFail(int requestId, String errorMsg) {
+                L.e(TAG, "----订单数据上传失败----");
+            }
+        });
     }
 }

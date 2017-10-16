@@ -105,13 +105,11 @@
 #-libraryjars libs/universal-image-loader-1.8.4-with-sources.jar 没有这个jar包
 -keep class com.nostra13.universalimageloader.** { *; }
 
-#友盟相关
-#-libraryjars libs/umeng-analytics-v5.2.3.jar
--keep class com.umeng.** { *; }
 
 #eventBus
 -keepattributes *Annotation*
--keepclassmembers class ** {@org.greenrobot.eventbus.Subscribe <methods>;
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
 }
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
 -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {

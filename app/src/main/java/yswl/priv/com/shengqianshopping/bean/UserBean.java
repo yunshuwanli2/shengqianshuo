@@ -48,7 +48,7 @@ public class UserBean implements Serializable {
 
 
     public class Invite{
-        public String totol;
+        public String total;
         public String reward;
     }
 

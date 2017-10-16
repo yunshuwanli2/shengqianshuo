@@ -41,7 +41,7 @@ public class SettingActivity extends MToolBarActivity {
         TextView version = findView(R.id.app_version);
         TextView name = findView(R.id.app_name);
         cache = findView(R.id.app_cache);
-        version.setText(MAppInfoUtil.getVersionCode(this) + "");
+        version.setText(MAppInfoUtil.getAppName(this) + "");
         name.setText(R.string.app_name);
         cache.setText(AppCacheCleanManager.getCacheSize(this));
 

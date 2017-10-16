@@ -12,12 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.MD5Util;
 import yswl.com.klibrary.util.UrlParamsConfig;
@@ -45,7 +43,6 @@ public class InvitationActivity extends MToolBarActivity {
     @BindView(R.id.invitation_tv_reward_num)
     TextView tvRewardNum;
 
-    private Unbinder unbinder;
     private UserBean userInfo;
 
     public static void startAct(Context context) {
@@ -56,7 +53,7 @@ public class InvitationActivity extends MToolBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invitation);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         init();
         eventBind();
     }
@@ -69,8 +66,13 @@ public class InvitationActivity extends MToolBarActivity {
         userInfo = UserManager.getUserInfo(this);
         setTitle("有奖邀请");
         vRewardPrompt.setText(Html.fromHtml("最高可获得<font color='#ff5b68'><big>¥200</big></font>元奖励"));
-        vInvitationPeopleNum.setText(userInfo.getInvite().totol + "人");
-        tvRewardNum.setText("¥" + userInfo.getInvite().reward);
+        if (userInfo.getInvite() != null) {
+            vInvitationPeopleNum.setText(userInfo.getInvite().total + "人");
+            tvRewardNum.setText("¥" + userInfo.getInvite().reward);
+        } else {
+            vInvitationPeopleNum.setText("0 人");
+            tvRewardNum.setText("¥ 0 ");
+        }
 
 
     }
@@ -80,14 +82,15 @@ public class InvitationActivity extends MToolBarActivity {
             @Override
             public void onClick(View v) {
                 //分享
-                String token = SharedPreUtils.getInstance(InvitationActivity.this).getValueBySharedPreferences(SharedPreUtils.TOKEN, "");
+                String token = UserManager.getToken(InvitationActivity.this);
+                String uid = UserManager.getUid(InvitationActivity.this);
                 String rnd = System.currentTimeMillis() + "";
                 Map<String, Object> paramsMap = new HashMap<>();
-                paramsMap.put("uid", userInfo.getUid());
+                paramsMap.put("uid", uid);
                 paramsMap.put("token", token);
                 paramsMap.put("rnd", rnd);
-                String url = String.format(UrlUtil.getUrl(InvitationActivity.this, R.string.url_sqs_share), userInfo.getUid(), token, rnd, getMdk(paramsMap));
-                UMShareUtils.share(InvitationActivity.this, url,"XXX","XXXXXXXXXXXXXXXXXXXXX");
+                String url = String.format(UrlUtil.getUrl(InvitationActivity.this, R.string.url_sqs_share), uid, token, rnd, getMdk(paramsMap));
+                UMShareUtils.share(InvitationActivity.this, url, "XXX", "XXXXXXXXXXXXXXXXXXXXX");
             }
         });
     }
@@ -100,9 +103,4 @@ public class InvitationActivity extends MToolBarActivity {
         return afterSign;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
 }
