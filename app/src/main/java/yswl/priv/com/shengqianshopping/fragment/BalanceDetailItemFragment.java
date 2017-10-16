@@ -46,7 +46,7 @@ public class BalanceDetailItemFragment extends MFragment implements HttpCallback
     private final int REFRESH = 1;//刷新标志
     private final int LOADMORE = 2;//加载更多
     private int GETDTATYPE = REFRESH;//当前获取数据方式（1刷新，2加载更多）
-    private String lastId = "0";
+    private int pageNo = 1;
     private boolean ALLOWLOADMORE = true;//是否允许上拉加载
 
     /**
@@ -107,14 +107,14 @@ public class BalanceDetailItemFragment extends MFragment implements HttpCallback
 
     private void requestData() {
         if (GETDTATYPE == REFRESH) {
-            lastId = "0";
+            pageNo = 1;
         }
         String url = UrlUtil.getUrl(getActivity(), R.string.url_balance_detail);
         Map<String, Object> map = new HashMap<>();
         map.put("uid", UserManager.getUid(getActivity()));
         map.put("token", UserManager.getToken(getActivity()));
-        map.put("lastId", lastId);
-        map.put("count", "20");
+        map.put("pageNo", pageNo);
+        map.put("pageSize", "20");
         SqsHttpClientProxy.postAsynSQS(url, 100, map, this);
     }
 
@@ -140,8 +140,8 @@ public class BalanceDetailItemFragment extends MFragment implements HttpCallback
             swipeToLoadLayout.setLoadingMore(false);
         }
         if (ResultUtil.isCodeOK(result)) {
+            pageNo++;
             JSONArray jsonArr = ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST);
-            lastId = ResultUtil.analysisData(result).optString("lastId");
             List<BalanceDetailItemBean> tempList = BalanceDetailItemBean.jsonToList(jsonArr);
             if (tempList != null && tempList.size() > 0) {
                 for (int i = 0; i < tempList.size(); i++) {

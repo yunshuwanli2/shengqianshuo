@@ -1,12 +1,9 @@
 package yswl.priv.com.shengqianshopping.fragment;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -25,13 +22,7 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.media.UMWeb;
 
 import org.json.JSONObject;
 
@@ -45,9 +36,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
-import yswl.com.klibrary.http.HttpClientProxy;
-import yswl.com.klibrary.util.ToastUtil;
-import yswl.priv.com.shengqianshopping.MainActivity;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.AdvanceActivity;
 import yswl.priv.com.shengqianshopping.activity.CrazyBuyActivity;
@@ -64,7 +52,6 @@ import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
-import yswl.priv.com.shengqianshopping.util.UMShareUtils;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.SelectionSortView;
 
@@ -111,10 +98,10 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     GridRecyclerFragmentAdapter mAdapter;
     private int currentPosition = 0;
 
-    private String hotlastId = "0";
-    private String newlastId = "0";
-    private String volumelastId = "-1";
-    private String pricelastId = "0";
+    private int hotPageNo = 1;
+    private int newPageNo = 1;
+    private int volumePageNo = 1;
+    private int pricePageNo = 1;
 
     private ImageView lastImg;
 
@@ -265,13 +252,13 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         SqsHttpClientProxy.postAsynSQS(url, REQUEST_ID_BANNER, null, this);
     }
 
-    private void requsetCategoryList(SortEnum sEnum, boolean asc, String lastId) {
+    private void requsetCategoryList(SortEnum sEnum, boolean asc, int pageNo) {
         Map<String, Object> parm = new HashMap<>();
         parm.put("pid", mCategory.pid);
         parm.put("sort", sEnum.getValue());
-        parm.put("lastId", lastId);
-        Log.i("znh", asc + "****lastId" + lastId);
-        parm.put("count", "20");
+        parm.put("pageNo", pageNo);
+        Log.i("znh", asc + "****pageNo" + pageNo);
+        parm.put("pageSize", "20");
         if (asc) {
             parm.put("sortBy", "asc");
         } else {
@@ -325,8 +312,8 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 lastImg = sortHot.getImgStatus();
                 sortHot.onClick(currentPosition);
                 currentPosition = 0;
-                hotlastId = "0";
-                requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotlastId);
+                hotPageNo = 1;
+                requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotPageNo);
                 break;
             case R.id.sort_new:
                 if (lastImg != null) {
@@ -335,8 +322,8 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 lastImg = sortNew.getImgStatus();
                 sortNew.onClick(currentPosition);
                 currentPosition = 1;
-                newlastId = "0";
-                requsetCategoryList(SortEnum.NEW, sortNew.isSortAsc(), newlastId);
+                newPageNo = 1;
+                requsetCategoryList(SortEnum.NEW, sortNew.isSortAsc(), newPageNo);
                 break;
             case R.id.sort_sell_count:
                 if (lastImg != null) {
@@ -345,8 +332,8 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 lastImg = sortSellCount.getImgStatus();
                 sortSellCount.onClick(currentPosition);
                 currentPosition = 2;
-                volumelastId = "-1";
-                requsetCategoryList(SortEnum.VOLUME, sortSellCount.isSortAsc(), volumelastId);
+                volumePageNo = 1;
+                requsetCategoryList(SortEnum.VOLUME, sortSellCount.isSortAsc(), volumePageNo);
                 break;
             case R.id.sort_price:
                 if (lastImg != null) {
@@ -355,8 +342,8 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 lastImg = sortPrice.getImgStatus();
                 sortPrice.onClick(currentPosition);
                 currentPosition = 3;
-                pricelastId = "0";
-                requsetCategoryList(SortEnum.PRICE, sortPrice.isSortAsc(), pricelastId);
+                pricePageNo = 1;
+                requsetCategoryList(SortEnum.PRICE, sortPrice.isSortAsc(), pricePageNo);
                 break;
         }
     }
@@ -393,16 +380,16 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                                 ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
                         switch (currentPosition) {
                             case 0:
-                                hotlastId = ResultUtil.analysisData(result).optString("lastId");
+                                hotPageNo++;
                                 break;
                             case 1:
-                                newlastId = ResultUtil.analysisData(result).optString("lastId");
+                                newPageNo++;
                                 break;
                             case 2:
-                                volumelastId = ResultUtil.analysisData(result).optString("lastId");
+                                volumePageNo++;
                                 break;
                             case 3:
-                                pricelastId = ResultUtil.analysisData(result).optString("lastId");
+                                pricePageNo++;
                                 break;
                         }
                         if (tempList != null && tempList.size() > 0) {
@@ -422,7 +409,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     void updateBottonItem(CategoryBean categoryBean) {
         mCatetoryTitle.setText(categoryBean.title);
-        requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotlastId);
+        requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotPageNo);
         //设置默认--人气
         sortHot.setDefault();
         if (lastImg != null) {
@@ -457,16 +444,16 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         if (ALLOWLOADMORE) {
             switch (currentPosition) {
                 case 0:
-                    requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotlastId);
+                    requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotPageNo);
                     break;
                 case 1:
-                    requsetCategoryList(SortEnum.NEW, sortNew.isSortAsc(), newlastId);
+                    requsetCategoryList(SortEnum.NEW, sortNew.isSortAsc(), newPageNo);
                     break;
                 case 2:
-                    requsetCategoryList(SortEnum.VOLUME, sortSellCount.isSortAsc(), volumelastId);
+                    requsetCategoryList(SortEnum.VOLUME, sortSellCount.isSortAsc(), volumePageNo);
                     break;
                 case 3:
-                    requsetCategoryList(SortEnum.PRICE, sortPrice.isSortAsc(), pricelastId);
+                    requsetCategoryList(SortEnum.PRICE, sortPrice.isSortAsc(), pricePageNo);
                     break;
             }
         } else {
@@ -482,20 +469,20 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
         switch (currentPosition) {
             case 0:
-                hotlastId = "0";
-                requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotlastId);
+                hotPageNo = 1;
+                requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotPageNo);
                 break;
             case 1:
-                newlastId = "0";
-                requsetCategoryList(SortEnum.NEW, sortNew.isSortAsc(), newlastId);
+                newPageNo = 1;
+                requsetCategoryList(SortEnum.NEW, sortNew.isSortAsc(), newPageNo);
                 break;
             case 2:
-                volumelastId = "-1";
-                requsetCategoryList(SortEnum.VOLUME, sortSellCount.isSortAsc(), volumelastId);
+                volumePageNo = 1;
+                requsetCategoryList(SortEnum.VOLUME, sortSellCount.isSortAsc(), volumePageNo);
                 break;
             case 3:
-                pricelastId = "0";
-                requsetCategoryList(SortEnum.PRICE, sortPrice.isSortAsc(), pricelastId);
+                pricePageNo = 1;
+                requsetCategoryList(SortEnum.PRICE, sortPrice.isSortAsc(), pricePageNo);
                 break;
         }
 
