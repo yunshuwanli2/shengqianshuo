@@ -2,15 +2,6 @@ apply plugin: 'com.android.library'
 apply from:'../version.gradle'
 
 repositories{
-//    maven{
-//        url "adad"
-//    }
-//    ivy{
-//        url ''
-//    }
-//    flatDir{
-//       dirs 'libs'
-//    }
 }
 android {
     compileSdkVersion MCompileSdkVersion

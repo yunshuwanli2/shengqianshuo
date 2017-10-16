@@ -13,6 +13,7 @@ import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
 import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
+import com.alibaba.baichuan.android.trade.model.AlibcTaokeParams;
 import com.alibaba.baichuan.android.trade.model.OpenType;
 import com.alibaba.baichuan.android.trade.model.TradeResult;
 import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
@@ -78,7 +79,7 @@ public class AlibcUtil {
         }
         Map<String, String> exParams = new HashMap<>();
         exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
-
+//        AlibcTaokeParams taokeParams = new AlibcTaokeParams("x", "x", "x");
         AlibcPage detailPage = new AlibcPage(url);
         AlibcShowParams showParams = new AlibcShowParams(OpenType.Native, true);
         AlibcTrade.show(context, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
@@ -98,7 +99,6 @@ public class AlibcUtil {
                     sbl.deleteCharAt(sbl.length() - 1);
                     requestAfterBuy(context, sbl.toString());
                 }
-
 
             }
 

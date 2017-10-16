@@ -47,6 +47,10 @@ public class MAppInfoUtil {
         return null;
     }
 
+    public static String getVersionName() {
+        return getVersionName(MApplication.getApplication());
+    }
+
     /**
      * [获取应用程序版本号]
      *

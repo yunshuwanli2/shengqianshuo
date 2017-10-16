@@ -31,7 +31,7 @@ public class SqsHttpClientProxy {
         paramsMap.put("deviceToken", MDeviceUtil.getMAC());
         paramsMap.put("deviceType", "2");
         paramsMap.put("osVersion", Build.VERSION.RELEASE);
-        paramsMap.put("appVersion", MAppInfoUtil.getVersionCode());
+        paramsMap.put("appVersion", MAppInfoUtil.getVersionName());
         paramsMap.put("mdk", getMdk(paramsMap));
         HttpClientProxy.getInstance().postAsyn(url, requestId, paramsMap, httpCallback);
     }

@@ -102,29 +102,20 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     @BindView(R.id.sort_price)
     SelectionSortView sortPrice;
 
-
     private final int REFRESH = 1;//刷新标志
     private final int LOADMORE = 2;//加载更多
     private int GETDTATYPE = REFRESH;//当前获取数据方式（1刷新，2加载更多）
 
     private boolean ALLOWLOADMORE = true;//是否允许上拉加载
 
-
     GridRecyclerFragmentAdapter mAdapter;
     private int currentPosition = 0;
 
-    //    private boolean hotAsc = false;//升序:asc 降序:desc-默认--人气
-//    private boolean newAsc = false;//升序:asc 降序:desc-默认--最新
-//    private boolean volumeAsc = false;//升序:asc 降序:desc-默认--销量
-//    private boolean priceAsc = false;//升序:asc 降序:desc-默认--价格
     private String hotlastId = "0";
     private String newlastId = "0";
     private String volumelastId = "-1";
     private String pricelastId = "0";
 
-    //    private Drawable drawableAsc;
-//    private Drawable drawableDesc;
-//    private TextView lastTv;
     private ImageView lastImg;
 
     public HomeFragment2() {
@@ -151,10 +142,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         //设置监听
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
-//        drawableAsc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_ace);
-//        drawableDesc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_desc);
-//        drawableAsc.setBounds(0, 0, drawableAsc.getMinimumWidth(), drawableAsc.getMinimumHeight());//对图片进行压缩
-//        drawableDesc.setBounds(0, 0, drawableDesc.getMinimumWidth(), drawableDesc.getMinimumHeight());//对图片进行压缩
         sortHot.setContent("人气");
         sortHot.setPosition(0);
         sortNew.setContent("最新");
@@ -303,35 +290,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     }
 
 
-    private UMShareListener umShareListener = new UMShareListener() {
-        @Override
-        public void onStart(SHARE_MEDIA platform) {
-            //分享开始的回调
-        }
-
-        @Override
-        public void onResult(SHARE_MEDIA platform) {
-            Log.d("plat", "platform" + platform);
-        }
-
-        @Override
-        public void onError(SHARE_MEDIA platform, Throwable t) {
-            if (t != null) {
-                Log.d("throw", "throw:" + t.getMessage());
-            }
-        }
-
-        @Override
-        public void onCancel(SHARE_MEDIA platform) {
-        }
-    };
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(getActivity()).onActivityResult(requestCode, resultCode, data);
-    }
 
     @OnClick({R.id.home_app_icon, R.id.home_toolbar_search, R.id.home_menu, R.id.ll_fkq,
             R.id.ll_tj, R.id.ll_sort, R.id.ll_plan, R.id.sort_hot,
@@ -362,20 +320,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 AdvanceActivity.startActivity(getActivity());
                 break;
             case R.id.sort_hot:
-//                if (currentPosition == 0) {
-//                    hotAsc = !hotAsc;
-//                } else {
-//                    currentPosition = 0;
-//                    if (lastTv != null) {
-//                        lastTv.setCompoundDrawables(null, null, null, null);
-//                    }
-//                    lastTv = tvHot;
-//                }
-//                if (hotAsc) {
-//                    tvHot.setCompoundDrawables(null, null, drawableAsc, null);
-//                } else {
-//                    tvHot.setCompoundDrawables(null, null, drawableDesc, null);
-//                }
                 if (lastImg != null) {
                     lastImg.setVisibility(View.INVISIBLE);
                 }
@@ -386,20 +330,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotlastId);
                 break;
             case R.id.sort_new:
-//                if (currentPosition == 1) {
-//                    newAsc = !newAsc;
-//                } else {
-//                    currentPosition = 1;
-//                    if (lastTv != null) {
-//                        lastTv.setCompoundDrawables(null, null, null, null);
-//                    }
-//                    lastTv = tvNew;
-//                }
-//                if (newAsc) {
-//                    tvNew.setCompoundDrawables(null, null, drawableAsc, null);
-//                } else {
-//                    tvNew.setCompoundDrawables(null, null, drawableDesc, null);
-//                }
                 if (lastImg != null) {
                     lastImg.setVisibility(View.INVISIBLE);
                 }
@@ -410,20 +340,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 requsetCategoryList(SortEnum.NEW, sortNew.isSortAsc(), newlastId);
                 break;
             case R.id.sort_sell_count:
-//                if (currentPosition == 2) {
-//                    volumeAsc = !volumeAsc;
-//                } else {
-//                    currentPosition = 2;
-//                    if (lastTv != null) {
-//                        lastTv.setCompoundDrawables(null, null, null, null);
-//                    }
-//                    lastTv = tvSellCount;
-//                }
-//                if (volumeAsc) {
-//                    tvSellCount.setCompoundDrawables(null, null, drawableAsc, null);
-//                } else {
-//                    tvSellCount.setCompoundDrawables(null, null, drawableDesc, null);
-//                }
                 if (lastImg != null) {
                     lastImg.setVisibility(View.INVISIBLE);
                 }
@@ -434,20 +350,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                 requsetCategoryList(SortEnum.VOLUME, sortSellCount.isSortAsc(), volumelastId);
                 break;
             case R.id.sort_price:
-//                if (currentPosition == 3) {
-//                    priceAsc = !priceAsc;
-//                } else {
-//                    currentPosition = 3;
-//                    if (lastTv != null) {
-//                        lastTv.setCompoundDrawables(null, null, null, null);
-//                    }
-//                    lastTv = tvPrice;
-//                }
-//                if (priceAsc) {
-//                    tvPrice.setCompoundDrawables(null, null, drawableAsc, null);
-//                } else {
-//                    tvPrice.setCompoundDrawables(null, null, drawableDesc, null);
-//                }
                 if (lastImg != null) {
                     lastImg.setVisibility(View.INVISIBLE);
                 }
@@ -532,10 +434,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     void updateBottonItem(CategoryBean categoryBean) {
         mCatetoryTitle.setText(categoryBean.title);
         requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotlastId);
-//        tvHot.setCompoundDrawables(null, null, drawableDesc, null);
-//        if (lastTv != null)
-//            lastTv.setCompoundDrawables(null, null, null, null);
-//        lastTv = tvHot;
         //设置默认--人气
         sortHot.setDefault();
         if (lastImg != null) {
@@ -613,5 +511,10 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(getActivity()).onActivityResult(requestCode, resultCode, data);
+    }
 
 }
