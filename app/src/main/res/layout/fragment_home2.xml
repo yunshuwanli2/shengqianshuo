@@ -77,25 +77,25 @@
                             android:id="@+id/sort_hot"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"></yswl.priv.com.shengqianshopping.view.SelectionSortView>
+                            android:layout_weight="1" />
 
                         <yswl.priv.com.shengqianshopping.view.SelectionSortView
                             android:id="@+id/sort_new"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"></yswl.priv.com.shengqianshopping.view.SelectionSortView>
+                            android:layout_weight="1" />
 
                         <yswl.priv.com.shengqianshopping.view.SelectionSortView
                             android:id="@+id/sort_sell_count"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"></yswl.priv.com.shengqianshopping.view.SelectionSortView>
+                            android:layout_weight="1" />
 
                         <yswl.priv.com.shengqianshopping.view.SelectionSortView
                             android:id="@+id/sort_price"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"></yswl.priv.com.shengqianshopping.view.SelectionSortView>
+                            android:layout_weight="1" />
                         <!--<TextView
                             android:id="@+id/tv_hot"
                             android:layout_width="0dp"

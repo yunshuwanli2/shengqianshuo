@@ -73,6 +73,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     private static final int REQUEST_ID_CATEGROY = 100;
     private static final int REQUEST_ID_BANNER = 101;
+    private static final int REQUEST_ID_PRUDECT_LIST = 200;
 
 
     private BannerUtil banner;
@@ -102,10 +103,9 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     @BindView(R.id.sort_price)
     SelectionSortView sortPrice;
 
-    private final int REFRESH = 1;//刷新标志
-    private final int LOADMORE = 2;//加载更多
+    private static final int REFRESH = 1;//刷新标志
+    private static final int LOADMORE = 2;//加载更多
     private int GETDTATYPE = REFRESH;//当前获取数据方式（1刷新，2加载更多）
-
     private boolean ALLOWLOADMORE = true;//是否允许上拉加载
 
     GridRecyclerFragmentAdapter mAdapter;
@@ -278,7 +278,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             parm.put("sortBy", "desc");
         }
         String url = UrlUtil.getUrl(this, R.string.url_category_list);
-        SqsHttpClientProxy.postAsynSQS(url, 200, parm, this);
+        SqsHttpClientProxy.postAsynSQS(url, REQUEST_ID_PRUDECT_LIST, parm, this);
     }
 
     void initBanner() {
@@ -288,7 +288,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         banner.setConvenientBanner(mConvenientBanner);
         banner.loadPic(mImags);
     }
-
 
 
     @OnClick({R.id.home_app_icon, R.id.home_toolbar_search, R.id.home_menu, R.id.ll_fkq,
@@ -365,15 +364,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     @Override
     public void onSucceed(int requestId, final JSONObject result) {
-        if (GETDTATYPE == REFRESH) {
-            swipeToLoadLayout.setRefreshing(false);
-            //清空数据
-
-        } else {
-            swipeToLoadLayout.setLoadingMore(false);
-        }
         if (ResultUtil.isCodeOK(result)) {
-
             switch (requestId) {
                 case REQUEST_ID_BANNER:
                     mImags = BannerBean.jsonToList(
@@ -390,7 +381,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                         updateBottonItem(mCategory);
                     }
                     break;
-                case 200:
+                case REQUEST_ID_PRUDECT_LIST:
                     if (GETDTATYPE == REFRESH) {
                         swipeToLoadLayout.setRefreshing(false);
                         mProductList.clear();
@@ -415,9 +406,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                                 break;
                         }
                         if (tempList != null && tempList.size() > 0) {
-                            for (int i = 0; i < tempList.size(); i++) {
-                                mProductList.add(tempList.get(i));
-                            }
+                            mProductList.addAll(tempList);
                             mAdapter.setmProductList(mProductList);
                             mAdapter.notifyDataSetChanged();
                         } else {
