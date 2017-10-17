@@ -30,10 +30,10 @@ public class MyWithdrawItemRecyclerViewAdapter extends RecyclerView.Adapter<MyWi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mOrder.setText(mValues.get(position).order);
-        holder.mAmount.setText(mValues.get(position).amount);
-        holder.mStatus.setText(mValues.get(position).status);
-        holder.mDateTime.setText(mValues.get(position).dateTime);
+        holder.mOrder.setText("提现编号&#160;&#160;&#160;&#160;" + mValues.get(position).order);
+        holder.mAmount.setText("提现金额&#160;&#160;&#160;&#160;" + mValues.get(position).amount);
+        holder.mStatus.setText("提现状态&#160;&#160;&#160;&#160;" + mValues.get(position).status);
+        holder.mDateTime.setText("提现时间&#160;&#160;&#160;&#160;" + mValues.get(position).dateTime);
 
 
     }

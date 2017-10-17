@@ -2,53 +2,59 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/corner0_white_bg_storke_black"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_order"
         android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text="Fasdfsdfsdf"
+        android:textAppearance="?attr/textAppearanceListItem" />
 
-        android:layout_height="48dp">
-
-        <TextView
-            android:id="@+id/tv_order"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/text_margin"
-            android:layout_weight="1"
-            android:text="Fasdfsdfsdf"
-            android:textAppearance="?attr/textAppearanceListItem" />
-
-        <TextView
-            android:id="@+id/tv_amount"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/text_margin"
-            android:layout_weight="1"
-            android:text="asdasda"
-            android:textAppearance="?attr/textAppearanceListItem" />
-    </LinearLayout>
-
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="1dp"
+        android:background="@color/background_dark" />
 
-        <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/text_margin"
-            android:layout_weight="1"
-            android:text="Fasdfsdfsdf"
-            android:textAppearance="?attr/textAppearanceListItem" />
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text="asdasda"
+        android:textAppearance="?attr/textAppearanceListItem" />
 
-        <TextView
-            android:id="@+id/tv_dateTime"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/text_margin"
-            android:layout_weight="1"
-            android:text="asdasda"
-            android:textAppearance="?attr/textAppearanceListItem" />
-    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_dark" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text="Fasdfsdfsdf"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_dark" />
+
+    <TextView
+        android:id="@+id/tv_dateTime"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text="asdasda"
+        android:textAppearance="?attr/textAppearanceListItem" />
 
 </LinearLayout>

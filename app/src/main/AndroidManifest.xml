@@ -88,9 +88,15 @@
         <activity
             android:name=".activity.UserInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.Myfans2Activity" />
-        <activity android:name=".activity.BindZFBActivity"></activity>
-        <activity android:name=".activity.ApplyForCashWithdrawalActivity"></activity>
+        <activity
+            android:name=".activity.Myfans2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BindZFBActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ApplyForCashWithdrawalActivity"
+            android:screenOrientation="portrait"></activity>
 
 
         <!--微信-->
@@ -127,27 +133,26 @@
         <activity
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="false"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        <activity
+            android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:windowSoftInputMode="adjustResize">
 
         </activity>
         <activity
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
             android:launchMode="singleTask"
-            android:name="com.sina.weibo.sdk.share.WbShareTransActivity">
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
         </activity>
-
 
 
     </application>
