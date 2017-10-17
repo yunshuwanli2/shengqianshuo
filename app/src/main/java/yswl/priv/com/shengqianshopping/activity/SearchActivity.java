@@ -2,7 +2,6 @@ package yswl.priv.com.shengqianshopping.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,21 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.alibaba.baichuan.android.trade.AlibcTrade;
-import com.alibaba.baichuan.android.trade.callback.AlibcTradeCallback;
-import com.alibaba.baichuan.android.trade.constants.AlibcConstants;
-import com.alibaba.baichuan.android.trade.model.AlibcShowParams;
-import com.alibaba.baichuan.android.trade.model.OpenType;
-import com.alibaba.baichuan.android.trade.model.TradeResult;
-import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
-import com.alibaba.baichuan.android.trade.page.AlibcDetailPage;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
@@ -42,20 +31,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import yswl.com.klibrary.base.MActivity;
-import yswl.com.klibrary.browser.BrowserActivity;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
-import yswl.com.klibrary.http.HttpClientProxy;
-import yswl.com.klibrary.http.okhttp.MDeviceUtil;
-import yswl.com.klibrary.util.L;
-import yswl.com.klibrary.util.MAppInfoUtil;
-import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
-import yswl.priv.com.shengqianshopping.bean.CrazyProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
-import yswl.priv.com.shengqianshopping.bean.TBProductDetail;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
-import yswl.priv.com.shengqianshopping.fragment.adapter.ListRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
@@ -104,7 +84,6 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
 
     GridRecyclerFragmentAdapter mAdapter;
     List<ProductDetail> mProductList = new ArrayList<>();
-    List<TBProductDetail> mTBProductList = new ArrayList<>();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -130,6 +109,8 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
             IS_TB_SEARCH = true;
             mEdit.setText(key);
             requstData(REFRESH);
+        } else {
+            IS_TB_SEARCH = false;
         }
 
         initToolbar();
@@ -213,54 +194,50 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
         if (TextUtils.isEmpty(key)) return;
         String url = "";
         if (IS_TB_SEARCH) {
-            url = UrlUtil.getUrl(this, R.string.url_product_search);
-        } else {
             url = UrlUtil.getUrl(this, R.string.url_tb_search);
+        } else {
+            url = UrlUtil.getUrl(this, R.string.url_product_search);
         }
         Map<String, Object> map = new HashMap<>();
         map.put("search", key);
         map.put("pageSize", 20);
         map.put("pageNo", pageNo);
-        SqsHttpClientProxy.postAsynSQS(url, 1002, map, this);
+        SqsHttpClientProxy.postAsynSQS(url, tag, map, this);
     }
 
     @Override
     public void onSucceed(int requestId, JSONObject result) {
-        swipeToLoadLayout.setRefreshing(false);
+        if (requestId == REFRESH) {
+            swipeToLoadLayout.setRefreshing(false);
+        } else if (requestId == LOADMORE) {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
         pageNo++;
         if (requestId == REFRESH) {
             mProductList.clear();
-            mTBProductList.clear();
         }
         if (ResultUtil.isCodeOK(result)) {
-            if (IS_TB_SEARCH) {
-                List<TBProductDetail> tempList = TBProductDetail.jsonToList(
-                        ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
-                if (tempList != null && tempList.size() > 0) {
-                    mTBProductList.addAll(tempList);
-                    mAdapter.setmProductList(mProductList);
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    ALLOWLOADMORE = false;
-                }
+            List<ProductDetail> tempList = ProductDetail.jsonToList(
+                    ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
+            if (tempList != null && tempList.size() > 0) {
+                mProductList.addAll(tempList);
+                mAdapter.setmProductList(mProductList);
+                mAdapter.notifyDataSetChanged();
             } else {
-                List<ProductDetail> tempList = ProductDetail.jsonToList(
-                        ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
-                if (tempList != null && tempList.size() > 0) {
-                    mProductList.addAll(tempList);
-                    mAdapter.setmProductList(mProductList);
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    ALLOWLOADMORE = false;
-                }
+                ALLOWLOADMORE = false;
             }
 
         }
+
     }
 
     @Override
     public void onFail(int requestId, String errorMsg) {
-        swipeToLoadLayout.setLoadingMore(false);
+        if (requestId == REFRESH) {
+            swipeToLoadLayout.setRefreshing(false);
+        } else if (requestId == LOADMORE) {
+            swipeToLoadLayout.setLoadingMore(false);
+        }
     }
 
 

@@ -43,7 +43,10 @@ public class UserManager {
     }
 
     public static void saveLogin(Context context) {
-        SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, true);
+        saveLogin(context,true);
+    }
+    public static void saveLogin(Context context,boolean boo) {
+        SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, boo);
     }
     //用户是否绑定支付宝
     public static boolean isBindZFB(Context context) {

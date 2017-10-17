@@ -150,7 +150,8 @@ public class SharedPreUtils {
     /**
      * 清空所有数据
      */
-    public void clearAllData() {
+
+    private void clearAllData() {
         Editor editor = sp.edit();
         editor.clear();
         editor.commit();

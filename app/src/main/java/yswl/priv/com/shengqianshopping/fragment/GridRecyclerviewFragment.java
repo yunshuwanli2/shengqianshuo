@@ -57,7 +57,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
     private final int LOADMORE = 2;//加载更多
     private int GETDTATYPE = REFRESH;//当前获取数据方式（1刷新，2加载更多）
     private boolean ALLOWLOADMORE = true;//是否允许上拉加载
-    private String lastId = "0";
+    private int pageNO = 1;
 
     private boolean asc = false;
 
@@ -129,8 +129,8 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
 
     /**
      * 1. pid | 不可 | 选品库ID |
-     * 1. lastId | 可 | | 默认0 | 由于volume有0值，销量默认－1
-     * 1. count | 可 | | 默认20
+     * 1. pageNo | 可 | | 默认0 | 由于volume有0值，销量默认－1
+     * 1. pageSize | 可 | | 默认20
      * 1. sort | 可 | 排序字段 | popularity/人气-默认 , volume/售量 ， new/最新 , price/价格
      * 1. sortBy | 可 | 排序方式 | 正序:asc 倒序:desc-默认
      */
@@ -139,14 +139,10 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         if (mParam1 != null) {
             Map<String, Object> parm = mParam1.map;
             if (GETDTATYPE == REFRESH) {
-                if ("volume".equals(parm.get("sort"))) {
-                    lastId = "-1";
-                } else {
-                    lastId = "0";
-                }
+                pageNO = 1;
             }
-            parm.put("lastId", lastId);
-            parm.put("count", "20");
+            parm.put("pageNo", pageNO);
+            parm.put("pageSize", "20");
             if (asc) {
                 parm.put("sortBy", "asc");
             } else {
@@ -169,7 +165,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         }
         L.e(TAG, "onSucceed result :" + result);
         if (ResultUtil.isCodeOK(result)) {
-            lastId = ResultUtil.analysisData(result).optString("lastId");
+            pageNO++;
             List<ProductDetail> tempList = ProductDetail.jsonToList(
                     ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
             if (tempList != null && tempList.size() > 0) {

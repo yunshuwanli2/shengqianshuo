@@ -57,7 +57,7 @@ public class SettingActivity extends MToolBarActivity {
             @Override
             public void onClick(View v) {
                 //TODO 清除缓存
-                AppCacheCleanManager.cleanApplicationData(SettingActivity.this);
+                AppCacheCleanManager.cleanApplicationData2(SettingActivity.this);
                 cache.setText(0 + "");
             }
         });

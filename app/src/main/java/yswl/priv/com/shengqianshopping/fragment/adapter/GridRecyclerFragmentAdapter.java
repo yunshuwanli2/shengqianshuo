@@ -74,18 +74,21 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
         Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
         holder.produce_buy_count.setText(detail.getVolume());
         holder.product_desc.setText(detail.title);
-        if ("0".equalsIgnoreCase(detail.userType))//0是淘宝 1是天猫
+        if ("0".equals(detail.userType))//0是淘宝 1是天猫
             MTextViewUtil.setCompoundDrawablesLeft(holder.product_desc, R.mipmap.ic_drawleft_tb);
         else
             MTextViewUtil.setCompoundDrawablesLeft(holder.product_desc, R.mipmap.ic_drawleft_tm);
 
-        if ("0".equalsIgnoreCase(detail.couponNum)) {
+        if (null== detail.couponNum ||"0".equalsIgnoreCase(detail.couponNum)) {
             holder.coup_price.setVisibility(View.GONE);
+            holder.product_price.setText(detail.getZkFinalPrice());
+
         } else {
             holder.coup_price.setVisibility(View.VISIBLE);
             holder.coup_price.setText(detail.getCouponNum());
+            holder.product_price.setText(detail.getCouponPrice());
         }
-        holder.product_price.setText(detail.getCouponPrice());
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

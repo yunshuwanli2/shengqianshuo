@@ -102,6 +102,23 @@ public class AppCacheCleanManager {
     }
 
     /**
+     * 清除除本地有用数据外的数据 图片等缓存
+     * @param context
+     * @param filepath
+     */
+    public static void cleanApplicationData2(Context context, String... filepath) {
+        cleanInternalCache(context);
+        cleanExternalCache(context);
+        cleanFiles(context);
+        if (filepath == null) {
+            return;
+        }
+        for (String filePath : filepath) {
+            cleanCustomCache(filePath);
+        }
+    }
+
+    /**
      * * 删除方法 这里只会删除某个文件夹下的文件，如果传入的directory是个文件，将不做处理 * *
      *
      * @param directory

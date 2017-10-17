@@ -1,16 +1,14 @@
 package yswl.priv.com.shengqianshopping.activity;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.ali.auth.third.core.model.User;
 import com.ali.auth.third.ui.context.CallbackContext;
 import com.alibaba.baichuan.android.trade.adapter.login.AlibcLogin;
 import com.alibaba.baichuan.android.trade.callback.AlibcLoginCallback;
@@ -22,7 +20,6 @@ import java.util.Map;
 
 import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
-import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.util.GsonUtil;
 import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.ToastUtil;
@@ -40,7 +37,7 @@ import yswl.priv.com.shengqianshopping.util.UrlUtil;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends MToolBarActivity implements HttpCallback<JSONObject> {
-    public static void startActivity(Activity context) {
+    public static void startActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
     }
