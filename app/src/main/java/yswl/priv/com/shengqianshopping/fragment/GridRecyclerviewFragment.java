@@ -17,6 +17,7 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,10 +68,6 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
 
     public SerializableParamsMap getmParam1() {
         return mParam1;
-    }
-
-    public void setmParam1(SerializableParamsMap mParam1) {
-        this.mParam1 = mParam1;
     }
 
 
@@ -137,7 +134,8 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
     public void requestData() {
 
         if (mParam1 != null) {
-            Map<String, Object> parm = mParam1.map;
+            Map<String, Object> parm = new HashMap<>();
+            parm.putAll(mParam1.map);
             if (GETDTATYPE == REFRESH) {
                 pageNO = 1;
             }
