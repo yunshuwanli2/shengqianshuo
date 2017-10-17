@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -95,6 +96,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
     @Override
     public void onSucceed(int requestId, final JSONObject result) {
         if (requestId == LOGIN_REQUESTID && ResultUtil.isCodeOK(result)) {
+
             String uid = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "uid");
             String token = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "token");
             String phoneStatus = GsonUtil.getJSONObjectKeyVal(GsonUtil.getJSONObjectKeyVal(result.toString(), ResultUtil.MSG), "phoneStatus");
@@ -113,6 +115,9 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
                 BindPhoneActivity.startActivity(this);
                 UserCenterFragment.publishUpdateUserInfoEvent(userInfo);
             }
+            //保存绑定支付宝数据
+            if (userInfo.alipay != null && !TextUtils.isEmpty(userInfo.alipay.account))
+                UserManager.bindZFB(this, true);
 
             MApplication.getApplication().getGolbalHander().post(new Runnable() {
                 @Override

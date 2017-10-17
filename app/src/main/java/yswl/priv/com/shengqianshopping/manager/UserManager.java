@@ -11,6 +11,7 @@ import java.util.Map;
 
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
+import yswl.com.klibrary.http.okhttp.MSPUtils;
 import yswl.com.klibrary.util.GsonUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
@@ -25,12 +26,43 @@ import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 public class UserManager {
 
-    //登录
-    public static void Login() {
 
-
+    public static void saveUserInfo(UserBean user) {
+        MSPUtils.put(SharedPreUtils.CACHE, SharedPreUtils.USERINFO, MSPUtils.ObjToStr(user));
     }
 
+
+    public static UserBean getUserInfo() {
+        String userStr = MSPUtils.getString(SharedPreUtils.CACHE, SharedPreUtils.USERINFO, "");
+        if (TextUtils.isEmpty(userStr)) return null;
+        Object object = MSPUtils.StrToObj(userStr);
+        UserBean userBean = null;
+        if (object instanceof UserBean)
+            userBean = (UserBean) object;
+        return userBean;
+    }
+
+
+    public static boolean isLogin() {
+        return getUserInfo() != null;
+    }
+
+    public static boolean isBandPhone() {
+        UserBean user = getUserInfo();
+        if (user == null) return false;
+        if (TextUtils.isEmpty(user.getPhone())) return false;
+        return true;
+    }
+
+    public static boolean isBandApplay() {
+        if (isBandPhone()) {
+            UserBean user = getUserInfo();
+            if (user.alipay != null && !TextUtils.isEmpty(user.alipay.account)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     //将用户信息保存
     public static void saveInfo(Context context, String jsonInfo) {
@@ -43,17 +75,19 @@ public class UserManager {
     }
 
     public static void saveLogin(Context context) {
-        saveLogin(context,true);
+        saveLogin(context, true);
     }
-    public static void saveLogin(Context context,boolean boo) {
+
+    public static void saveLogin(Context context, boolean boo) {
         SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.ISONLINE, boo);
     }
+
     //用户是否绑定支付宝
     public static boolean isBindZFB(Context context) {
         return SharedPreUtils.getInstance(context).getBooleanValueBySharedPreferences(SharedPreUtils.IS_BIND_ZFB, false);
     }
 
-    public static void bindZFB(Context context,boolean boo) {
+    public static void bindZFB(Context context, boolean boo) {
         SharedPreUtils.getInstance(context).saveValueBySharedPreferences(SharedPreUtils.IS_BIND_ZFB, boo);
     }
 
@@ -114,7 +148,7 @@ public class UserManager {
     }
 
     //调用接口获取用户信息
-    public static void rquestUserInfoDetail(Context context, String uid,String token, HttpCallback<JSONObject> httpCallback, int requestId) {
+    public static void rquestUserInfoDetail(Context context, String uid, String token, HttpCallback<JSONObject> httpCallback, int requestId) {
         String url = UrlUtil.getUrl(context, R.string.url_get_user_info);
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);

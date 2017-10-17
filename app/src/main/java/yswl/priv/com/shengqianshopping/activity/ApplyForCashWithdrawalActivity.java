@@ -28,6 +28,7 @@ import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.UserBean;
+import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
@@ -91,6 +92,7 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
     public void onSucceed(int requestId, JSONObject result) {
         if (requestId == 122 && ResultUtil.isCodeOK(result)) {
             ToastUtil.showToast("申请提现已提交,请耐心等待1-2个工作日");
+            UserCenterFragment.publishUserInfoRequestEvent();
             finish();
         }
     }

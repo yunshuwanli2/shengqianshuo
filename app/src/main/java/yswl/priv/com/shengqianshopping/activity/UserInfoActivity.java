@@ -22,6 +22,7 @@ import yswl.priv.com.shengqianshopping.bean.UserBean;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 
+@Deprecated
 public class UserInfoActivity extends MToolBarActivity implements HttpCallback<JSONObject> {
 
     @BindView(R.id.base_toolbar)
