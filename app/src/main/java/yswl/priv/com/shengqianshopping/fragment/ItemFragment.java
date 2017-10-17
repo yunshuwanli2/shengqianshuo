@@ -99,10 +99,6 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
-//        drawableAsc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_ace);
-//        drawableDesc = ContextCompat.getDrawable(getActivity(), R.mipmap.icon_desc);
-//        drawableAsc.setBounds(0, 0, drawableAsc.getMinimumWidth(), drawableAsc.getMinimumHeight());//对图片进行压缩
-//        drawableDesc.setBounds(0, 0, drawableDesc.getMinimumWidth(), drawableDesc.getMinimumHeight());//对图片进行压缩
         sortHot.setContent("人气");
         sortHot.setPosition(0);
         sortNew.setContent("最新");
@@ -124,8 +120,6 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
         sortPrice.hideImg();
         lastImg = sortHot.getImgStatus();
         currentPosition = 0;
-//        hotProduct.setCompoundDrawables(null, null, drawableDesc, null);
-//        lastTv = hotProduct;
     }
 
     private MFragment[] mFragments;
@@ -140,21 +134,6 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
             case R.id.sort_hot:
                 fragment = mFragments[0];
                 postion = 0;
-//                if (currentPosition == 0) {
-//                    hotAsc = !hotAsc;
-//                    ((GridRecyclerviewFragment) fragment).setAsc(hotAsc);
-//                } else {
-//                    currentPosition = 0;
-//                    if (lastTv != null) {
-//                        lastTv.setCompoundDrawables(null, null, null, null);
-//                    }
-//                    lastTv = hotProduct;
-//                }
-//                if (hotAsc) {
-//                    hotProduct.setCompoundDrawables(null, null, drawableAsc, null);
-//                } else {
-//                    hotProduct.setCompoundDrawables(null, null, drawableDesc, null);
-//                }
                 if (lastImg != null) {
                     lastImg.setVisibility(View.INVISIBLE);
                 }
@@ -167,21 +146,6 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
             case R.id.sort_new:
                 fragment = mFragments[1];
                 postion = 1;
-//                if (currentPosition == 1) {
-//                    newAsc = !newAsc;
-//                    ((GridRecyclerviewFragment) fragment).setAsc(newAsc);
-//                } else {
-//                    currentPosition = 1;
-//                    if (lastTv != null) {
-//                        lastTv.setCompoundDrawables(null, null, null, null);
-//                    }
-//                    lastTv = newProduct;
-//                }
-//                if (newAsc) {
-//                    newProduct.setCompoundDrawables(null, null, drawableAsc, null);
-//                } else {
-//                    newProduct.setCompoundDrawables(null, null, drawableDesc, null);
-//                }
                 if (lastImg != null) {
                     lastImg.setVisibility(View.INVISIBLE);
                 }
@@ -194,21 +158,6 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
             case R.id.sort_sell_count:
                 fragment = mFragments[2];
                 postion = 2;
-//                if (currentPosition == 2) {
-//                    volumeAsc = !volumeAsc;
-//                    ((GridRecyclerviewFragment) fragment).setAsc(volumeAsc);
-//                } else {
-//                    currentPosition = 2;
-//                    if (lastTv != null) {
-//                        lastTv.setCompoundDrawables(null, null, null, null);
-//                    }
-//                    lastTv = sellCountProduct;
-//                }
-//                if (volumeAsc) {
-//                    sellCountProduct.setCompoundDrawables(null, null, drawableAsc, null);
-//                } else {
-//                    sellCountProduct.setCompoundDrawables(null, null, drawableDesc, null);
-//                }
                 if (lastImg != null) {
                     lastImg.setVisibility(View.INVISIBLE);
                 }
@@ -221,21 +170,6 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
             case R.id.sort_price:
                 fragment = mFragments[3];
                 postion = 3;
-//                if (currentPosition == 3) {
-//                    priceAsc = !priceAsc;
-//                    ((GridRecyclerviewFragment) fragment).setAsc(priceAsc);
-//                } else {
-//                    currentPosition = 3;
-//                    if (lastTv != null) {
-//                        lastTv.setCompoundDrawables(null, null, null, null);
-//                    }
-//                    lastTv = priceProduct;
-//                }
-//                if (priceAsc) {
-//                    priceProduct.setCompoundDrawables(null, null, drawableAsc, null);
-//                } else {
-//                    priceProduct.setCompoundDrawables(null, null, drawableDesc, null);
-//                }
                 if (lastImg != null) {
                     lastImg.setVisibility(View.INVISIBLE);
                 }
