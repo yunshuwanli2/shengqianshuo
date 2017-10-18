@@ -79,7 +79,7 @@ public class BalanceOfPaymentDetailActivity extends MToolBarActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             if (position == 0)
-                return "收支明细";
+                return "收入明细";
             return "提现历史";
         }
 

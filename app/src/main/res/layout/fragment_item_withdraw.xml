@@ -11,50 +11,42 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center_vertical"
-        android:paddingLeft="8dp"
-        android:text="Fasdfsdfsdf"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:paddingLeft="8dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/background_dark" />
+        android:background="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/tv_amount"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center_vertical"
-        android:paddingLeft="8dp"
-        android:text="asdasda"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:paddingLeft="8dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/background_dark" />
+        android:background="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center_vertical"
-        android:paddingLeft="8dp"
-        android:text="Fasdfsdfsdf"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:paddingLeft="8dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/background_dark" />
+        android:background="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/tv_dateTime"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center_vertical"
-        android:paddingLeft="8dp"
-        android:text="asdasda"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:paddingLeft="8dp" />
 
 </LinearLayout>

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -17,8 +16,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
-import yswl.com.klibrary.http.HttpClientProxy;
-import yswl.com.klibrary.util.GsonUtil;
 import yswl.com.klibrary.util.ToastUtil;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.activity.adapter.ScoreboardActivityAdapter;
@@ -27,7 +24,6 @@ import yswl.priv.com.shengqianshopping.bean.HeroeListBean;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
-import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
@@ -101,5 +97,6 @@ public class ScoreboardActivity extends MToolBarActivity implements HttpCallback
         super.onDestroy();
         unbinder.unbind();
     }
+
 
 }

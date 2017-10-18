@@ -13,10 +13,11 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
+import yswl.com.klibrary.MApplication;
+
 /**
  * Created by yunshuwanli on 17/10/13.
  */
-
 public class T {
     //这个是获取SHA1的方法
     public static String getCertificateSHA1Fingerprint(Context context) {
@@ -68,6 +69,7 @@ public class T {
         }
         return hexString;
     }
+
     //这里是将获取到得编码进行16进制转换
     private static String byte2HexFormatted(byte[] arr) {
         StringBuilder str = new StringBuilder(arr.length * 2);
@@ -86,4 +88,30 @@ public class T {
     }
 
 
+
+
+    public static String getSign(String packageName) {
+        Signature[] arrayOfSignature = getRawSignature(MApplication.getApplication(), packageName);
+        if ((arrayOfSignature == null) || (arrayOfSignature.length == 0)) {
+            return "";
+        }
+
+        return (MD5Util.MD5(arrayOfSignature[0].toByteArray().toString()));
+    }
+    private static Signature[] getRawSignature(Context paramContext, String paramString) {
+        if ((paramString == null) || (paramString.length() == 0)) {
+            return null;
+        }
+        PackageManager localPackageManager = paramContext.getPackageManager();
+        PackageInfo localPackageInfo;
+        try {
+            localPackageInfo = localPackageManager.getPackageInfo(paramString, PackageManager.GET_SIGNATURES);
+            if (localPackageInfo == null) {
+                return null;
+            }
+        } catch (PackageManager.NameNotFoundException localNameNotFoundException) {
+            return null;
+        }
+        return localPackageInfo.signatures;
+    }
 }

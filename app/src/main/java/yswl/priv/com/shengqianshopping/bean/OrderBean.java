@@ -22,8 +22,20 @@ public class OrderBean {
 
     public String order;
     public String amount;
+
+    public String getStatus() {
+        if (status.equals("0"))
+            return "待处理";
+        if (status.equals("1"))
+            return "处理完成";
+        if (status.equals("2"))
+            return "拒绝";
+        return "待处理";
+    }
+
     public String status;
     public String dateTime;
+
 
     public static List<OrderBean> jsonToList(JSONArray objarray) {
         if (objarray == null) return null;

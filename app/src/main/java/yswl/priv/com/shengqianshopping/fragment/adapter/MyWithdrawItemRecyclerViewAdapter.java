@@ -1,6 +1,7 @@
 package yswl.priv.com.shengqianshopping.fragment.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,11 @@ public class MyWithdrawItemRecyclerViewAdapter extends RecyclerView.Adapter<MyWi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mOrder.setText("提现编号&#160;&#160;&#160;&#160;" + mValues.get(position).order);
-        holder.mAmount.setText("提现金额&#160;&#160;&#160;&#160;" + mValues.get(position).amount);
-        holder.mStatus.setText("提现状态&#160;&#160;&#160;&#160;" + mValues.get(position).status);
-        holder.mDateTime.setText("提现时间&#160;&#160;&#160;&#160;" + mValues.get(position).dateTime);
 
+        holder.mOrder.setText(Html.fromHtml("提现编号 &emsp;&emsp;<font color='#575757'>") + mValues.get(position).order);
+        holder.mAmount.setText(Html.fromHtml("提现金额 &emsp;&emsp;<font color='#575757'>") + mValues.get(position).amount);
+        holder.mStatus.setText(Html.fromHtml("提现状态 &emsp;&emsp;<font color='#575757'>") + mValues.get(position).getStatus());
+        holder.mDateTime.setText(Html.fromHtml("提现时间 &emsp;&emsp;<font color='#575757'>") + mValues.get(position).dateTime);
 
     }
 
