@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.priv.com.shengqianshopping.R;
@@ -54,6 +56,8 @@ import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.SelectionSortView;
+
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
     private static final String FRAGMENT_TAG = "HomeFragment2_ItemFragment";
@@ -162,9 +166,19 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        scollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY || scrollY < oldScrollY) {
+                    mAdapter.setScrolling(false);
+                } else {
+                    mAdapter.setScrolling(true);
+                }
+
+            }
+        });
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);
-//        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(), 10, R.color.white));
         mAdapter = new GridRecyclerFragmentAdapter();
         mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
             @Override
@@ -375,36 +389,45 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                     } else {
                         swipeToLoadLayout.setLoadingMore(false);
                     }
-                    if (ResultUtil.isCodeOK(result)) {
-                        List<ProductDetail> tempList = ProductDetail.jsonToList(
-                                ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
-                        switch (currentPosition) {
-                            case 0:
-                                hotPageNo++;
-                                break;
-                            case 1:
-                                newPageNo++;
-                                break;
-                            case 2:
-                                volumePageNo++;
-                                break;
-                            case 3:
-                                pricePageNo++;
-                                break;
+
+                    getMActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final List<ProductDetail> tempList = ProductDetail.jsonToList(
+                                    ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
+                            if (tempList != null && tempList.size() > 0) {
+                                if (GETDTATYPE == REFRESH) {
+                                    mAdapter.setmProductList(tempList);
+                                } else {
+                                    mAdapter.addDate(tempList);
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            } else {
+                                ALLOWLOADMORE = false;
+                            }
+                            GETDTATYPE = REFRESH;
+                            switch (currentPosition) {
+                                case 0:
+                                    hotPageNo++;
+                                    break;
+                                case 1:
+                                    newPageNo++;
+                                    break;
+                                case 2:
+                                    volumePageNo++;
+                                    break;
+                                case 3:
+                                    pricePageNo++;
+                                    break;
+                            }
+
                         }
-                        if (tempList != null && tempList.size() > 0) {
-                            mProductList.addAll(tempList);
-                            mAdapter.setmProductList(mProductList);
-                            mAdapter.notifyDataSetChanged();
-                        } else {
-                            ALLOWLOADMORE = false;
-                        }
-                        GETDTATYPE = REFRESH;
-                    }
+                    });
+
                     break;
             }
-        }
 
+        }
     }
 
     void updateBottonItem(CategoryBean categoryBean) {

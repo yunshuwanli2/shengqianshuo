@@ -35,7 +35,11 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
     }
 
     List<ProductDetail> mProductList;
+    protected boolean isScrolling = false;
 
+    public void setScrolling(boolean scrolling) {
+        isScrolling = scrolling;
+    }
 
     public List<ProductDetail> getmProductList() {
         return mProductList;
@@ -45,15 +49,21 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
         this.mProductList = mProductList;
     }
 
+    public void addDate(List<ProductDetail> mProductList) {
+        this.mProductList.addAll(mProductList);
+    }
+
     public GridRecyclerFragmentAdapter() {
     }
 
     RecyclerView recyclerView;
+
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         this.recyclerView = recyclerView;
     }
+
     @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
@@ -70,8 +80,9 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
     @Override
     public void onBindViewHolder(GridRecyHolder holder, final int position) {
         ProductDetail detail = mProductList.get(position);
-
-        Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
+        if (!isScrolling) {
+            Glide.with(holder.itemView.getContext()).load(detail.pictUrl).into(holder.preview_img);
+        }
         holder.produce_buy_count.setText(detail.getVolume());
         holder.product_desc.setText(detail.title);
         if ("0".equals(detail.userType))//0是淘宝 1是天猫
@@ -79,7 +90,7 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
         else
             MTextViewUtil.setCompoundDrawablesLeft(holder.product_desc, R.mipmap.ic_drawleft_tm);
 
-        if (null== detail.couponNum ||"0".equalsIgnoreCase(detail.couponNum)) {
+        if (null == detail.couponNum || "0".equalsIgnoreCase(detail.couponNum)) {
             holder.coup_price.setVisibility(View.GONE);
             holder.product_price.setText(detail.getZkFinalPrice());
 
@@ -108,13 +119,13 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
     }
 
 
-    class GridRecyHolder extends RecyclerView.ViewHolder {
-        View itemView;
-        ImageView preview_img;
-        TextView coup_price;
-        TextView product_desc;
-        TextView product_price;
-        TextView produce_buy_count;
+    static class GridRecyHolder extends RecyclerView.ViewHolder {
+        final View itemView;
+        final ImageView preview_img;
+        final TextView coup_price;
+        final TextView product_desc;
+        final TextView product_price;
+        final TextView produce_buy_count;
 
         public GridRecyHolder(View view) {
             super(view);

@@ -2,7 +2,6 @@ package yswl.priv.com.shengqianshopping.bean;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;

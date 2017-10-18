@@ -36,6 +36,8 @@ import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
 
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+
 /**
  *
  */
@@ -106,7 +108,19 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         mRecyclerView = (RecyclerView) view.findViewById(R.id.swipe_target);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         manager.setOrientation(OrientationHelper.VERTICAL);
-//        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(), 10, R.color.white));
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == SCROLL_STATE_IDLE) { // 滚动静止时才加载图片资源，极大提升流畅度
+                    mAdapter.setScrolling(false);
+                    mAdapter.notifyDataSetChanged(); // notify调用后onBindViewHolder会响应调用
+                } else
+                    mAdapter.setScrolling(true);
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+        });
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new GridRecyclerFragmentAdapter();
@@ -211,7 +225,6 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
 
     @Override
     public void onItemClick(RecyclerView parent, View view, int position) {
-
 
     }
 
