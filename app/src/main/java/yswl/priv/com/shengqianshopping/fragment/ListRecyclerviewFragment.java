@@ -170,10 +170,7 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
             List<CrazyProductDetail> tempList = CrazyProductDetail.jsonToList(
                     ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
             if (tempList != null && tempList.size() > 0) {
-                for (int i = 0; i < tempList.size(); i++) {
-                    mProductList.add(tempList.get(i));
-                }
-
+                mProductList.addAll(tempList);
                 mAdapter.setmProductList(mProductList);
                 mAdapter.notifyDataSetChanged();
 
