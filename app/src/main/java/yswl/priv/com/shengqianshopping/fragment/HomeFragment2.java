@@ -3,6 +3,8 @@ package yswl.priv.com.shengqianshopping.fragment;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -72,7 +75,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     List<CategoryBean> mCategorys;
     CategoryBean mCategory;
     List<ProductDetail> mProductList = new ArrayList<>();
-
     @BindView(R.id.swipe_target)
     NestedScrollView scollview;
     @BindView(R.id.convenientBanner)
@@ -85,6 +87,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     RecyclerView mRecyclerView;
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
+
     @BindView(R.id.sort_hot)
     SelectionSortView sortHot;
     @BindView(R.id.sort_new)
@@ -146,51 +149,49 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     @Override
     public void onResume() {
         super.onResume();
-        banner.startTurning();
+        if (banner != null)
+            banner.startTurning();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        banner.stopTurning();
+        if (banner != null)
+            banner.stopTurning();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mConvenientBanner = null;
         banner = null;
+        mPopupWindow = null;
     }
 
     private void initGridView() {
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         manager.setOrientation(OrientationHelper.VERTICAL);
+        manager.setSmoothScrollbarEnabled(true);
+        manager.setAutoMeasureEnabled(true);
         mRecyclerView.setLayoutManager(manager);
-        scollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY || scrollY < oldScrollY) {
-                    mAdapter.setScrolling(false);
-                } else {
-                    mAdapter.setScrolling(true);
-                }
-
-            }
-        });
-        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);
-        mAdapter = new GridRecyclerFragmentAdapter();
-        mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerView parent, View view, int position) {
-                List<ProductDetail> products = getProductList();
-                if (products == null || products.size() == 0) return;
-                ProductDetail detail = products.get(position);
-                AlibcUtil.openBrower(detail, getActivity());
-            }
-        });
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(getAdapter());
+    }
 
+    GridRecyclerFragmentAdapter getAdapter() {
+        if (mAdapter == null) {
+            mAdapter = new GridRecyclerFragmentAdapter();
+            mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(RecyclerView parent, View view, int position) {
+                    List<ProductDetail> products = mAdapter.getmProductList();
+                    if (products == null || products.size() == 0) return;
+                    ProductDetail detail = products.get(position);
+                    AlibcUtil.openBrower(detail, getActivity());
+                }
+            });
+        }
+        return mAdapter;
     }
 
     PopupWindow mPopupWindow;
@@ -249,8 +250,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     private void closePopWindow() {
         if (mPopupWindow != null && mPopupWindow.isShowing()) {
             mPopupWindow.dismiss();
-            mPopupWindow = null;
-
         }
     }
 
@@ -365,6 +364,14 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
     @Override
     public void onSucceed(int requestId, final JSONObject result) {
+        if (requestId == REQUEST_ID_PRUDECT_LIST) {
+            if (GETDTATYPE == REFRESH) {
+                swipeToLoadLayout.setRefreshing(false);
+                mProductList.clear();
+            } else {
+                swipeToLoadLayout.setLoadingMore(false);
+            }
+        }
         if (ResultUtil.isCodeOK(result)) {
             switch (requestId) {
                 case REQUEST_ID_BANNER:
@@ -376,60 +383,57 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
                     mCategorys = CategoryBean.jsonToList(
                             ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
 
-                    //TODO 默认 赋值
                     if (mCategorys != null && mCategorys.size() > 0) {
                         mCategory = mCategorys.get(0);
                         updateBottonItem(mCategory);
                     }
                     break;
                 case REQUEST_ID_PRUDECT_LIST:
-                    if (GETDTATYPE == REFRESH) {
-                        swipeToLoadLayout.setRefreshing(false);
-                        mProductList.clear();
-                    } else {
-                        swipeToLoadLayout.setLoadingMore(false);
-                    }
-
-                    getMActivity().runOnUiThread(new Runnable() {
+                    getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            final List<ProductDetail> tempList = ProductDetail.jsonToList(
+                            List<ProductDetail> tempList = ProductDetail.jsonToList(
                                     ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
                             if (tempList != null && tempList.size() > 0) {
-                                if (GETDTATYPE == REFRESH) {
-                                    mAdapter.setmProductList(tempList);
-                                } else {
-                                    mAdapter.addDate(tempList);
-                                }
-                                mAdapter.notifyDataSetChanged();
+                                mProductList.addAll(tempList);
                             } else {
                                 ALLOWLOADMORE = false;
                             }
-                            GETDTATYPE = REFRESH;
-                            switch (currentPosition) {
-                                case 0:
-                                    hotPageNo++;
-                                    break;
-                                case 1:
-                                    newPageNo++;
-                                    break;
-                                case 2:
-                                    volumePageNo++;
-                                    break;
-                                case 3:
-                                    pricePageNo++;
-                                    break;
-                            }
-
+                            handle.sendEmptyMessage(0);
                         }
                     });
-
+                    GETDTATYPE = REFRESH;
+                    switch (currentPosition) {
+                        case 0:
+                            hotPageNo++;
+                            break;
+                        case 1:
+                            newPageNo++;
+                            break;
+                        case 2:
+                            volumePageNo++;
+                            break;
+                        case 3:
+                            pricePageNo++;
+                            break;
+                    }
+                default:
                     break;
             }
 
         }
     }
-
+    Handler handle = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 0) {
+                getAdapter().setmProductList(mProductList);
+                getAdapter().notifyDataSetChanged();
+//                getAdapter().notifyItemRangeInserted(mProductList.size(),0);
+            }
+        }
+    };
     void updateBottonItem(CategoryBean categoryBean) {
         mCatetoryTitle.setText(categoryBean.title);
         requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotPageNo);
@@ -444,17 +448,16 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         lastImg = sortHot.getImgStatus();
         currentPosition = 0;
     }
-//    private void addProductListModule(CategoryBean category) {
-//        getChildFragmentManager().beginTransaction().replace(R.id.content, ItemFragment.newInstance(category), FRAGMENT_TAG).commit();
-//    }
 
     @Override
     public void onFail(int requestId, String errorMsg) {
         if (requestId == REQUEST_ID_PRUDECT_LIST) {
-            swipeToLoadLayout.setLoadingMore(false);
+            if (GETDTATYPE == REFRESH) {
+                swipeToLoadLayout.setRefreshing(false);
+            } else {
+                swipeToLoadLayout.setLoadingMore(false);
+            }
             GETDTATYPE = REFRESH;
-        } else {
-            swipeToLoadLayout.setRefreshEnabled(false);
         }
 
     }
@@ -489,7 +492,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         //刷新
         GETDTATYPE = REFRESH;
         ALLOWLOADMORE = true;
-
         switch (currentPosition) {
             case 0:
                 hotPageNo = 1;
@@ -510,6 +512,8 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         }
 
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

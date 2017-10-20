@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import yswl.priv.com.shengqianshopping.R;
@@ -34,8 +35,8 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
         this.onItemClickListener = onItemClickListener;
     }
 
-    List<ProductDetail> mProductList;
-    protected boolean isScrolling = false;
+    List<ProductDetail> mProductList = new ArrayList<>();
+    private boolean isScrolling = false;
 
     public void setScrolling(boolean scrolling) {
         isScrolling = scrolling;
@@ -45,13 +46,20 @@ public class GridRecyclerFragmentAdapter extends RecyclerView.Adapter<GridRecycl
         return mProductList;
     }
 
-    public void setmProductList(List<ProductDetail> mProductList) {
-        this.mProductList = mProductList;
+    public void setmProductList(List<ProductDetail> productList) {
+        this.mProductList.clear();
+        this.mProductList.addAll(productList);
+//        notifyItemInserted(getItemCount());
     }
-
-    public void addDate(List<ProductDetail> mProductList) {
-        this.mProductList.addAll(mProductList);
-    }
+//
+//    public void clearDate() {
+//        if (mProductList != null)
+//            this.mProductList.clear();
+//    }
+//
+//    public void addDate(List<ProductDetail> productList) {
+//        this.mProductList.addAll(productList);
+//    }
 
     public GridRecyclerFragmentAdapter() {
     }

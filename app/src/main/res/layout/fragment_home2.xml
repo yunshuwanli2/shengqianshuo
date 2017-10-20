@@ -16,11 +16,10 @@
             android:id="@id/swipe_refresh_header"
             layout="@layout/layout_twitter_header" />
 
-
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/swipe_target"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:fillViewport="true">
 
             <LinearLayout
@@ -97,42 +96,6 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1" />
-                        <!--<TextView
-                            android:id="@+id/tv_hot"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="人气"
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_new"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="最新"
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_sell_count"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="销量"
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_price"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="价格"
-                            />
--->
                     </LinearLayout>
 
                     <android.support.v7.widget.RecyclerView
