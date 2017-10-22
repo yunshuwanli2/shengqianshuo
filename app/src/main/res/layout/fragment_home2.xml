@@ -16,95 +16,23 @@
             android:id="@id/swipe_refresh_header"
             layout="@layout/layout_twitter_header" />
 
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/swipe_target"
+        <!--      <android.support.v4.widget.NestedScrollView
+                  android:id="@+id/swipe_target"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:fillViewport="true">-->
+  <!--      <FrameLayout
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="match_parent">-->
 
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/swipe_target"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent" />
 
-                <com.bigkoo.convenientbanner.ConvenientBanner
-                    android:id="@+id/convenientBanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="140dp" />
-
-                <include layout="@layout/home_middle_menu_layout" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/lighter_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/white">
-
-                    <View
-                        android:layout_width="6dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="10dp"
-                        android:background="@color/colorAccent" />
-
-                    <TextView
-                        android:id="@+id/tv_catetory_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/lighter_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
-
-                        <yswl.priv.com.shengqianshopping.view.SelectionSortView
-                            android:id="@+id/sort_hot"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <yswl.priv.com.shengqianshopping.view.SelectionSortView
-                            android:id="@+id/sort_new"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <yswl.priv.com.shengqianshopping.view.SelectionSortView
-                            android:id="@+id/sort_sell_count"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <yswl.priv.com.shengqianshopping.view.SelectionSortView
-                            android:id="@+id/sort_price"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        <!--</FrameLayout>-->
+        <!--</android.support.v4.widget.NestedScrollView>-->
 
         <include
             android:id="@id/swipe_load_more_footer"

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.bigkoo.convenientbanner.ConvenientBanner
+        android:id="@+id/convenientBanner"
+        android:layout_width="match_parent"
+        android:layout_height="140dp" />
+
+    <include layout="@layout/home_middle_menu_layout" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/lighter_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white">
+
+        <View
+            android:layout_width="6dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:background="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/tv_catetory_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/lighter_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <yswl.priv.com.shengqianshopping.view.SelectionSortView
+            android:id="@+id/sort_hot"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <yswl.priv.com.shengqianshopping.view.SelectionSortView
+            android:id="@+id/sort_new"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <yswl.priv.com.shengqianshopping.view.SelectionSortView
+            android:id="@+id/sort_sell_count"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <yswl.priv.com.shengqianshopping.view.SelectionSortView
+            android:id="@+id/sort_price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

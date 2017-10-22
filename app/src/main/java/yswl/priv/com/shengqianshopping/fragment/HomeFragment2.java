@@ -6,12 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -38,7 +35,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.base.MFragment;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.priv.com.shengqianshopping.R;
@@ -47,22 +43,21 @@ import yswl.priv.com.shengqianshopping.activity.CrazyBuyActivity;
 import yswl.priv.com.shengqianshopping.activity.RecommendActivity;
 import yswl.priv.com.shengqianshopping.activity.SearchActivity;
 import yswl.priv.com.shengqianshopping.activity.Top100Activity;
-import yswl.priv.com.shengqianshopping.bean.BannerBean;
 import yswl.priv.com.shengqianshopping.banner.BannerUtil;
-import yswl.priv.com.shengqianshopping.bean.SortEnum;
+import yswl.priv.com.shengqianshopping.bean.BannerBean;
 import yswl.priv.com.shengqianshopping.bean.CategoryBean;
 import yswl.priv.com.shengqianshopping.bean.ProductDetail;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
+import yswl.priv.com.shengqianshopping.bean.SortEnum;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerAdapter;
 import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdapter;
+import yswl.priv.com.shengqianshopping.fragment.adapter.HomeFragmentAdapter;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.SelectionSortView;
 
-import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
-
-public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
+public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener, View.OnClickListener {
     private static final String FRAGMENT_TAG = "HomeFragment2_ItemFragment";
 
     private static final int REQUEST_ID_CATEGROY = 100;
@@ -75,34 +70,41 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     List<CategoryBean> mCategorys;
     CategoryBean mCategory;
     List<ProductDetail> mProductList = new ArrayList<>();
-    @BindView(R.id.swipe_target)
-    NestedScrollView scollview;
-    @BindView(R.id.convenientBanner)
+    //    @BindView(R.id.swipe_target)
+//    NestedScrollView scollview;
+//    @BindView(R.id.convenientBanner)
     ConvenientBanner mConvenientBanner;
-    @BindView(R.id.home_toolbar)
+    //    @BindView(R.id.home_toolbar)
     LinearLayout mHomeTool;
-    @BindView(R.id.tv_catetory_title)
+    //    @BindView(R.id.tv_catetory_title)
     TextView mCatetoryTitle;
-    @BindView(R.id.recycler_view)
+    //    @BindView(R.id.swipe_target)
     RecyclerView mRecyclerView;
-    @BindView(R.id.swipeToLoadLayout)
+    //    @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
 
-    @BindView(R.id.sort_hot)
+    //    @BindView(R.id.sort_hot)
     SelectionSortView sortHot;
-    @BindView(R.id.sort_new)
+    //    @BindView(R.id.sort_new)
     SelectionSortView sortNew;
-    @BindView(R.id.sort_sell_count)
+    //    @BindView(R.id.sort_sell_count)
     SelectionSortView sortSellCount;
-    @BindView(R.id.sort_price)
+    //    @BindView(R.id.sort_price)
     SelectionSortView sortPrice;
+
+    RelativeLayout home_toolbar_search;
+    ImageView home_menu;
+    LinearLayout ll_fkq;
+    LinearLayout ll_tj;
+    LinearLayout ll_sort;
+    LinearLayout ll_plan;
 
     private static final int REFRESH = 1;//刷新标志
     private static final int LOADMORE = 2;//加载更多
     private int GETDTATYPE = REFRESH;//当前获取数据方式（1刷新，2加载更多）
     private boolean ALLOWLOADMORE = true;//是否允许上拉加载
 
-    GridRecyclerFragmentAdapter mAdapter;
+    HomeFragmentAdapter mAdapter;
     private int currentPosition = 0;
 
     private int hotPageNo = 1;
@@ -111,6 +113,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     private int pricePageNo = 1;
 
     private ImageView lastImg;
+
 
     public HomeFragment2() {
     }
@@ -122,17 +125,22 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home2, container, false);
-        ButterKnife.bind(this, view);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.swipe_target);
+        swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
+        home_toolbar_search = (RelativeLayout) view.findViewById(R.id.home_toolbar_search);
+        home_menu = (ImageView) view.findViewById(R.id.home_menu);
+        mHomeTool = (LinearLayout) view.findViewById(R.id.home_toolbar);
+//        ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        initGridView();
         initBanner();
         requestCategroy();
         requestBanner();
 
-        initGridView();
         //设置监听
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
@@ -144,6 +152,16 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         sortSellCount.setPosition(2);
         sortPrice.setContent("价格");
         sortPrice.setPosition(3);
+        home_toolbar_search.setOnClickListener(this);
+        home_menu.setOnClickListener(this);
+        ll_fkq.setOnClickListener(this);
+        ll_tj.setOnClickListener(this);
+        ll_sort.setOnClickListener(this);
+        ll_plan.setOnClickListener(this);
+        sortHot.setOnClickListener(this);
+        sortNew.setOnClickListener(this);
+        sortSellCount.setOnClickListener(this);
+        sortPrice.setOnClickListener(this);
     }
 
     @Override
@@ -173,14 +191,15 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
         manager.setSmoothScrollbarEnabled(true);
         manager.setAutoMeasureEnabled(true);
         mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.setNestedScrollingEnabled(false);
+//        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(getAdapter());
+        setHeader(mRecyclerView);
     }
 
-    GridRecyclerFragmentAdapter getAdapter() {
+    HomeFragmentAdapter getAdapter() {
         if (mAdapter == null) {
-            mAdapter = new GridRecyclerFragmentAdapter();
+            mAdapter = new HomeFragmentAdapter();
             mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(RecyclerView parent, View view, int position) {
@@ -192,6 +211,22 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             });
         }
         return mAdapter;
+    }
+
+    private void setHeader(RecyclerView view) {
+        View header = LayoutInflater.from(getContext()).inflate(R.layout.home_top_layout, view, false);
+        mConvenientBanner = (ConvenientBanner) header.findViewById(R.id.convenientBanner);
+        mCatetoryTitle = (TextView) header.findViewById(R.id.tv_catetory_title);
+        sortHot = (SelectionSortView) header.findViewById(R.id.sort_hot);
+        sortNew = (SelectionSortView) header.findViewById(R.id.sort_new);
+        sortSellCount = (SelectionSortView) header.findViewById(R.id.sort_sell_count);
+        sortPrice = (SelectionSortView) header.findViewById(R.id.sort_price);
+        ll_fkq = (LinearLayout) header.findViewById(R.id.ll_fkq);
+        ll_tj = (LinearLayout) header.findViewById(R.id.ll_tj);
+        ll_sort = (LinearLayout) header.findViewById(R.id.ll_sort);
+        ll_plan = (LinearLayout) header.findViewById(R.id.ll_plan);
+        mAdapter.setHeaderView(header);
+
     }
 
     PopupWindow mPopupWindow;
@@ -236,13 +271,13 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
-                    scollview.setAlpha(1.0f);
+//                    scollview.setAlpha(1.0f);
                 }
             });
             mPopupWindow.setFocusable(true);
         }
 
-        scollview.setAlpha(0.2f);
+//        scollview.setAlpha(0.2f);
         if (!mPopupWindow.isShowing())
             mPopupWindow.showAsDropDown(view);
     }
@@ -290,9 +325,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     }
 
 
-    @OnClick({R.id.home_app_icon, R.id.home_toolbar_search, R.id.home_menu, R.id.ll_fkq,
-            R.id.ll_tj, R.id.ll_sort, R.id.ll_plan, R.id.sort_hot,
-            R.id.sort_new, R.id.sort_price, R.id.sort_sell_count})
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.home_toolbar_search:
@@ -423,6 +456,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 
         }
     }
+
     Handler handle = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -434,14 +468,15 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             }
         }
     };
+
     void updateBottonItem(CategoryBean categoryBean) {
         mCatetoryTitle.setText(categoryBean.title);
         requsetCategoryList(SortEnum.HOT, sortHot.isSortAsc(), hotPageNo);
         //设置默认--人气
-        sortHot.setDefault();
         if (lastImg != null) {
             lastImg.setVisibility(View.INVISIBLE);
         }
+        sortHot.setDefault();
         sortNew.hideImg();
         sortSellCount.hideImg();
         sortPrice.hideImg();
@@ -514,11 +549,10 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(getActivity()).onActivityResult(requestCode, resultCode, data);
+
     }
 
 }

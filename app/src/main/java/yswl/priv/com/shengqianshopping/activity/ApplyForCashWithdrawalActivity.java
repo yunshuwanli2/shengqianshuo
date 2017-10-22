@@ -32,6 +32,7 @@ import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
+import yswl.priv.com.shengqianshopping.util.VerifyUtils;
 
 /**
  * 提现申请
@@ -110,6 +111,9 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
         } else if (TextUtils.isEmpty(edtPhone.getText().toString())) {
             ToastUtil.showToast("请填手机号");
             return false;
+        } else if (!VerifyUtils.isValidMobileNo(edtPhone.getText().toString())) {
+            ToastUtil.showToast("手机号格式错误");
+            return false;
         } else if (Double.parseDouble(edtApplyForMoney.getText().toString()) < 10) {
             ToastUtil.showToast("输入金额必须大于10");
             return false;
@@ -134,6 +138,4 @@ public class ApplyForCashWithdrawalActivity extends MToolBarActivity implements 
         paramsMap.put("phone", phone);
         SqsHttpClientProxy.postAsynSQS(url, 122, paramsMap, this);
     }
-
-
 }
