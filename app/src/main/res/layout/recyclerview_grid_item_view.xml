@@ -22,20 +22,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/iv_product_preview"
-            android:layout_alignTop="@+id/iv_product_preview"
-            android:layout_marginTop="1dp"
-            android:background="@color/red2"
+            android:layout_alignBottom="@+id/iv_product_preview"
+            android:layout_marginBottom="1dp"
+            android:background="@color/color_FFC125"
             android:padding="3dp"
             android:text="券:¥3"
             android:textColor="@color/white"
             android:textSize="12sp" />
     </RelativeLayout>
-
+    <!-- android:drawableLeft="@mipmap/ic_drawleft_tb"-->
     <TextView
         android:id="@+id/tv_product_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_drawleft_tb"
         android:drawablePadding="4dp"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -50,42 +49,47 @@
         android:padding="2dp">
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/tv_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="券后:"
-            android:textSize="12sp" />
+            android:text="¥ 2000000"
+            android:layout_marginLeft="2dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
 
         <TextView
-            android:id="@+id/tv_product_price"
+            android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/text"
-            android:layout_toRightOf="@+id/text"
-            android:text="¥ 2000000"
-            android:textColor="@color/colorAccent"
+            android:layout_toEndOf="@+id/tv_product_price"
+            android:layout_toRightOf="@+id/tv_product_price"
+            android:text="券后"
+            android:layout_centerVertical="true"
             android:textSize="12sp" />
+
 
         <TextView
             android:id="@+id/tv_number_people"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/text2"
-            android:layout_toStartOf="@+id/text2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:text="2000"
-            android:textColor="@color/colorAccent"
+            android:layout_marginRight="2dp"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="人已买"
-            android:textColor="@color/colorPrimaryDark"
+            android:layout_toLeftOf="@+id/tv_number_people"
+            android:layout_toStartOf="@+id/tv_number_people"
+            android:layout_centerVertical="true"
+            android:text="销量"
             android:textSize="12sp" />
     </RelativeLayout>
 
