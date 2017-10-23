@@ -6,7 +6,7 @@ android {
         Release {
             keyAlias 'yunshuwanli'
             keyPassword '011235'
-            storeFile file('C:/Users/Administrator/Desktop/yunshuwanliMAC/Android_Studio_key/android_studio_strokey.jks')
+            storeFile file('C:/Users/Administrator/Desktop/android_studio_strokey.jks')
             storePassword '011235'
         }
     }
@@ -34,10 +34,11 @@ android {
         }
         debug {
             signingConfig signingConfigs.Release
+
             minifyEnabled false
             pseudoLocalesEnabled false
             buildConfigField("String", "base_url", '\"http://api.saveduoduo.com/v2\"');
-            buildConfigField("boolean", "debug", "true")
+            buildConfigField("boolean", "debug", "false")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.umeng.socialize.UMShareAPI;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -106,6 +108,12 @@ public class InvitationActivity extends MToolBarActivity {
         L.e("SqsHttpClientProxy", "排序：拼接: " + beforeSign.toString());
         String afterSign = MD5Util.MD5(beforeSign.toString());
         return afterSign;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
