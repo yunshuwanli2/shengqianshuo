@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.baichuan.android.trade.model.OpenType;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -58,7 +60,7 @@ public class RebateFragment extends MFragment {
 //            SearchActivity.startActivity(getActivity(), key);
 
             String url = getActivity().getResources().getString(R.string.url_search_tool, key);
-            AlibcUtil.openBrower2(url, getActivity());
+            AlibcUtil.openBrower2(url, OpenType.H5, getActivity());
         }
     }
 

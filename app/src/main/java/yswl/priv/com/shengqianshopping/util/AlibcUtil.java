@@ -70,6 +70,11 @@ public class AlibcUtil {
 
     //打开优惠券/或其他淘宝地址
     public static void openBrower2(String url, final Activity context) {
+        openBrower2(url, null, context);
+    }
+
+    //打开优惠券/或其他淘宝地址
+    public static void openBrower2(String url, OpenType type, final Activity context) {
         if (!UserManager.isLogin(context)) {
             LoginActivity.startActivity(context);
             return;
@@ -81,7 +86,8 @@ public class AlibcUtil {
         exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
 //        AlibcTaokeParams taokeParams = new AlibcTaokeParams("x", "x", "x");
         AlibcPage detailPage = new AlibcPage(url);
-        AlibcShowParams showParams = new AlibcShowParams(OpenType.Native, true);
+        OpenType openType = type == null ? OpenType.Native : type;
+        AlibcShowParams showParams = new AlibcShowParams(openType, true);
         AlibcTrade.show(context, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
             @Override
             public void onTradeSuccess(TradeResult tradeResult) {
@@ -108,7 +114,6 @@ public class AlibcUtil {
         });
     }
 
-    //打开优惠券
     public static void openBrower(ProductDetail detail, Activity context) {
         String jumpUrl = detail.couponClickUrl;
         if (TextUtils.isEmpty(jumpUrl)) {
@@ -258,7 +263,7 @@ public class AlibcUtil {
             @Override
             public void onSuccess() {
                 //清除数据
-                UserManager.saveLogin(activity,false);
+                UserManager.saveLogin(activity, false);
                 MainActivityV3.publishHomeTabEvent();
             }
 

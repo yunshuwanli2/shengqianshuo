@@ -1,11 +1,13 @@
 package yswl.priv.com.shengqianshopping;
 
+import org.json.JSONObject;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.Locale;
 
 
@@ -23,7 +25,7 @@ public class ExampleUnitTest {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         calendar.add(Calendar.DATE, +1);
-        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         Date date1 = calendar.getTime();
@@ -31,4 +33,5 @@ public class ExampleUnitTest {
         String ss = formatter.format(date1);
         if (ss.equals("2017-10-12 18:42")) ;
     }
+
 }
