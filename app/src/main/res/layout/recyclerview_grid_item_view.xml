@@ -57,7 +57,7 @@
             android:text="¥ 2000000"
             android:layout_marginLeft="2dp"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
 
         <TextView

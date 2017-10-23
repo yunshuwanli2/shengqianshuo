@@ -2,7 +2,23 @@ package yswl.priv.com.shengqianshopping.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.http.SslError;
+import android.os.Build;
 import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.View;
+import android.webkit.ConsoleMessage;
+import android.webkit.HttpAuthHandler;
+import android.webkit.JsResult;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.ali.auth.third.login.callback.LogoutCallback;
@@ -67,6 +83,105 @@ public class AlibcUtil {
             }
         });
     }
+    public static void openBrower3(ProductDetail detail, Activity context) {
+        String jumpUrl = detail.couponClickUrl;
+        if (TextUtils.isEmpty(jumpUrl)) {
+            jumpUrl = detail.clickUrl;
+        }
+        if (TextUtils.isEmpty(jumpUrl)) {
+            jumpUrl = detail.itemUrl;
+        }
+        openBrower2(jumpUrl, context);
+    }
+
+    public static void openBrower3(String url, OpenType type, final Activity context) {
+        if (!UserManager.isLogin(context)) {
+            LoginActivity.startActivity(context);
+            return;
+        } else if (!UserManager.isBindPhone(context)) {
+            BindPhoneActivity.startActivity(context);
+            return;
+        }
+        Map<String, String> exParams = new HashMap<>();
+        exParams.put(AlibcConstants.ISV_CODE, "saveduoduo");
+        AlibcPage detailPage = new AlibcPage(url);
+
+        WebView webView = new WebView(context);
+        WebSettings settings = webView.getSettings();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        settings.setDomStorageEnabled(true);
+        settings.setLoadWithOverviewMode(true);
+        // this.getSettings().set
+        // this.setInitialScale(1);
+        webView.setScrollContainer(false);
+        webView.setScrollbarFadingEnabled(false);
+        webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
+        settings.setDefaultTextEncodingName("UTF-8");
+        // settings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+        settings.setBuiltInZoomControls(false); // 设置显示缩放按钮
+        settings.setDisplayZoomControls(false);
+        settings.setSupportZoom(true); // 支持缩放
+        settings.setUseWideViewPort(true);
+        //
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+
+        WebChromeClient webChromeClient = new WebChromeClient() {
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                CharSequence pnotfound = "The page cannot be found";
+                if (title.contains(pnotfound)) {
+                    view.stopLoading();
+                }
+            }
+        };
+
+        WebViewClient webViewClient = new WebViewClient() {
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                // handler.cancel(); // Android默认的处理方式
+                handler.proceed(); // 接受所有网站的证书
+                // handleMessage(Message msg); // 进行其他处理
+                // super.onReceivedSslError(view, handler, error);
+            }
+
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+                return super.shouldInterceptRequest(view, url);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.contains("tbopen")) {
+                    return false;
+                } else {
+                    view.loadUrl(url);
+                }
+
+                return true;
+            }
+        };
+
+
+        OpenType openType = type == null ? OpenType.Native : type;
+        AlibcShowParams showParams = new AlibcShowParams(openType, true);
+        AlibcTrade.show(context, webView, webViewClient, webChromeClient, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
+            @Override
+            public void onTradeSuccess(TradeResult tradeResult) {
+                //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
+            }
+        });
+    }
+
 
     //打开优惠券/或其他淘宝地址
     public static void openBrower2(String url, final Activity context) {
