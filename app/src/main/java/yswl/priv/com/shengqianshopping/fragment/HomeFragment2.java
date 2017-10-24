@@ -254,7 +254,6 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             mMenuRecyView.setHasFixedSize(true);
             mMenuRecyView.setNestedScrollingEnabled(false);
             mMenuRecyView.setLayoutManager(manager);
-            mMenuRecyView.addItemDecoration(new DividerGridItemDecoration(getActivity(),1,0xffeeeeee));
             GridRecyclerAdapter adapter = new GridRecyclerAdapter();
             adapter.setCategoryList(mCategorys);
             adapter.setOnItemClickListener(new GridRecyclerAdapter.OnItemClickListener() {
