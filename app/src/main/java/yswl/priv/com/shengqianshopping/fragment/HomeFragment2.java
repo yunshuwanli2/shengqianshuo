@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -55,6 +56,7 @@ import yswl.priv.com.shengqianshopping.fragment.adapter.HomeFragmentAdapter;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
+import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
 import yswl.priv.com.shengqianshopping.view.SelectionSortView;
 
 public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener, View.OnClickListener {
@@ -252,6 +254,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             mMenuRecyView.setHasFixedSize(true);
             mMenuRecyView.setNestedScrollingEnabled(false);
             mMenuRecyView.setLayoutManager(manager);
+            mMenuRecyView.addItemDecoration(new DividerGridItemDecoration(getActivity(),1,0xffeeeeee));
             GridRecyclerAdapter adapter = new GridRecyclerAdapter();
             adapter.setCategoryList(mCategorys);
             adapter.setOnItemClickListener(new GridRecyclerAdapter.OnItemClickListener() {
