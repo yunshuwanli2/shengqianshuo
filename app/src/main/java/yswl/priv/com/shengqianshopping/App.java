@@ -37,7 +37,7 @@ public class App extends MApplication {
         //微信分享配置appid---appsecret
         PlatformConfig.setWeixin("wx124653c63868deed", "ce81af4b4dc73a075e7d6a57e7528d5c");
         PlatformConfig.setQQZone("1106493318", "gVsrLG21vNHlsCW9");
-        PlatformConfig.setSinaWeibo("3980630687", "40e3a0f7b06464614f6f18b1c64fed8c", "http://saveduoduo.com/");
+        PlatformConfig.setSinaWeibo("3474292982", "5ccac9d2442611945866c7df19afa165", "http://sns.whalecloud.com");
     }
 
     @Override
