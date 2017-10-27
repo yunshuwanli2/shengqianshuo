@@ -6,7 +6,7 @@ android {
         Release {
             keyAlias 'yunshuwanli'
             keyPassword '011235'
-            storeFile file('C:/Users/Administrator/Desktop/android_studio_strokey.jks')
+            storeFile file('/Users/yunshuwanli/Desktop/AndroidStudio_key/shengqianshuo/android_studio_strokey.jks')
             storePassword '011235'
         }
     }
@@ -38,7 +38,7 @@ android {
             minifyEnabled false
             pseudoLocalesEnabled false
             buildConfigField("String", "base_url", '\"http://api.saveduoduo.com/v2\"');
-            buildConfigField("boolean", "debug", "false")
+            buildConfigField("boolean", "debug", "true")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -50,6 +50,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(':klibrary')
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
     //    compile 'compile.com.github.Aspsine:SwipeToLoadLayout:1.0.4'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:25.3.1'

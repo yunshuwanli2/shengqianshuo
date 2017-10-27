@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import yswl.com.klibrary.MApplication;
+import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.util.GsonUtil;
 import yswl.com.klibrary.util.L;
@@ -31,7 +32,6 @@ import yswl.priv.com.shengqianshopping.bean.UserBean;
 import yswl.priv.com.shengqianshopping.fragment.UserCenterFragment;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
-import yswl.priv.com.shengqianshopping.util.SharedPreUtils;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
 /**
@@ -67,7 +67,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
 
             @Override
             public void onSuccess() {
-                L.i(TAG, "获取淘宝用户信息: " + AlibcLogin.getInstance().getSession());
+                L.i(TAG, "获取淘宝用户信息: " + AlibcLogin.getInstance().getSession().toString());
                 String nick = AlibcLogin.getInstance().getSession().nick;
                 String headImg = AlibcLogin.getInstance().getSession().avatarUrl;
                 String url = UrlUtil.getUrl(LoginActivity.this, R.string.url_login);

@@ -56,23 +56,23 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
         mTextView = findView(R.id.timer);
         mTextView.setVisibility(View.GONE);
         request();
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0.2f, 1f);
-        alphaAnimation.setDuration(2000);
-        screenImg.startAnimation(alphaAnimation);
-        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-        });
+//        AlphaAnimation alphaAnimation = new AlphaAnimation(0.2f, 1f);
+//        alphaAnimation.setDuration(2000);
+//        screenImg.startAnimation(alphaAnimation);
+//        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationEnd(Animation arg0) {
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//            }
+//
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//            }
+//
+//        });
 
     }
 
@@ -97,7 +97,8 @@ public class SplashActivity extends MActivity implements HttpCallback<JSONObject
             });
 
             if (!TextUtils.isEmpty(aDbean.imgUrl)) {
-                Glide.with(this).load(aDbean.imgUrl).transition(new DrawableTransitionOptions().crossFade(1000)).apply(new RequestOptions().placeholder(R.mipmap.app_launch_bg)).into(screenImg);
+                Glide.with(this).load(aDbean.imgUrl)
+                        .apply(new RequestOptions().placeholder(R.mipmap.app_launch_bg)).into(screenImg);
             }
 
             if (!TextUtils.isEmpty(aDbean.link)) {

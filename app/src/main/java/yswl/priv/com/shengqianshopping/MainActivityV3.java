@@ -1,15 +1,10 @@
 package yswl.priv.com.shengqianshopping;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PersistableBundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -26,12 +21,9 @@ import java.lang.ref.WeakReference;
 import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.base.MActivity;
 import yswl.com.klibrary.base.MFragment;
-import yswl.com.klibrary.manager.ActivityManager;
 import yswl.priv.com.shengqianshopping.activity.BindPhoneActivity;
 import yswl.priv.com.shengqianshopping.activity.LoginActivity;
-import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.event.ExitEvent;
-import yswl.priv.com.shengqianshopping.event.UserInfoRequestEvent;
 import yswl.priv.com.shengqianshopping.fragment.DataGenerator;
 import yswl.priv.com.shengqianshopping.manager.UserManager;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
@@ -39,15 +31,17 @@ import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 
 public class MainActivityV3 extends MActivity {
 
-    public static void startAct(Context context) {
+    public static void startAct(Activity context) {
         Intent intent = new Intent(context, MainActivityV3.class);
         context.startActivity(intent);
+        context.finish();
     }
 
-    public static void startActJumpAD(Context context, String url) {
+    public static void startActJumpAD(Activity context, String url) {
         Intent intent = new Intent(context, MainActivityV3.class);
         intent.putExtra("url", url);
         context.startActivity(intent);
+        context.finish();
     }
 
     BottomNavigationBar bottomNavigationBar;

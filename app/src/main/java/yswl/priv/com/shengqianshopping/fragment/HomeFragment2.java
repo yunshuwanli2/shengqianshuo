@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -60,7 +61,7 @@ import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
 import yswl.priv.com.shengqianshopping.view.SelectionSortView;
 
 public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener, View.OnClickListener {
-    private static final String FRAGMENT_TAG = "HomeFragment2_ItemFragment";
+    private static final String FRAGMENT_TAG = "HomeFragment2";
 
     private static final int REQUEST_ID_CATEGROY = 100;
     private static final int REQUEST_ID_BANNER = 101;
@@ -270,18 +271,14 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
             mPopupWindow.setContentView(ui);
             mPopupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
             mPopupWindow.setOutsideTouchable(true);
-            mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-//                    scollview.setAlpha(1.0f);
-                }
-            });
             mPopupWindow.setFocusable(true);
+//            mPopupWindow.setAnimationStyle(R.style.home_popwindow_anim_style);
         }
 
-//        scollview.setAlpha(0.2f);
-        if (!mPopupWindow.isShowing())
+
+        if (!mPopupWindow.isShowing()) {
             mPopupWindow.showAsDropDown(view);
+        }
     }
 
     private void closePopWindow() {

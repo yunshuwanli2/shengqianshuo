@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.ConsoleMessage;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.HttpAuthHandler;
 import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
@@ -83,6 +85,7 @@ public class AlibcUtil {
             }
         });
     }
+
     public static void openBrower3(ProductDetail detail, Activity context) {
         String jumpUrl = detail.couponClickUrl;
         if (TextUtils.isEmpty(jumpUrl)) {
@@ -94,7 +97,7 @@ public class AlibcUtil {
         openBrower2(jumpUrl, context);
     }
 
-    public static void openBrower3(String url, OpenType type, final Activity context) {
+    public static void openBrower3(String url, final Activity context) {
         if (!UserManager.isLogin(context)) {
             LoginActivity.startActivity(context);
             return;
@@ -108,22 +111,15 @@ public class AlibcUtil {
 
         WebView webView = new WebView(context);
         WebSettings settings = webView.getSettings();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
         settings.setDomStorageEnabled(true);
         settings.setLoadWithOverviewMode(true);
-        // this.getSettings().set
-        // this.setInitialScale(1);
         webView.setScrollContainer(false);
         webView.setScrollbarFadingEnabled(false);
-        webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
         settings.setDefaultTextEncodingName("UTF-8");
-        // settings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
         settings.setBuiltInZoomControls(false); // 设置显示缩放按钮
         settings.setDisplayZoomControls(false);
-        settings.setSupportZoom(true); // 支持缩放
         settings.setUseWideViewPort(true);
+//        settings.setJavaScriptEnabled(true);
         //
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -137,9 +133,21 @@ public class AlibcUtil {
                     view.stopLoading();
                 }
             }
+
+
         };
 
         WebViewClient webViewClient = new WebViewClient() {
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -156,19 +164,27 @@ public class AlibcUtil {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //获取cookies
                 if (url.contains("tbopen")) {
                     return false;
                 } else {
                     view.loadUrl(url);
                 }
-
                 return true;
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                return super.shouldInterceptRequest(view, request);
             }
         };
 
-
-        OpenType openType = type == null ? OpenType.Native : type;
-        AlibcShowParams showParams = new AlibcShowParams(openType, true);
+        AlibcShowParams showParams = new AlibcShowParams(OpenType.Native, false);
         AlibcTrade.show(context, webView, webViewClient, webChromeClient, detailPage, showParams, null, exParams, new AlibcTradeCallback() {
             @Override
             public void onTradeSuccess(TradeResult tradeResult) {
@@ -182,6 +198,18 @@ public class AlibcUtil {
         });
     }
 
+    /**
+     * 同步一下cookie
+     */
+    public void synCookies(Context context, String url) {
+
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+//        cookieManager.removeSessionCookie();//移除
+        cookieManager.setCookie(url, AlibcLogin.getInstance().getSession().toString());
+        CookieSyncManager.getInstance().sync();
+    }
 
     //打开优惠券/或其他淘宝地址
     public static void openBrower2(String url, final Activity context) {
