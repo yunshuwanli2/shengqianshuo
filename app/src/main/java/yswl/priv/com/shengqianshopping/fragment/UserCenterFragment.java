@@ -107,7 +107,6 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
         if (!isLogin()) {
             LoginActivity.startActivity(getActivity());
         } else if (!isAuth()) {
@@ -159,12 +158,6 @@ public class UserCenterFragment extends MFragment implements HttpCallback<JSONOb
 
     @Override
     public void onFail(int requestId, String errorMsg) {
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
 
     }
 

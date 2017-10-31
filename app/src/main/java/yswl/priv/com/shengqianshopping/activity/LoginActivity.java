@@ -40,6 +40,7 @@ import yswl.priv.com.shengqianshopping.util.UrlUtil;
 public class LoginActivity extends MToolBarActivity implements HttpCallback<JSONObject> {
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

@@ -47,6 +47,7 @@ public class MainActivityV3 extends MActivity {
     BottomNavigationBar bottomNavigationBar;
     int lastSelectedPosition = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,11 +95,6 @@ public class MainActivityV3 extends MActivity {
     }
 
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-    }
-
     private MFragment[] mFragments;
     private int index = 0;
 
@@ -143,10 +139,7 @@ public class MainActivityV3 extends MActivity {
         ft.show(fragment); // 显示目标tab
         ft.commitAllowingStateLoss();
         index = postion;
-
-
     }
-
 
     @Override
     public void onStart() {

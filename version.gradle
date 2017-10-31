@@ -1,8 +1,8 @@
 ext{
-    MCompileSdkVersion =25;
-    MBuildToolsVersion="25.0.3";
-    MminSdkVersion=15;
-    MtargetSdkVersion=25;
-    MVersionCode=3;
-    MVersionName="2.0.0";
+    MCompileSdkVersion =26
+    MBuildToolsVersion="26.0.2"
+    MminSdkVersion=15
+    MtargetSdkVersion=26
+    MVersionCode=3
+    MVersionName="2.0.0"
 }
