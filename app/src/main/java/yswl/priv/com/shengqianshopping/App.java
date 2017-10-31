@@ -1,13 +1,5 @@
 package yswl.priv.com.shengqianshopping;
 
-import android.Manifest;
-import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.widget.Toast;
-
-import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
-import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
-import com.squareup.leakcanary.LeakCanary;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -34,9 +26,9 @@ public class App extends MApplication {
         AlibcUtil.initAlibc(this);
         CustomActivityOnCrash.install(this);
         Config.DEBUG = getDebugSetting();
-        if (getDebugSetting()) {
-            LeakCanary.install(this);
-        }
+//        if (getDebugSetting()) {
+//            LeakCanary.install(this);
+//        }
         UMShareAPI.get(this);
         initShare();
 
