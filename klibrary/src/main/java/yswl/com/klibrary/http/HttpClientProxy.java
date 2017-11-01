@@ -109,15 +109,7 @@ public class HttpClientProxy implements IRequestMethod {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Log.e(TAG, "url:" + finalUrl + "\n msg:" + e.getMessage());
-                    if (httpCallback != null) {
-                        MApplication.getApplication().getGolbalHander().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                httpCallback.onFail(requestId, "访问失败");
-                            }
-                        });
-
-                    }
+                    callbackFial(requestId,httpCallback);
                 }
 
                 @Override
@@ -161,9 +153,7 @@ public class HttpClientProxy implements IRequestMethod {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Log.e(TAG, "url:" + finalUrl + "\n msg:" + e.getMessage());
-                    if (httpCallback != null) {
-                        httpCallback.onFail(requestId, "访问失败");
-                    }
+                    callbackFial(requestId,httpCallback);
                 }
 
                 @Override
@@ -203,9 +193,7 @@ public class HttpClientProxy implements IRequestMethod {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Log.e(TAG, "url:" + finalUrl + "\n msg:" + e.getMessage());
-                    if (httpCallback != null) {
-                        httpCallback.onFail(requestId, "访问失败");
-                    }
+                    callbackFial(requestId,httpCallback);
                 }
 
                 @Override
@@ -249,9 +237,7 @@ public class HttpClientProxy implements IRequestMethod {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "url:" + finalUrl + "\n msg:" + e.getMessage());
-                if (httpCallback != null) {
-                    httpCallback.onFail(requestId, "访问失败");
-                }
+                callbackFial(requestId,httpCallback);
             }
 
             @Override
@@ -289,7 +275,9 @@ public class HttpClientProxy implements IRequestMethod {
      * @param requestId    下载保存文件夹
      * @param fileRootPath 下载保存文件夹
      * @param fileName     下载文件名
+     *                      回调需要加handle
      */
+    @Deprecated
     public void download(final String url, final int requestId, final String fileRootPath, final String fileName, final DownloadCallBack downloadCallBack) {
 
         Request request = new Request.Builder().url(url).tag(url).build();
@@ -422,6 +410,17 @@ public class HttpClientProxy implements IRequestMethod {
 
     }
 
+    private void callbackFial(final int requestId,final HttpCallback httpCallback){
+        MApplication.getApplication().getGolbalHander().post(new Runnable() {
+            @Override
+            public void run() {
+                if (httpCallback != null) {
+                    ToastUtil.showToast("访问失败,请检查网络设置！");
+                    httpCallback.onFail(requestId, "访问失败,请检查网络设置！");
+                }
+            }
+        });
+    }
 
     private void callback(int requestId, int code, JSONObject object, String msg, HttpCallback<JSONObject> callback) {
         if (null == callback) return;

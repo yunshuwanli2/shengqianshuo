@@ -162,13 +162,12 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
             holder.product_price.setText(detail.getCouponPrice());
         }
 
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null && v != null && recyclerView != null) {
                     int position = recyclerView.getChildAdapterPosition(v);
-                    onItemClickListener.onItemClick(recyclerView, v, position);
+                    onItemClickListener.onItemClick(recyclerView, v, position-1);
                 }
             }
         });

@@ -75,7 +75,7 @@ public class AlibcUtil {
             @Override
             public void onSuccess() {
                 //初始化成功，设置相关的全局配置参数
-//                AlibcTradeSDK.setForceH5(true);
+                AlibcTradeSDK.setForceH5(true);
             }
 
             @Override
