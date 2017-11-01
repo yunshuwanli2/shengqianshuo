@@ -4,5 +4,5 @@ ext{
     MminSdkVersion=15
     MtargetSdkVersion=26
     MVersionCode=4
-    MVersionName="2.1.0"
+    MVersionName="2.1.1"
 }
