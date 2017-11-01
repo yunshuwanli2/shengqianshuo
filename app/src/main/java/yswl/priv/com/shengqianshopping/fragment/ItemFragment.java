@@ -28,38 +28,20 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
 
-//    private boolean hotAsc = false;//升序:asc 降序:desc-默认--人气
-//    private boolean newAsc = false;//升序:asc 降序:desc-默认--最新
-//    private boolean volumeAsc = false;//升序:asc 降序:desc-默认--销量
-//    private boolean priceAsc = false;//升序:asc 降序:desc-默认--价格
-
-    private Drawable drawableAsc;
-    private Drawable drawableDesc;
     private int currentPosition = 0;
-    private TextView lastTv;
 
 
     public CategoryBean getmCategory() {
         return mCategory;
     }
 
-    public void setmCategory(CategoryBean mCategory) {
-        this.mCategory = mCategory;
-    }
 
     private CategoryBean mCategory;
 
-
     public ItemFragment() {
-
     }
 
-    @SuppressLint("ValidFragment")
-    public ItemFragment(CategoryBean param1) {
-        this.mCategory = param1;
-    }
-
-    public static ItemFragment newInstance2(CategoryBean param1) {
+    public static ItemFragment newInstance(CategoryBean param1) {
         ItemFragment fragment = new ItemFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
@@ -67,17 +49,32 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
         return fragment;
     }
 
-    public static ItemFragment newInstance(CategoryBean param1) {
-        ItemFragment fragment = new ItemFragment(param1);
-        return fragment;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (savedInstanceState != null) {
+            mCategory = (CategoryBean) savedInstanceState.getSerializable(ARG_PARAM1);
+        }
+        if (mCategory == null && getArguments() != null) {
             mCategory = (CategoryBean) getArguments().getSerializable(ARG_PARAM1);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (outState != null) {
+            outState.putSerializable(ARG_PARAM1, mCategory);
+        }
+
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null)
+            mCategory = (CategoryBean) savedInstanceState.getSerializable(ARG_PARAM1);
     }
 
     @Nullable
@@ -195,8 +192,5 @@ public class ItemFragment extends MFragment implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-    }
+
 }

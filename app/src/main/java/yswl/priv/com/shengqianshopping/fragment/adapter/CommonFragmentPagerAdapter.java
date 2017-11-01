@@ -26,7 +26,7 @@ public class CommonFragmentPagerAdapter extends FragmentPagerAdapter {
 
     public void setFragmentList(List<CategoryBean> categorys) {
         for (CategoryBean catb : categorys) {
-            this.fragmentList.add(new ItemFragment(catb));
+            this.fragmentList.add(ItemFragment.newInstance(catb));
         }
     }
 
