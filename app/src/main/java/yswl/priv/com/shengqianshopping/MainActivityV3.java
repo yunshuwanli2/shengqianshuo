@@ -91,7 +91,7 @@ public class MainActivityV3 extends MActivity {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.content, mFragments[0], mFragments[0].getClass().getSimpleName());
-        ft.commit();
+        ft.commitAllowingStateLoss();
     }
 
 

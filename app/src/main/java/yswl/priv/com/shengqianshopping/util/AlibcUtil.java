@@ -86,16 +86,7 @@ public class AlibcUtil {
         });
     }
 
-    public static void openBrower3(ProductDetail detail, Activity context) {
-        String jumpUrl = detail.couponClickUrl;
-        if (TextUtils.isEmpty(jumpUrl)) {
-            jumpUrl = detail.clickUrl;
-        }
-        if (TextUtils.isEmpty(jumpUrl)) {
-            jumpUrl = detail.itemUrl;
-        }
-        openBrower2(jumpUrl, context);
-    }
+/*
 
     public static void openBrower3(String url, final Activity context) {
         if (!UserManager.isLogin(context)) {
@@ -197,6 +188,7 @@ public class AlibcUtil {
             }
         });
     }
+*/
 
     /**
      * 同步一下cookie

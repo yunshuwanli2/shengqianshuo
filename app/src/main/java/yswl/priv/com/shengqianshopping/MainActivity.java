@@ -56,7 +56,7 @@ public class MainActivity extends MActivity {
         // 默认显示第一页
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.content, mFragments[0], mFragments[0].getClass().getSimpleName());
-        ft.commit();
+        ft.commitAllowingStateLoss();
     }
 
     private MFragment[] mFragments;

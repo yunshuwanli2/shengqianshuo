@@ -22,7 +22,7 @@ public class Top100Activity extends MToolBarActivity {
         setTitle("实时疯抢榜TOP100");
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content, Top100GridRecyclerFragment.newInstance()).commit();
+                .replace(R.id.content, Top100GridRecyclerFragment.newInstance()).commitAllowingStateLoss();
 
     }
 }

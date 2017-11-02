@@ -71,7 +71,7 @@ public class RecommendActivity extends MToolBarActivity implements HttpCallback<
             mParam.put("pid", category.pid);
             MFragment fragment = GridRecyclerviewFragment.newInstance(new SerializableParamsMap(mParam));
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content, fragment).commit();
+                    .replace(R.id.content, fragment).commitAllowingStateLoss();
         }
     }
 

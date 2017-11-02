@@ -14,10 +14,14 @@
     <color name="white">#ffffff</color>
     <color name="dark_alpha">#16262626</color>
     <color name="yellow">#f5f7e80f</color>
+    <color name="yellow2">#FF8504</color>
+
     <color name="rebate_bg">#ff6633</color>
     <color name="color_A0522D">#A0522D</color>
     <color name="color_FFC125">#FFC125</color>
     <color name="color_FF7F90">#FF7F90</color>
     <color name="color_EEEEEE">#ffeeeeee</color>
+
+
 
 </resources>

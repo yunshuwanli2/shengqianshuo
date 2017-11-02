@@ -22,9 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/iv_product_preview"
-            android:layout_alignBottom="@+id/iv_product_preview"
-            android:layout_marginBottom="1dp"
-            android:background="@color/color_FFC125"
+            android:layout_alignTop="@+id/iv_product_preview"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/coupon_shade_bg"
             android:padding="3dp"
             android:text="券:¥3"
             android:textColor="@color/white"
@@ -54,8 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="¥ 2000000"
             android:layout_marginLeft="2dp"
+            android:text="¥ 2000000"
             android:textColor="@color/colorAccent"
             android:textSize="16sp" />
 
@@ -64,10 +64,10 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/tv_product_price"
             android:layout_toRightOf="@+id/tv_product_price"
             android:text="券后"
-            android:layout_centerVertical="true"
             android:textSize="12sp" />
 
 
@@ -78,17 +78,17 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="2000"
             android:layout_marginRight="2dp"
+            android:text="2000"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/tv_number_people"
             android:layout_toStartOf="@+id/tv_number_people"
-            android:layout_centerVertical="true"
             android:text="销量"
             android:textSize="12sp" />
     </RelativeLayout>
