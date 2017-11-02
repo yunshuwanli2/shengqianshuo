@@ -19,6 +19,7 @@ android {
         targetSdkVersion MtargetSdkVersion
         versionCode MVersionCode
         versionName MVersionName
+        flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -30,7 +31,8 @@ android {
         release {
             signingConfig signingConfigs.Release
             minifyEnabled true
-            pseudoLocalesEnabled false // 如果没有提供混淆规则文件，则设置默认的混淆规则文件（SDK/tools/proguard/proguard-android.txt）
+            pseudoLocalesEnabled false
+            // 如果没有提供混淆规则文件，则设置默认的混淆规则文件（SDK/tools/proguard/proguard-android.txt）
             shrinkResources true  // 移除无用的resource文件
             zipAlignEnabled true // //Zipalign优化
             buildConfigField("String", "base_url", '\"http://api.saveduoduo.com/v2\"')
@@ -39,12 +41,47 @@ android {
         }
         debug {
             signingConfig signingConfigs.Release
-
             minifyEnabled false
             pseudoLocalesEnabled false
-            buildConfigField("String", "base_url", '\"http://api.saveduoduo.com/v2\"');
+            buildConfigField("String", "base_url", '\"http://api.saveduoduo.com/v2\"')
             buildConfigField("boolean", "debug", "true")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        product_xiaomi {
+            buildConfigField("String", "aFrom", '\"xiaomi\"')
+        }
+        product_OPPO {
+            buildConfigField("String", "aFrom", '\"OPPO\"')
+        }
+        product_Sanxing {
+            buildConfigField("String", "aFrom", '\"Sanxing\"')
+        }
+        product_Huawei {
+            buildConfigField("String", "aFrom", '\"Huawei\"')
+        }
+        product_Yingyongbao {
+            buildConfigField("String", "aFrom", '\"Yingyongbao\"')
+        }
+        product_Meizu {
+            buildConfigField("String", "aFrom", '\"Meizu\"')
+        }
+        product_Lianxiang {
+            buildConfigField("String", "aFrom", '\"Lianxiang\"')
+        }
+        product_Jinli {
+            buildConfigField("String", "aFrom", '\"Jinli\"')
+        }
+        product_htc {
+            buildConfigField("String", "aFrom",'\"htc\"')
+        }
+        product_360 {
+            buildConfigField("String", "aFrom", '\"360\"')
+        }
+        product_baidu {
+            buildConfigField("String", "aFrom",'\"baidu\"')
         }
     }
 

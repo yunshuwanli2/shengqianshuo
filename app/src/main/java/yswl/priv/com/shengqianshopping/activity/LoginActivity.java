@@ -25,6 +25,7 @@ import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.util.GsonUtil;
 import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.ToastUtil;
+import yswl.priv.com.shengqianshopping.BuildConfig;
 import yswl.priv.com.shengqianshopping.R;
 import yswl.priv.com.shengqianshopping.base.MToolBarActivity;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
@@ -77,7 +78,7 @@ public class LoginActivity extends MToolBarActivity implements HttpCallback<JSON
                 map.put("channelUid", AlibcLogin.getInstance().getSession().userid);
                 map.put("channelNickname", nick);
                 map.put("channelAvatar", headImg);
-                map.put("aFrom", "baidu");
+                map.put("aFrom", BuildConfig.aFrom);
                 SqsHttpClientProxy.postAsynSQS(url, LOGIN_REQUESTID, map, LoginActivity.this);
             }
 
