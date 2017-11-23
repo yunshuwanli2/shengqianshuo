@@ -19,6 +19,7 @@ import yswl.priv.com.shengqianshopping.bean.CategoryBean;
 import yswl.priv.com.shengqianshopping.bean.ResultUtil;
 import yswl.priv.com.shengqianshopping.bean.SerializableParamsMap;
 import yswl.priv.com.shengqianshopping.fragment.GridRecyclerviewFragment;
+import yswl.priv.com.shengqianshopping.fragment.ItemFragment;
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 
@@ -67,11 +68,14 @@ public class RecommendActivity extends MToolBarActivity implements HttpCallback<
                     jsonToList(ResultUtil.analysisData(result).optJSONArray(ResultUtil.LIST));
             if (caregorys == null || caregorys.size() == 0) return;
             CategoryBean category = caregorys.get(0);
-            Map<String, Object> mParam = new HashMap<>();
-            mParam.put("pid", category.pid);
-            MFragment fragment = GridRecyclerviewFragment.newInstance(new SerializableParamsMap(mParam));
+
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content, fragment).commitAllowingStateLoss();
+                    .replace(R.id.content, ItemFragment.newInstance(category)).commitAllowingStateLoss();
+//            Map<String, Object> mParam = new HashMap<>();
+//            mParam.put("pid", category.pid);
+//            MFragment fragment = GridRecyclerviewFragment.newInstance(new SerializableParamsMap(mParam));
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.content, fragment).commitAllowingStateLoss();
         }
     }
 
