@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -82,6 +84,12 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
     @BindView(R.id.toolbar_search)
     ImageView mSearch;
 
+    @BindView(R.id.ll_advance)
+    LinearLayout mAdvance;
+
+    @BindView(R.id.tv_search_advance)
+    TextView mAdvanceTops;
+
     GridRecyclerFragmentAdapter mAdapter;
     List<ProductDetail> mProductList = new ArrayList<>();
 
@@ -112,9 +120,7 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
         } else {
             IS_TB_SEARCH = false;
         }
-
         initToolbar();
-        initRefesh();
         initUI();
     }
 
@@ -151,12 +157,12 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
     }
 
     void initUI() {
+        initRefesh();
         mClear.setVisibility(View.GONE);
         mEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s)) {
@@ -165,7 +171,6 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
                     mClear.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -192,7 +197,7 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
         }
         String key = mEdit.getText().toString().trim();
         if (TextUtils.isEmpty(key)) return;
-        String url = "";
+        String url ;
         if (IS_TB_SEARCH) {
             url = UrlUtil.getUrl(this, R.string.url_tb_search);
         } else {
@@ -223,8 +228,15 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
                 mProductList.addAll(tempList);
                 mAdapter.setmProductList(mProductList);
                 mAdapter.notifyDataSetChanged();
+
+                swipeToLoadLayout.setVisibility(View.VISIBLE);
+                mAdvance.setVisibility(View.GONE);
             } else {
                 ALLOWLOADMORE = false;
+                //返回数据为空
+                swipeToLoadLayout.setVisibility(View.GONE);
+                mAdvance.setVisibility(View.VISIBLE);
+                mAdvanceTops.setText("使用\"返利工具\"搜索"+mEdit.getText());
             }
 
         }

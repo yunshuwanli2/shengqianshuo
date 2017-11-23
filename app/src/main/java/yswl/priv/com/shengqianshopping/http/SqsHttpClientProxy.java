@@ -8,12 +8,15 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import yswl.com.klibrary.MApplication;
 import yswl.com.klibrary.http.CallBack.HttpCallback;
 import yswl.com.klibrary.http.HttpClientProxy;
 import yswl.com.klibrary.http.okhttp.MDeviceUtil;
 import yswl.com.klibrary.util.L;
 import yswl.com.klibrary.util.MAppInfoUtil;
 import yswl.com.klibrary.util.MD5Util;
+import yswl.com.klibrary.util.MNetStatusUtils;
+import yswl.com.klibrary.util.ToastUtil;
 import yswl.com.klibrary.util.UrlParamsConfig;
 
 /**
@@ -23,8 +26,16 @@ import yswl.com.klibrary.util.UrlParamsConfig;
 
 public class SqsHttpClientProxy {
     public static final String SQS_SECRET = "18555a3d6070754e4ca3bd4603432668";//省钱说密钥
-
+    public static boolean networkOff() {
+        boolean isOff = !MNetStatusUtils.isNetworkAvailable(MApplication.getApplication());
+        if (isOff) {
+            ToastUtil.showToast("当前网络不可用，请检查网络设置");
+        }
+        return isOff;
+    }
     public static void postAsynSQS(String url, final int requestId, Map<String, Object> paramsMap, final HttpCallback<JSONObject> httpCallback) {
+        if (networkOff()) return;
+
         if (paramsMap == null) {
             paramsMap = new HashMap<>();
         }
