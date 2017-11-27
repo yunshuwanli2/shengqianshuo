@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.baichuan.android.trade.model.OpenType;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
@@ -176,6 +177,13 @@ public class SearchActivity extends MActivity implements HttpCallback<JSONObject
             }
         });
 
+        mAdvanceTops.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = SearchActivity.this.getResources().getString(R.string.url_search_tool, mEdit.getText());
+                AlibcUtil.openBrower2(url, OpenType.H5, SearchActivity.this);
+            }
+        });
 
     }
 
