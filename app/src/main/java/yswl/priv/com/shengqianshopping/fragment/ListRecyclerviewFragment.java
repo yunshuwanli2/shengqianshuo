@@ -39,6 +39,7 @@ import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdap
 import yswl.priv.com.shengqianshopping.fragment.adapter.ListRecyclerFragmentAdapter;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
+import yswl.priv.com.shengqianshopping.view.TopButton;
 
 /**
  * TOP100
@@ -60,6 +61,8 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
 
     @BindView(R.id.swipe_target)
     RecyclerView mRecyclerView;
+    @BindView(R.id.top_button)
+    TopButton topButton;
     ListRecyclerFragmentAdapter mAdapter;
 
     public TimeBean getmParam1() {
@@ -123,6 +126,7 @@ public class ListRecyclerviewFragment extends MFragment implements HttpCallback<
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+        topButton.ToTop(mRecyclerView);
         requestData();
     }
 

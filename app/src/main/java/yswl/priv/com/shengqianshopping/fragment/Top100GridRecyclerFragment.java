@@ -29,12 +29,14 @@ import yswl.priv.com.shengqianshopping.fragment.adapter.Top100GridRecyclerFragme
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
+import yswl.priv.com.shengqianshopping.view.TopButton;
 
 /**
  * TOP100 没有上下拉
  */
 public class Top100GridRecyclerFragment extends MFragment implements HttpCallback<JSONObject> {
     RecyclerView mRecyclerView;
+    TopButton topButton;
     Top100GridRecyclerFragmentAdapter mAdapter;
 
     private static final int REQUEST_ID = 1003;
@@ -82,6 +84,7 @@ public class Top100GridRecyclerFragment extends MFragment implements HttpCallbac
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.swipe_target);
+        topButton = view.findViewById(R.id.top_button);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
@@ -97,6 +100,7 @@ public class Top100GridRecyclerFragment extends MFragment implements HttpCallbac
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+        topButton.ToTop(mRecyclerView);
         requestData();
     }
 

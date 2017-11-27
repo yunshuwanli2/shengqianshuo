@@ -59,6 +59,7 @@ import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
 import yswl.priv.com.shengqianshopping.view.SelectionSortView;
+import yswl.priv.com.shengqianshopping.view.TopButton;
 
 public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener, View.OnClickListener {
     private static final String FRAGMENT_TAG = "HomeFragment2";
@@ -101,6 +102,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     LinearLayout ll_tj;
     LinearLayout ll_sort;
     LinearLayout ll_plan;
+    TopButton topButton;
 
     private static final int REFRESH = 1;//刷新标志
     private static final int LOADMORE = 2;//加载更多
@@ -129,6 +131,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home2, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.swipe_target);
+        topButton = view.findViewById(R.id.top_button);
         swipeToLoadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
         home_toolbar_search = (RelativeLayout) view.findViewById(R.id.home_toolbar_search);
         home_menu = (ImageView) view.findViewById(R.id.home_menu);
@@ -197,6 +200,7 @@ public class HomeFragment2 extends MFragment implements HttpCallback<JSONObject>
 //        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(getAdapter());
+        topButton.ToTop(mRecyclerView);
         setHeader(mRecyclerView);
     }
 

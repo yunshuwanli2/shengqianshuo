@@ -3,6 +3,6 @@ ext{
     MBuildToolsVersion="26.0.2"
     MminSdkVersion=15
     MtargetSdkVersion=26
-    MVersionCode=4
-    MVersionName="2.1.1"
+    MVersionCode=5
+    MVersionName="2.2.1"
 }

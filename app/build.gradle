@@ -19,6 +19,7 @@ android {
         targetSdkVersion MtargetSdkVersion
         versionCode MVersionCode
         versionName MVersionName
+        //AS3.0以后必须的配置 以下版本去掉
         flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
@@ -31,7 +32,7 @@ android {
         release {
             signingConfig signingConfigs.Release
             minifyEnabled true
-            pseudoLocalesEnabled false
+            pseudoLocalesEnabled true
             // 如果没有提供混淆规则文件，则设置默认的混淆规则文件（SDK/tools/proguard/proguard-android.txt）
             shrinkResources true  // 移除无用的resource文件
             zipAlignEnabled true // //Zipalign优化

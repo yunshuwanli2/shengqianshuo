@@ -36,6 +36,7 @@ import yswl.priv.com.shengqianshopping.fragment.adapter.GridRecyclerFragmentAdap
 import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
+import yswl.priv.com.shengqianshopping.view.TopButton;
 
 public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallback<JSONObject>, OnRefreshListener, OnLoadMoreListener {
 
@@ -54,6 +55,8 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
 
     @BindView(R.id.swipe_target)
     RecyclerView mRecyclerView;
+    @BindView(R.id.top_button)
+    TopButton topButton;
     AdvanceGridRecyclerFragmentAdapter mAdapter;
 
     public AdvanceGridRecyclerFragment() {
@@ -87,6 +90,7 @@ public class AdvanceGridRecyclerFragment extends MFragment implements HttpCallba
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new AdvanceGridRecyclerFragmentAdapter();
         mRecyclerView.setAdapter(mAdapter);
+        topButton.ToTop(mRecyclerView);
         mAdapter.setOnItemClickListener(new GridRecyclerFragmentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position) {

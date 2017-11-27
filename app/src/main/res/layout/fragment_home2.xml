@@ -7,35 +7,53 @@
 
     <include layout="@layout/home_actionbar_layout" />
 
-    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-        android:id="@+id/swipeToLoadLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@id/swipe_refresh_header"
-            layout="@layout/layout_twitter_header" />
-
-        <!--      <android.support.v4.widget.NestedScrollView
-                  android:id="@+id/swipe_target"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:fillViewport="true">-->
-  <!--      <FrameLayout
-            android:id="@+id/recycler_view"
+        <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+            android:id="@+id/swipeToLoadLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">-->
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@id/swipe_refresh_header"
+                layout="@layout/layout_twitter_header" />
+
+            <!--      <android.support.v4.widget.NestedScrollView
+                      android:id="@+id/swipe_target"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:fillViewport="true">-->
+            <!--      <FrameLayout
+                      android:id="@+id/recycler_view"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent">-->
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/swipe_target"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        <!--</FrameLayout>-->
-        <!--</android.support.v4.widget.NestedScrollView>-->
+            <!--</FrameLayout>-->
+            <!--</android.support.v4.widget.NestedScrollView>-->
 
-        <include
-            android:id="@id/swipe_load_more_footer"
-            layout="@layout/layout_classic_footer" />
-    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+            <include
+                android:id="@id/swipe_load_more_footer"
+                layout="@layout/layout_classic_footer" />
+        </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+        <yswl.priv.com.shengqianshopping.view.TopButton
+            android:id="@+id/top_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/back_top"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
 </LinearLayout>

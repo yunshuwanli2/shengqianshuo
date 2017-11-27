@@ -35,6 +35,7 @@ import yswl.priv.com.shengqianshopping.http.SqsHttpClientProxy;
 import yswl.priv.com.shengqianshopping.util.AlibcUtil;
 import yswl.priv.com.shengqianshopping.util.UrlUtil;
 import yswl.priv.com.shengqianshopping.view.DividerGridItemDecoration;
+import yswl.priv.com.shengqianshopping.view.TopButton;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
@@ -51,6 +52,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
 
     private SerializableParamsMap mParam1;//已经封装好的参数
     RecyclerView mRecyclerView;
+    TopButton topButton;
 
     GridRecyclerFragmentAdapter mAdapter;
     List<ProductDetail> mProductList = new ArrayList<>();
@@ -106,6 +108,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.swipe_target);
+        topButton = view.findViewById(R.id.top_button);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -134,6 +137,7 @@ public class GridRecyclerviewFragment extends MFragment implements HttpCallback<
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+        topButton.ToTop(mRecyclerView);
         requestData();
     }
 
