@@ -42,7 +42,7 @@ public class TopButton extends android.support.v7.widget.AppCompatButton impleme
                 super.onScrolled(recyclerView, dx, dy);
                 //行数
                 int count = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-                if (count > 21) {
+                if (count > 10) {
                     TopButton.this.setVisibility(View.VISIBLE);
                 } else {
                     TopButton.this.setVisibility(View.GONE);
